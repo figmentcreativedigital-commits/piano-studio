@@ -82,6 +82,11 @@ function clock(min: number): string {
 export function calendarDescription(l: Lesson, url?: string): string {
   const lines: string[] = [];
   lines.push(l.objective, "");
+  if (url) {
+    lines.push(`Full lesson: ${url}`, `Start the session: ${new URL(`/session/${l.id}`, url).toString()}`);
+    if (l.blocks.some((b) => b.kind === "baseline")) lines.push(`Baseline page: ${new URL("/baseline.html", url).toString()}`);
+    lines.push("");
+  }
   let t = 0;
   for (const b of l.blocks) {
     const ex = (b.exerciseIds ?? []).map((id) => getExercise(id)).filter((e): e is NonNullable<typeof e> => !!e);
@@ -107,10 +112,6 @@ export function calendarDescription(l: Lesson, url?: string): string {
   }
   lines.push("Left hand: fingers 2–5 only, thumb off the keys. Any ache at the thumb base: right hand only.");
   lines.push(`Short on time? The ${l.essential.minutes}-minute essential version replaces this session.`);
-  if (url) {
-    lines.push("", `Full lesson: ${url}`);
-    if (l.blocks.some((b) => b.kind === "baseline")) lines.push(`Baseline page: ${new URL("/baseline.html", url).toString()}`);
-  }
   return lines.join("\n");
 }
 
