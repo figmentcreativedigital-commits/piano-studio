@@ -24,7 +24,7 @@ export const NARRATOR_VOICES = [
   { name: "Achird", trait: "Friendly" },
 ] as const;
 
-export const NARRATOR_DEFAULT = "Sadaltager";
+export const NARRATOR_DEFAULT = "Charon";
 
 export const NARRATOR_SAMPLE =
   "W01 D02: Movement + Blues Guide Tones. Left hand: F7 is E♭3 and A3, short on beat 1, with the click on 2 and 4 at ♩ = 60. Then the right hand answers with the riff.";
