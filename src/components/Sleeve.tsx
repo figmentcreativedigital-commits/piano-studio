@@ -1,4 +1,4 @@
-import { getExercise, lessonCode } from "@/content";
+import { getExercise, lessonCode, themeVars } from "@/content";
 import type { Lesson } from "@/content/types";
 import { midiOf } from "@/lib/abc";
 import { prettyDate } from "@/lib/schedule";
@@ -32,16 +32,16 @@ function KeysBand({ notes }: { notes: number[] }) {
   return (
     <svg className="sleeve-keys" viewBox={`0 0 ${whites.length * W} ${H}`} aria-hidden="true" preserveAspectRatio="xMinYMax meet">
       {whites.map((m) => (
-        <rect key={m} x={x.get(m)! + 0.5} y={0.5} width={W - 1} height={H - 1} fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth={1} />
+        <rect key={m} x={x.get(m)! + 0.5} y={0.5} width={W - 1} height={H - 1} fill="none" stroke="var(--c-ink)" strokeWidth={1} />
       ))}
       {whites.map((m) =>
-        set.has(m) ? <circle key={`d${m}`} cx={x.get(m)! + W / 2} cy={H - 7} r={3} fill="#fff" /> : null,
+        set.has(m) ? <circle key={`d${m}`} cx={x.get(m)! + W / 2} cy={H - 7} r={3} fill="var(--c-ink)" /> : null,
       )}
       {Array.from({ length: end - start + 1 }, (_, i) => start + i)
         .filter((m) => isBlack(m) && x.has(m - 1))
         .map((m) => (
           <g key={`b${m}`}>
-            <rect x={x.get(m - 1)! + W - 3} y={0.5} width={6} height={H * 0.6} fill="rgba(255,255,255,0.85)" />
+            <rect x={x.get(m - 1)! + W - 3} y={0.5} width={6} height={H * 0.6} fill="var(--c-ink)" />
             {set.has(m) ? <circle cx={x.get(m - 1)! + W} cy={H * 0.6 - 5} r={2.2} fill="var(--c)" /> : null}
           </g>
         ))}
@@ -53,10 +53,10 @@ export function Sleeve({ lesson, mini = false, done = false }: { lesson: Lesson;
   const long = lesson.title.length > 30;
   const code = lessonCode(lesson);
   return (
-    <div className={`sleeve${mini ? " mini" : ""}`} style={{ ["--c" as string]: lesson.color }} aria-label={`${code}: ${lesson.title}`}>
+    <div className={`sleeve${mini ? " mini" : ""}`} style={themeVars(lesson.theme)} aria-label={`${code}: ${lesson.title}`}>
       {!mini && (
         <div className="sleeve-code">
-          <span>Woodshed {code}</span>
+          <span>{code}</span>
           <span>{lesson.minutes === 120 ? "Sides A + B" : "Single"}</span>
         </div>
       )}

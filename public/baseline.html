@@ -10,28 +10,28 @@
 <style>
 /* Layout: one lesson-book column under a sticky metronome strip; one task at a time; notation and keyboards sit on "paper" cards that stay light in both themes, like a lit music desk. */
 :root {
-  --bg: #E9ECEF;
-  --surface: #FFFFFF;
-  --surface-2: #F3F5F7;
-  --ink: #111418;
-  --muted: #56606D;
-  --line: #CDD3DA;
-  --paper: #FFFFFF;
-  --paper-ink: #0E1012;
-  --paper-line: #D6D9DD;
-  --rh: #2347C5;
-  --lh: #B4500C;
-  --mark-rh: #2347C5;
-  --mark-lh: #B4500C;
-  --mark-neutral: #3A3F46;
-  --hl: #2347C5;
-  --key-white: #FFFFFF;
-  --key-black: #17191C;
-  --focus: #2347C5;
-  --ok: #1F7346;
-  --stop: #B42318;
-  --btn-bg: #111418;
-  --btn-ink: #FFFFFF;
+  --bg: #F7FEFF;
+  --surface: #F7FEFF;
+  --surface-2: #F7FEFF;
+  --ink: #0A1014;
+  --muted: #54727C;
+  --line: #A9D1E7;
+  --paper: #F7FEFF;
+  --paper-ink: #0A1014;
+  --paper-line: #A9D1E7;
+  --rh: #0267B2;
+  --lh: #B471AF;
+  --mark-rh: #0267B2;
+  --mark-lh: #B471AF;
+  --mark-neutral: #24373C;
+  --hl: #B471AF;
+  --key-white: #F7FEFF;
+  --key-black: #0A1014;
+  --focus: #0A1014;
+  --ok: #0267B2;
+  --stop: #B471AF;
+  --btn-bg: #0267B2;
+  --btn-ink: #F7FEFF;
   --font-display: "Libre Franklin", "Franklin Gothic Medium", "Arial Narrow", system-ui, sans-serif;
   --font-ui: "Libre Franklin", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -39,17 +39,17 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0D1013; --surface: #161A1F; --surface-2: #1D2228; --ink: #E7EAEE; --muted: #9CA5B0; --line: #2C333C;
-    --paper: #F5F4F0; --paper-ink: #0E1012; --paper-line: #D6D6D0;
-    --rh: #93ABFF; --lh: #FF9F5E; --focus: #93ABFF; --ok: #5CC28C; --stop: #FF6F61;
-    --btn-bg: #E7EAEE; --btn-ink: #0D1013; color-scheme: dark;
+    --bg: #0A1014; --surface: #11171C; --surface-2: #1B2125; --ink: #F7FEFF; --muted: #86A9BB; --line: #24373C;
+    --paper: #F7FEFF; --paper-ink: #0A1014; --paper-line: #A9D1E7;
+    --rh: #00B0EF; --lh: #B471AF; --focus: #F7FEFF; --ok: #00B0EF; --stop: #B471AF;
+    --btn-bg: #00B0EF; --btn-ink: #0A1014; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0D1013; --surface: #161A1F; --surface-2: #1D2228; --ink: #E7EAEE; --muted: #9CA5B0; --line: #2C333C;
-  --paper: #F5F4F0; --paper-ink: #0E1012; --paper-line: #D6D6D0;
-  --rh: #93ABFF; --lh: #FF9F5E; --focus: #93ABFF; --ok: #5CC28C; --stop: #FF6F61;
-  --btn-bg: #E7EAEE; --btn-ink: #0D1013; color-scheme: dark;
+  --bg: #0A1014; --surface: #11171C; --surface-2: #1B2125; --ink: #F7FEFF; --muted: #86A9BB; --line: #24373C;
+  --paper: #F7FEFF; --paper-ink: #0A1014; --paper-line: #A9D1E7;
+  --rh: #00B0EF; --lh: #B471AF; --focus: #F7FEFF; --ok: #00B0EF; --stop: #B471AF;
+  --btn-bg: #00B0EF; --btn-ink: #0A1014; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -632,7 +632,7 @@ textarea { min-height: 74px; resize: vertical; }
     (spec.marks || []).forEach(([n, hand, lab]) => {
       const m = midi(n), x = cx(m), y = cy(m), col = hand === "R" ? "var(--mark-rh)" : "var(--mark-lh)";
       s += '<circle cx="' + x + '" cy="' + y + '" r="10.5" fill="' + col + '"/>';
-      s += '<text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-family="Libre Franklin, system-ui, sans-serif" font-size="13" font-weight="800" fill="#fff">' + lab + "</text>";
+      s += '<text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-family="Libre Franklin, system-ui, sans-serif" font-size="13" font-weight="800" fill="' + (hand === "R" ? "#F7FEFF" : "#0A1014") + '">' + lab + "</text>";
     });
     return s + "</svg>";
   }

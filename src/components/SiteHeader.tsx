@@ -4,10 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { metronome, type ClickMode, type MetroBeat } from "@/lib/audio";
+import { ListenButton } from "./ReadAloud";
 
 const NAV = [
   { href: "/", label: "Today" },
   { href: "/lessons", label: "Lessons" },
+  { href: "/tunes", label: "Tunes" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/listening", label: "Listening" },
   { href: "/progress", label: "Progress" },
@@ -27,7 +29,7 @@ function HeaderMetronome() {
   }, []);
   const lit = !!beat?.audible;
   return (
-    <div className="metro" role="group" aria-label="Metronome">
+    <div className="metro" role="group" aria-label="Metronome" data-tour="metronome">
       <span className={`metro-light${lit ? " on" : ""}${lit && beat?.beat === 0 ? " down" : ""}`} aria-hidden="true" />
       <span className="metro-tempo">
         <button type="button" className="icon-btn" aria-label="Slower" onClick={() => metronome.setTempo(st.tempo - 2)}>
@@ -55,7 +57,7 @@ export function SiteHeader() {
   const path = usePathname();
   const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
   return (
-    <header className="site-header">
+    <header className="site-header band">
       <div className="wrap">
         <Link href="/" className="wordmark" aria-label="Woodshed, today">
           Woodshed
@@ -67,7 +69,10 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <HeaderMetronome />
+        <div className="header-tools">
+          <ListenButton />
+          <HeaderMetronome />
+        </div>
       </div>
     </header>
   );

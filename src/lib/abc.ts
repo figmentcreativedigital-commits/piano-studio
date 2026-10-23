@@ -5,11 +5,11 @@ import type { ChordSpec, NotationSpec } from "@/content/types";
  * playback: the player reads pitches from the abcjs object made from this text.
  */
 
-const LETTERS = ["C", "D", "E", "F", "G", "A", "B"] as const;
-type Letter = (typeof LETTERS)[number];
+export const LETTERS = ["C", "D", "E", "F", "G", "A", "B"] as const;
+export type Letter = (typeof LETTERS)[number];
 
 /** Key-signature accidentals: +1 sharp, -1 flat. */
-const KEY_SIGNATURES: Record<string, Partial<Record<Letter, number>>> = {
+export const KEY_SIGNATURES: Record<string, Partial<Record<Letter, number>>> = {
   C: {},
   G: { F: 1 },
   D: { F: 1, C: 1 },
@@ -41,7 +41,7 @@ export function parsePitch(name: string): Pitch {
   return { letter: m[1] as Letter, accidental, octave: parseInt(m[3], 10) };
 }
 
-const SEMITONES: Record<Letter, number> = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+export const SEMITONES: Record<Letter, number> = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
 
 export function midiOf(name: string): number {
   const p = parsePitch(name);
@@ -126,7 +126,7 @@ export function beatsPerBar(meter = "4/4"): number {
   return (n * 4) / d;
 }
 
-const FORMAT = [
+export const FORMAT = [
   "%%measurenb 0",
   "%%stretchlast 1",
   "%%gchordfont Helvetica 17 bold",
@@ -149,6 +149,7 @@ export function buildAbc(spec: NotationSpec, barsPerLine: number, opts: { showTe
   const b = specBars(spec);
   const twoStaves = !!(b.rh && b.lh);
   h.push(`K:${spec.key}${!twoStaves && spec.clef === "bass" ? " clef=bass" : ""}`);
+  if (spec.directives) h.push(...spec.directives);
   if (spec.raw) {
     h.push(spec.raw);
     return h.join("\n");
@@ -165,7 +166,13 @@ export function buildAbc(spec: NotationSpec, barsPerLine: number, opts: { showTe
     const bars = b.bars ?? [];
     for (let i = 0; i < bars.length; i += barsPerLine) {
       const end = i + barsPerLine >= bars.length;
-      h.push(`${bars.slice(i, i + barsPerLine).join(" | ")}${end ? " |]" : " |"}`);
+      if (spec.barlines) {
+        const chunk = bars.slice(i, i + barsPerLine).map((bar, k) => {
+          const at = i + k;
+          return `${bar} ${at === bars.length - 1 ? "|]" : spec.barlines![at] ?? "|"}`;
+        });
+        h.push(chunk.join(" "));
+      } else h.push(`${bars.slice(i, i + barsPerLine).join(" | ")}${end ? " |]" : " |"}`);
     }
   }
   return h.join("\n");

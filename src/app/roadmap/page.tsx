@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { BASELINE, PHASES, WEEK_COLORS } from "@/content";
+import Link from "next/link";
+import { BASELINE, PHASES, getVehicle } from "@/content";
 import { RoadmapNow } from "@/components/RoadmapNow";
 
 export const metadata: Metadata = { title: "Roadmap", description: "Twelve weeks in four phases, with milestones you can hear and check." };
@@ -12,9 +13,9 @@ export default function RoadmapPage() {
         <p>A provisional plan in four phases. It promises a sound process, not a date for mastery: each milestone is a check you can play, and the plan moves when the evidence does.</p>
       </div>
       <div className="wrap">
-        <div className="timeline" aria-hidden="true">
+        <div className="timeline" aria-hidden="true" data-tour="roadmap-timeline">
           {Array.from({ length: 12 }, (_, i) => (
-            <RoadmapNow key={i} week={i + 1} color={WEEK_COLORS[i]} />
+            <RoadmapNow key={i} week={i + 1} />
           ))}
         </div>
 
@@ -61,6 +62,16 @@ export default function RoadmapPage() {
                 </p>
               </div>
               <div className="phase-cols">
+                <div className="phase-tunes">
+                  <h3>The three tunes</h3>
+                  <ul>
+                    {p.tunes.map((t) => (
+                      <li key={t.vehicle}>
+                        <Link href={`/tunes#${t.vehicle}`}>{getVehicle(t.vehicle).name.replace(/"/g, "")}</Link>: {t.text}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <div>
                   <h3>Jazz</h3>
                   <ul>{p.jazz.map((x) => <li key={x}>{x}</li>)}</ul>

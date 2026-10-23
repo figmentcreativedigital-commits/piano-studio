@@ -4,7 +4,7 @@ import type { KeyboardSpec } from "@/content/types";
 const isBlack = (m: number) => [1, 3, 6, 8, 10].includes(((m % 12) + 12) % 12);
 
 /**
- * Keyboard diagram. Blue marks are the right hand, orange the left, numbers are
+ * Keyboard diagram. Cobalt marks are the right hand, orchid the left, numbers are
  * fingers (1 = thumb). Dashed outlines are neutral targets such as a starting
  * note. `active` lights keys from MIDI input.
  */
@@ -31,12 +31,12 @@ export function Keyboard({ spec, active, compact = false }: { spec: KeyboardSpec
     <figure className="kbd" style={compact ? { maxWidth: 300 } : undefined}>
       <svg viewBox={`-1 -1 ${W + 2} ${H + 2}`} width={Math.round((W + 2) * 1.15)} role="img" aria-label={label}>
         {whites.map((m) => (
-          <rect key={`w${m}`} x={xOf.get(m)} y={0} width={WW} height={WH} rx={2} fill={active?.has(m) ? "#cfd9ff" : "var(--key-white)"} stroke="var(--paper-ink)" strokeWidth={1} />
+          <rect key={`w${m}`} x={xOf.get(m)} y={0} width={WW} height={WH} rx={2} fill={active?.has(m) ? "var(--key-lit)" : "var(--key-white)"} stroke="var(--paper-ink)" strokeWidth={1} />
         ))}
         {Array.from({ length: hi - lo + 1 }, (_, i) => lo + i)
           .filter((m) => isBlack(m) && xOf.has(m - 1))
           .map((m) => (
-            <rect key={`b${m}`} x={(xOf.get(m - 1) ?? 0) + WW - BW / 2} y={0} width={BW} height={BH} rx={1.5} fill={active?.has(m) ? "#3a55d8" : "var(--key-black)"} />
+            <rect key={`b${m}`} x={(xOf.get(m - 1) ?? 0) + WW - BW / 2} y={0} width={BW} height={BH} rx={1.5} fill={active?.has(m) ? "var(--key-lit)" : "var(--key-black)"} />
           ))}
         {whites
           .filter((m) => m % 12 === 0)
@@ -52,8 +52,8 @@ export function Keyboard({ spec, active, compact = false }: { spec: KeyboardSpec
           const pw = Math.max(22, lab.length * 6.4 + 6);
           return (
             <g key={`t${n}`}>
-              <rect x={x - pw / 2} y={y - 10} width={pw} height={20} rx={10} fill="var(--paper)" stroke="#3a3f46" strokeWidth={1.5} strokeDasharray="3 2" />
-              <text x={x} y={y + 4} textAnchor="middle" fontSize={10} fontWeight={700} fill="#3a3f46" fontFamily="var(--ui)">
+              <rect x={x - pw / 2} y={y - 10} width={pw} height={20} rx={10} fill="var(--paper)" stroke="var(--slate)" strokeWidth={1.5} strokeDasharray="3 2" />
+              <text x={x} y={y + 4} textAnchor="middle" fontSize={10} fontWeight={700} fill="var(--slate)" fontFamily="var(--ui)">
                 {lab}
               </text>
             </g>
@@ -65,8 +65,8 @@ export function Keyboard({ spec, active, compact = false }: { spec: KeyboardSpec
           const y = cy(m);
           return (
             <g key={`m${n}${hand}`}>
-              <circle cx={x} cy={y} r={10.5} fill={hand === "R" ? "#2347c5" : "#b4500c"} />
-              <text x={x} y={y + 4.5} textAnchor="middle" fontSize={13} fontWeight={800} fill="#fff" fontFamily="var(--ui)">
+              <circle cx={x} cy={y} r={10.5} fill={hand === "R" ? "var(--rh)" : "var(--lh)"} />
+              <text x={x} y={y + 4.5} textAnchor="middle" fontSize={13} fontWeight={800} fill={hand === "R" ? "var(--white)" : "var(--night)"} fontFamily="var(--ui)">
                 {lab}
               </text>
             </g>

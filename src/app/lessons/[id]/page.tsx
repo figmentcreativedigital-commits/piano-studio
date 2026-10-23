@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { BLOCK_LABEL, LESSONS, getExercise, getLesson, lessonLabel } from "@/content";
+import { BLOCK_LABEL, LESSONS, getExercise, getLesson, getVehicle, lessonCode, lessonLabel, themeVars } from "@/content";
 import { ExerciseCard } from "@/components/ExerciseCard";
 import { Sleeve } from "@/components/Sleeve";
 import { Tracklist } from "@/components/Tracklist";
+import { ReadButton } from "@/components/ReadAloud";
 import { prettyDate, prettyTime } from "@/lib/schedule";
 
 export function generateStaticParams() {
@@ -27,15 +28,23 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
   const next = LESSONS[idx + 1];
 
   return (
-    <div className="wrap">
-      <section className="lesson-top">
-        <div className="sleeve-stage">
-          <Sleeve lesson={lesson} />
+    <>
+      <section className="hero" aria-labelledby="lesson-h1" style={themeVars(lesson.theme)}>
+        <div className="hero-field">
+          <div className="sleeve-stage">
+            <Sleeve lesson={lesson} />
+          </div>
         </div>
-        <div>
-          <p className="lesson-id">{lessonLabel(lesson)}</p>
-          <h1 className="lesson-h1">{lesson.title}</h1>
-          <p className="today-objective">{lesson.objective}</p>
+        <div className="hero-main" data-tour="lesson-main" data-read-region>
+          <p className="lesson-id" data-read>
+            {lessonCode(lesson)}, {prettyDate(lesson.date, { weekday: "long", month: "long", day: "numeric" })}, {prettyTime(lesson.start)}
+          </p>
+          <h1 className="lesson-h1" id="lesson-h1" data-read>
+            {lesson.title}
+          </h1>
+          <p className="today-objective" data-read>
+            {lesson.objective}
+          </p>
           <div className="btn-row">
             <Link className="btn primary" href={`/session/${lesson.id}`}>
               Start session
@@ -46,24 +55,41 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             <Link className="btn ghost" href={`/check-in?lesson=${lesson.id}`}>
               Check in
             </Link>
+            <ReadButton label="Read the overview" what={`lesson-${lesson.id}`} />
           </div>
           <dl className="facts">
-            <dt>When</dt>
-            <dd>
-              {prettyDate(lesson.date, { weekday: "long", month: "long", day: "numeric" })}, {prettyTime(lesson.start)}, {lesson.minutes} minutes
-            </dd>
+            <dt>Length</dt>
+            <dd>{lesson.minutes} minutes, breaks included</dd>
             <dt>Builds on</dt>
             <dd>{lesson.prerequisites.join("; ")}</dd>
             <dt>Time balance</dt>
-            <dd>{lesson.balance}</dd>
+            <dd data-read data-read-text={`Time balance: ${lesson.balance}`}>
+              {lesson.balance}
+            </dd>
             <dt>Application</dt>
-            <dd>{lesson.application}</dd>
+            <dd data-read data-read-text={`Application: ${lesson.application}`}>
+              {lesson.application}
+            </dd>
+            <dt>Tunes</dt>
+            <dd data-tour="lesson-tunes">
+              {lesson.applies.length ? (
+                lesson.applies.map((v, i) => (
+                  <span key={v}>
+                    {i > 0 ? ", " : ""}
+                    <Link href={`/tunes#${v}`}>{getVehicle(v).name.replace(/"/g, "")}</Link>
+                  </span>
+                ))
+              ) : (
+                <span>Baseline day: the tunes start tomorrow.</span>
+              )}
+            </dd>
             <dt>Last task</dt>
             <dd>{lesson.retrieval}</dd>
           </dl>
         </div>
       </section>
 
+      <div className="wrap">
       <div className="lesson-body">
         <aside className="lesson-aside" aria-label="Agenda">
           <Tracklist blocks={lesson.blocks} linkBase={`/lessons/${lesson.id}`} />
@@ -88,14 +114,18 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             return (
               <section key={b.id} id={`b-${b.id}`} className="block-section" aria-labelledby={`h-${b.id}`}>
                 <header>
-                  <h2 id={`h-${b.id}`}>{b.title}</h2>
+                  <h2 id={`h-${b.id}`} data-read>
+                    {b.title}
+                  </h2>
                   <span className="kind">
                     {BLOCK_LABEL[b.kind]}, {b.minutes} min{b.side ? `, side ${b.side}` : ""}
                   </span>
                 </header>
                 <ul>
                   {b.text.map((t, i) => (
-                    <li key={i}>{t}</li>
+                    <li key={i} data-read>
+                      {t}
+                    </li>
                   ))}
                   {repeat.map((x) => (
                     <li key={x}>
@@ -127,6 +157,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
           </section>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

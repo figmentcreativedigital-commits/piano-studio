@@ -6,6 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { BLOCK_LABEL, LESSONS, getExercise, getLesson, lessonCode, lessonLabel } from "@/content";
 import type { Block } from "@/content/types";
 import { chime, keepAwake } from "@/lib/audio";
+import { connectMidi, getMidiStatus, onMidiStatus, pedalDoubleTap, type MidiStatus } from "@/lib/midi";
+import { reader, speechSupported } from "@/lib/speech";
 import { plan as makePlan } from "@/lib/planner";
 import { recordStore, sessionStore, useStore } from "@/lib/store";
 import { useToday } from "@/lib/useToday";
@@ -89,6 +91,38 @@ export function SessionRunner({ id }: { id: string }) {
     router.push(`/check-in?lesson=${lesson.id}&v=${version}&done=1`);
   };
 
+  // Hands-free: read each part aloud as it begins; double-tap the sustain pedal to go on.
+  const [canSpeak, setCanSpeak] = useState(false);
+  const [autoRead, setAutoRead] = useState(false);
+  const [midi, setMidi] = useState<MidiStatus>({ state: "idle", devices: [] });
+  useEffect(() => {
+    setCanSpeak(speechSupported());
+    setAutoRead(reader.getPrefs().autoRead);
+    setMidi(getMidiStatus());
+    const un = onMidiStatus(setMidi);
+    return () => {
+      un();
+    };
+  }, []);
+  const readBlock = () => reader.speak([{ text: [block.title, ...block.text].join(". ") }], "session");
+  useEffect(() => {
+    if (autoRead && canSpeak) readBlock();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx, autoRead, canSpeak]);
+  const goRef = useRef(go);
+  goRef.current = go;
+  const idxRef = useRef(idx);
+  idxRef.current = idx;
+  useEffect(() => {
+    if (midi.state !== "ready") return;
+    const un = pedalDoubleTap(() => {
+      if (idxRef.current < blocks.length - 1) goRef.current(idxRef.current + 1);
+    });
+    return () => {
+      un();
+    };
+  }, [midi.state, blocks.length]);
+
   const exercises = (block.exerciseIds ?? []).map((x) => getExercise(x)).filter((e): e is NonNullable<typeof e> => !!e);
   const isLast = idx >= blocks.length - 1;
   const total = blocks.reduce((s, b) => s + b.minutes, 0);
@@ -114,8 +148,10 @@ export function SessionRunner({ id }: { id: string }) {
           {BLOCK_LABEL[block.kind]}, block {idx + 1} of {blocks.length}
           {block.side ? `, side ${block.side}` : ""}
         </span>
-        <h1 className="now-title">{block.title}</h1>
-        <div className={`timer${running ? " running" : ""}${remaining <= 0 ? " overtime" : ""}`} role="timer" aria-live="off">
+        <h1 className="now-title" data-read>
+          {block.title}
+        </h1>
+        <div className={`timer${running ? " running" : ""}${remaining <= 0 ? " overtime" : ""}`} role="timer" aria-live="off" data-tour="session-timer">
           <span className="timer-read">{fmt(remaining)}</span>
           <div className="btn-row">
             <button type="button" className="btn primary" onClick={() => setRunning((r) => !r)} aria-pressed={running}>
@@ -149,9 +185,39 @@ export function SessionRunner({ id }: { id: string }) {
           </div>
         </div>
         {remaining <= 0 && <p className="hint" style={{ margin: 0 }}>Time&apos;s up for this block. Finish the rep you&apos;re on, then move on.</p>}
+        <div className="hands-free" data-tour="session-hands-free">
+          {canSpeak && (
+            <>
+              <label className="check">
+                <input
+                  type="checkbox"
+                  checked={autoRead}
+                  onChange={(e) => {
+                    setAutoRead(e.target.checked);
+                    reader.setPrefs({ autoRead: e.target.checked });
+                    if (!e.target.checked && reader.state.label === "session") reader.stop();
+                  }}
+                />{" "}
+                Read each part aloud
+              </label>
+              <button type="button" className="btn small ghost" onClick={readBlock}>
+                Read this part
+              </button>
+            </>
+          )}
+          {midi.state === "ready" ? (
+            <span className="hint">Double-tap the sustain pedal to go to the next part.</span>
+          ) : midi.state !== "unsupported" ? (
+            <button type="button" className="btn small ghost" onClick={() => void connectMidi()}>
+              {midi.state === "connecting" ? "Connecting…" : "Connect piano for pedal control"}
+            </button>
+          ) : null}
+        </div>
         <ul className="now-text">
           {block.text.map((t, i) => (
-            <li key={i}>{t}</li>
+            <li key={i} data-read>
+              {t}
+            </li>
           ))}
         </ul>
         {p.lhRest && <p className="care">Left hand rests today. Left-hand parts switch to right-hand-only versions.</p>}

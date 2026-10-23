@@ -197,7 +197,7 @@ export function ExercisePlayer({ ex, lhRest = false }: { ex: Exercise; lhRest?: 
         </div>
       )}
       {n && (
-        <div className="controls">
+        <div className="controls" data-tour="player">
           <button type="button" className="btn primary" onClick={play} aria-pressed={playing} disabled={!canAudio}>
             {playing ? "Stop" : ex.kind === "reading" ? "Hear it (after your try)" : ex.hideNotation ? "Play phrase" : "Hear it"}
           </button>
@@ -234,17 +234,17 @@ export function ExercisePlayer({ ex, lhRest = false }: { ex: Exercise; lhRest?: 
             <input type="checkbox" checked={clickOn} onChange={(e) => setClickOn(e.target.checked)} /> Click
           </label>
           {midi.state === "ready" ? (
-            <label className="check" title="Waits for the right keys, then moves on. Checks pitch only.">
+            <label className="check" title="Waits for the right keys, then moves on. Checks pitch only." data-tour="midi">
               <input type="checkbox" checked={follow} onChange={(e) => setFollow(e.target.checked)} /> Follow my playing
             </label>
           ) : midi.state !== "unsupported" ? (
-            <button type="button" className="btn small ghost" onClick={() => void connectMidi()}>
+            <button type="button" className="btn small ghost" onClick={() => void connectMidi()} data-tour="midi">
               {midi.state === "connecting" ? "Connecting…" : midi.state === "denied" ? "MIDI blocked" : midi.state === "no-device" ? "No MIDI device found" : "Connect piano (MIDI)"}
             </button>
           ) : null}
         </div>
       )}
-      <div className="reps-bar" style={{ padding: "12px 20px 0" }}>
+      <div className="reps-bar" style={{ padding: "12px 20px 0" }} data-tour="reps">
         <div className="reps" aria-live="polite">
           <span style={{ fontWeight: 700 }}>Clean runs</span>
           <span className="rep-dots" aria-label={`${Math.min(streak, target)} of ${target} clean in a row`}>

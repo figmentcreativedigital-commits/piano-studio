@@ -25,7 +25,7 @@ export interface Source {
   /** One line a reader can check. */
   note: string;
   /** How well the claim is verified. */
-  status?: "verified" | "secondary-sources" | "pending-primary-check";
+  status?: "verified" | "checked-in-class" | "secondary-sources" | "pending-primary-check";
   refs?: { label: string; url?: string }[];
 }
 
@@ -75,6 +75,10 @@ export interface NotationSpec {
   chords?: ChordSpec[];
   /** Raw body for special cases such as repeat signs. */
   raw?: string;
+  /** Barline after each bar, e.g. "||" at the end of a section. Defaults to "|". */
+  barlines?: string[];
+  /** Extra ABC directives placed after the key line. */
+  directives?: string[];
   /** Wrap at most this many bars per system on wide screens. */
   barsPerLine?: number;
   /** Dense material wraps sooner on narrow screens. */
@@ -103,6 +107,8 @@ export interface Exercise {
   kind: BlockKind;
   source: Source;
   hands: Hand;
+  /** The tune this exercise applies its material to, if any. */
+  vehicle?: VehicleId;
   /** Plain-language spelling of the material, so nothing depends on reading notation. */
   spelling?: string;
   fingering?: string;
@@ -181,8 +187,69 @@ export interface Lesson {
   essential: { minutes: number; blocks: Block[] };
   /** Main skills; outcomes logged in the check-in. */
   focus: string[];
-  /** Palette slot for the sleeve. */
-  color?: string;
+  /** The tunes this lesson's material is applied to. Only the baseline day may leave this empty. */
+  applies: VehicleId[];
+  /** Sleeve design; filled in from SLEEVE_THEMES when not set. */
+  theme?: SleeveTheme;
+}
+
+/** Named inks from the cover. See globals.css. */
+export type Ink = "cobalt" | "cyan" | "orchid" | "white" | "navy" | "night" | "slate" | "steel" | "ice";
+
+export interface SleeveTheme {
+  bg: Ink;
+  ink: Ink;
+  acc: Ink;
+  /** The color field the sleeve sits on in a hero. */
+  field: Ink;
+}
+
+/**
+ * The three application vehicles. Every technique in the program is put to
+ * work on one of these: Rhythm changes, the blues (major and minor), and
+ * "Indiana" with "Donna Lee", its bebop line.
+ */
+export type VehicleId = "rhythm" | "blues" | "minor-blues" | "indiana";
+
+export interface ChartSection {
+  /** Rehearsal letter as written on the part: A, B, C. */
+  mark?: string;
+  /** One chord symbol per bar; two in a bar are separated by a space. */
+  bars: string[];
+  repeat?: boolean;
+}
+
+export interface VehicleRecording {
+  artist: string;
+  title: string;
+  recorded: string;
+  detail: string;
+  note: string;
+  sourceUrl?: string;
+}
+
+export interface Vehicle {
+  id: VehicleId;
+  /** The family, e.g. "Rhythm changes". */
+  name: string;
+  /** The parent tune. */
+  tune: string;
+  key: string;
+  /** abcjs key for the chart. */
+  abcKey: string;
+  form: string;
+  tempo: number;
+  summary: string;
+  chart: ChartSection[];
+  /** What the program puts on this tune, phase by phase. */
+  uses: { phase: string; text: string }[];
+  /** Tunes built on the same changes. */
+  family: string[];
+  recordings: VehicleRecording[];
+  theme: SleeveTheme;
+  /** A second key for the same chart, e.g. "Donna Lee" in A♭. */
+  alt?: { label: string; key: string; abcKey: string; steps: number; semitones: number; note: string };
+  source: { note: string; url?: string };
 }
 
 export interface Milestone {
@@ -201,5 +268,7 @@ export interface Phase {
   bach: string[];
   technique: string[];
   ear: string[];
+  /** How each of the three tunes is used in this phase. */
+  tunes: { vehicle: VehicleId; text: string }[];
   milestone: Milestone;
 }

@@ -5,9 +5,11 @@ import { SOURCE_LABEL, SKILLS } from "@/content";
 import type { Exercise } from "@/content/types";
 import { EarCheck } from "./EarCheck";
 import { ExercisePlayer } from "./ExercisePlayer";
+import { ReadButton } from "./ReadAloud";
 
 const STATUS: Record<string, string> = {
   verified: "verified",
+  "checked-in-class": "checked against Barry in class",
   "secondary-sources": "from secondary sources",
   "pending-primary-check": "primary source check pending",
 };
@@ -24,21 +26,32 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
   const lhOnly = ex.hands === "LH";
   const r = ex.recording;
   return (
-    <article className="ex" id={`ex-${ex.id}`} aria-labelledby={`ex-${ex.id}-t`}>
+    <article className="ex" id={`ex-${ex.id}`} aria-labelledby={`ex-${ex.id}-t`} data-tour="exercise" data-read-region>
       <header className="ex-head">
-        <h3 className="ex-title" id={`ex-${ex.id}-t`}>
-          {ex.title}
-        </h3>
+        <div className="ex-title-row">
+          <h3 className="ex-title" id={`ex-${ex.id}-t`} data-read>
+            {ex.title}
+          </h3>
+          <ReadButton label="Read the steps" what={`ex-${ex.id}`} />
+        </div>
         {ex.subtitle && <p className="ex-sub">{ex.subtitle}</p>}
-        <span className={`source ${ex.source.kind}`}>
+        <span className={`source ${ex.source.kind}`} data-tour="exercise-source">
           <b>{SOURCE_LABEL[ex.source.kind]}</b>
           <span>
             {ex.source.note}
             {ex.source.status && ` (${STATUS[ex.source.status]})`}
           </span>
         </span>
-        {ex.spelling && !ex.hideNotation && <p className="ex-spell">{ex.spelling}</p>}
-        {ex.fingering && <p className="ex-spell">Fingering: {ex.fingering}</p>}
+        {ex.spelling && !ex.hideNotation && (
+          <p className="ex-spell" data-read>
+            {ex.spelling}
+          </p>
+        )}
+        {ex.fingering && (
+          <p className="ex-spell" data-read>
+            Fingering: {ex.fingering}
+          </p>
+        )}
       </header>
 
       {lhRest && (ex.hands === "LH" || ex.hands === "both") && (
@@ -47,7 +60,7 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
         </div>
       )}
       {simplify && (
-        <div className="care" style={{ margin: "0 20px 14px", borderLeftColor: "var(--felt)" }}>
+        <div className="care" style={{ margin: "0 20px 14px" }}>
           Start with the easier version: {ex.easier} Move to the full version after three clean runs.
         </div>
       )}
@@ -92,7 +105,9 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
           <h4>How to practice</h4>
           <ol>
             {ex.steps.map((s, i) => (
-              <li key={i}>{s}</li>
+              <li key={i} data-read>
+                {s}
+              </li>
             ))}
           </ol>
           {(ex.listenFor || ex.feelFor) && (
@@ -120,10 +135,14 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
         </div>
         <div>
           <h4>Cue</h4>
-          <p className="cue">{ex.cue}</p>
-          <div className="done-when">
+          <p className="cue" data-read data-read-text={`Cue: ${ex.cue}`}>
+            {ex.cue}
+          </p>
+          <div className="done-when" data-tour="done-when">
             <h4>Done when</h4>
-            <p>{ex.check}</p>
+            <p data-read data-read-text={`Done when: ${ex.check}`}>
+              {ex.check}
+            </p>
             <p className="hint" style={{ margin: 0 }}>
               Start at ♩ = {ex.tempo.start || "record tempo"}
               {ex.tempo.target ? `, aim for ♩ = ${ex.tempo.target}` : ""}. {ex.reps}.{ex.tempo.note ? ` ${ex.tempo.note}.` : ""}

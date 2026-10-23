@@ -22,6 +22,8 @@ interface MIDIAccessLike {
 }
 
 const listeners = new Set<NoteListener>();
+type ControlListener = (e: { control: number; value: number }) => void;
+const controlListeners = new Set<ControlListener>();
 const statusListeners = new Set<(s: MidiStatus) => void>();
 const down = new Set<number>();
 
@@ -52,6 +54,34 @@ export function onNote(l: NoteListener) {
   return () => listeners.delete(l);
 }
 
+/** Control changes: 64 is the sustain pedal (0–63 up, 64–127 down). */
+export function onControl(l: ControlListener) {
+  controlListeners.add(l);
+  return () => controlListeners.delete(l);
+}
+
+/**
+ * Double-tap detector for the sustain pedal. Calls `fire` when the pedal goes
+ * down twice within `window` ms; a single press does nothing, so normal
+ * pedalling never triggers it.
+ */
+export function pedalDoubleTap(fire: () => void, window = 650) {
+  let isDown = false;
+  let last = 0;
+  return onControl(({ control, value }) => {
+    if (control !== 64) return;
+    const nowDown = value >= 64;
+    if (nowDown && !isDown) {
+      const t = Date.now();
+      if (t - last < window) {
+        last = 0;
+        fire();
+      } else last = t;
+    }
+    isDown = nowDown;
+  });
+}
+
 export function keysDown(): Set<number> {
   return new Set(down);
 }
@@ -65,6 +95,8 @@ function handle(e: MIDIMessageEventLike) {
   } else if (cmd === 0x80 || (cmd === 0x90 && d2 === 0)) {
     down.delete(d1);
     listeners.forEach((l) => l({ type: "off", pitch: d1, velocity: 0 }));
+  } else if (cmd === 0xb0) {
+    controlListeners.forEach((l) => l({ control: d1, value: d2 }));
   }
 }
 

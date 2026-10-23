@@ -101,7 +101,7 @@ export function CheckInForm() {
     const next = makePlan(LESSONS, recordStore.get(), today);
     const text = checkInText(saved);
     return (
-      <div className="form">
+      <div className="form" data-tour="checkin-copy">
         <div className="notice live">
           <h3>Logged</h3>
           <p>
@@ -128,7 +128,7 @@ export function CheckInForm() {
   }
 
   return (
-    <form className="form" onSubmit={submit}>
+    <form className="form" onSubmit={submit} data-tour="checkin-form">
       {params.get("done") && (
         <div className="notice live">
           <h3>Session finished</h3>
@@ -215,7 +215,7 @@ export function CheckInForm() {
         </label>
         <textarea id="ci-note" className="input" value={note} onChange={(e) => setNote(e.target.value)} />
       </div>
-      <div className="btn-row">
+      <div className="btn-row" data-tour="checkin-save">
         <button type="submit" className="btn primary">
           Log check-in
         </button>

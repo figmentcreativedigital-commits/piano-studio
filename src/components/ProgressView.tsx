@@ -59,7 +59,7 @@ export function ProgressView() {
         </div>
       </section>
 
-      <section className="section" aria-labelledby="ledger-h">
+      <section className="section" aria-labelledby="ledger-h" data-tour="progress-ledger">
         <div className="section-head">
           <h2 id="ledger-h">Skills</h2>
           <span className="muted">Your ratings from check-ins. Nothing here is measured by the app unless it says so.</span>
@@ -154,7 +154,7 @@ export function ProgressView() {
         )}
       </section>
 
-      <section className="section" aria-labelledby="data-h">
+      <section className="section" aria-labelledby="data-h" data-tour="progress-backup">
         <div className="section-head">
           <h2 id="data-h">Your data</h2>
         </div>

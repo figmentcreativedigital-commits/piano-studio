@@ -1,4 +1,4 @@
-import type { Phase } from "./types";
+import type { SleeveTheme, Phase } from "./types";
 
 export const PROGRAM = {
   name: "Woodshed",
@@ -53,21 +53,32 @@ export const BASELINE = {
   ],
 };
 
-/** Week colors for lesson sleeves, chosen to read well with dark ink and white type. */
-export const WEEK_COLORS = [
-  "#2B44D8", // W1 ultramarine
-  "#C2410C", // W2 burnt orange
-  "#0F766E", // W3 teal
-  "#6D28D9", // W4 violet
-  "#B45309", // W5 amber
-  "#1D4ED8", // W6 cobalt
-  "#9F1239", // W7 crimson
-  "#3F6212", // W8 olive
-  "#0E7490", // W9 cyan
-  "#7C2D12", // W10 rust
-  "#4338CA", // W11 indigo
-  "#111827", // W12 ink
+/**
+ * Sleeve designs, all drawn from the cover's inks. A lesson's sleeve is chosen
+ * by week and day, so each record in a week looks different and each week
+ * starts one design later. Ink on ground is at least 4.5:1 in every pairing.
+ */
+export const SLEEVE_THEMES: SleeveTheme[] = [
+  { bg: "cobalt", ink: "white", acc: "cyan", field: "cyan" },
+  { bg: "night", ink: "cyan", acc: "orchid", field: "cyan" },
+  { bg: "white", ink: "cobalt", acc: "orchid", field: "cyan" },
+  { bg: "navy", ink: "white", acc: "cyan", field: "cyan" },
+  { bg: "orchid", ink: "night", acc: "white", field: "navy" },
+  { bg: "cyan", ink: "night", acc: "cobalt", field: "navy" },
+  { bg: "slate", ink: "ice", acc: "orchid", field: "cyan" },
 ];
+
+export function sleeveTheme(week: number, day: number): SleeveTheme {
+  return SLEEVE_THEMES[(week - 1 + day - 1) % SLEEVE_THEMES.length];
+}
+
+/** One field per phase on the roadmap timeline. */
+export const PHASE_THEMES: Record<string, SleeveTheme> = {
+  P1: { bg: "cobalt", ink: "white", acc: "cyan", field: "cyan" },
+  P2: { bg: "cyan", ink: "night", acc: "cobalt", field: "navy" },
+  P3: { bg: "orchid", ink: "night", acc: "white", field: "navy" },
+  P4: { bg: "navy", ink: "white", acc: "cyan", field: "cyan" },
+};
 
 export const PHASES: Phase[] = [
   {
@@ -75,16 +86,22 @@ export const PHASES: Phase[] = [
     name: "The Bench",
     weeks: [1, 3],
     summary:
-      "Sound and time at the keyboard. The sixth-diminished scale in the right hand, the blues form under light left-hand guide tones, Lester Young by ear, and the opening of Bach's first invention.",
+      "Sound and time at the keyboard, put to work on the three tunes from the first week: the blues in F, the same Harris scale turned minor for the C minor blues, and the opening of “Indiana”, whose chain of dominants is also the Rhythm bridge. Lester Young by ear, and the opening of Bach's first invention.",
     jazz: [
-      "C major sixth-diminished scale as a line and as chord movement (Barry Harris)",
-      "F blues: left-hand guide tones, short on beat 1; a right-hand riff that takes turns with the left",
-      "Harmonizing a short melody with sixth and diminished chords",
-      "Transfer to F and B♭",
+      "C sixth-diminished scale and C6–B° movement (Barry Harris), then F and B♭",
+      "F blues: left-hand guide tones short on beat 1, and a right-hand riff that takes turns with the left (Week 1)",
+      "C minor blues: the minor sixth-diminished scale, one note different (Week 2)",
+      "“Indiana” in F: F6 movement on bar 1, then the D7–G7–C7 chain, which is also the Rhythm bridge (Week 3)",
+    ],
+    tunes: [
+      { vehicle: "blues", text: "F blues, two choruses, hands taking turns." },
+      { vehicle: "minor-blues", text: "C minor blues: guide tones, and Cm6–B° movement on bars 1–4." },
+      { vehicle: "indiana", text: "Bars 1–8 in left-hand guide tones." },
+      { vehicle: "rhythm", text: "The bridge in left-hand guide tones." },
     ],
     bach: ["Invention No. 1, BWV 772: mm. 1–4, each hand alone, then m. 1 hands together"],
     technique: ["Arm-weight touch", "Thumb travel in the right hand", "Light left-hand shapes with fingers 2–5"],
-    ear: ["Sing then play", "Lester Young, 'Oh, Lady Be Good!' (1936), first phrases", "Chord quality by ear: sixth or diminished"],
+    ear: ["Sing then play", "Lester Young, “Oh, Lady Be Good!” (1936), first phrases, in G and moved to F", "Lester Young, “Indiana” (1942)", "Chord quality by ear: sixth or diminished"],
     milestone: {
       id: "M1",
       week: 3,
@@ -92,8 +109,10 @@ export const PHASES: Phase[] = [
       checks: [
         "C6–B° chord movement, right hand, up and down one octave in half notes at ♩ = 60, three clean runs in a row, and once from memory the next day.",
         "F blues: two choruses with left-hand guide tones and the right-hand riff, click on 2 and 4 at ♩ = 80, without stopping.",
+        "C minor blues: one chorus of left-hand guide tones with the play-along at ♩ = 72.",
+        "“Indiana” bars 1–8 and the Rhythm bridge: left-hand guide tones with the play-along at ♩ = 66.",
         "Bach, Invention No. 1, mm. 1–4, each hand alone at ♩ = 50, three clean runs.",
-        "Sing and then play Lester's first two phrases by ear.",
+        "Sing and then play Lester's first two phrases by ear, in G and in F.",
       ],
     },
   },
@@ -102,23 +121,30 @@ export const PHASES: Phase[] = [
     name: "Lines",
     weeks: [4, 6],
     summary:
-      "Bebop lines that land chord tones on the beat, built from Harris's scale rules, over the blues and ii–V–I in F and B♭. Left-hand guide tones start to move with the harmony.",
+      "Bebop lines that put chord tones on the beat, built from Barry's added-note rules, over all three tunes: the bebop blues in F, the Rhythm A sections in B♭, and the whole of “Indiana”. Left-hand guide tones move with the harmony.",
     jazz: [
-      "Harris dominant scale with added half steps, verified against his own teaching before use",
-      "Sixth-diminished movement in F and B♭",
-      "A four-bar line in the style of Bud Powell, then your own",
-      "Lester phrases moved to a second key",
+      "Barry's added-note rules for the dominant scale, taken from his classes before they're taught",
+      "Sixth-diminished movement in B♭ for the Rhythm A sections",
+      "The bebop blues: a ii–V into bar 5, the diminished chord in bar 6, the turnaround",
+      "A four-bar line in the style of Bud Powell over the D7–G7–C7–F7 chain, then your own",
+    ],
+    tunes: [
+      { vehicle: "blues", text: "The bebop version, two choruses of lines." },
+      { vehicle: "rhythm", text: "The A sections and the bridge, one chorus." },
+      { vehicle: "indiana", text: "The whole form in guide tones; lines over the chain of dominants." },
+      { vehicle: "minor-blues", text: "Lines over A♭7 to G7, bars 9–10." },
     ],
     bach: ["mm. 1–8 hands separately; mm. 1–4 hands together"],
     technique: ["Eighth-note evenness in swing", "Left-hand guide tones through ii–V–I", "Thumb-under in right-hand lines"],
-    ear: ["Bud Powell, 1949 trio sides", "Transcribing two bars by ear each week"],
+    ear: ["Bud Powell, “Wail” (1949): the left hand on the bridge", "Transcribing two bars by ear each week"],
     milestone: {
       id: "M2",
       week: 6,
       title: "End of Week 6",
       checks: [
-        "Two choruses of F blues improvised in the right hand with Harris scale rules over left-hand guide tones, ♩ = 96 swing.",
-        "A Lester phrase by ear in two keys.",
+        "Two choruses of the F blues improvised in the right hand with the added-note rules over left-hand guide tones, ♩ = 96 swing.",
+        "Rhythm changes: one chorus, left-hand guide tones throughout, a right-hand line over the bridge, ♩ = 88.",
+        "“Indiana”: the whole form in left-hand guide tones with the play-along at ♩ = 80.",
         "Bach mm. 1–4 hands together at ♩ = 50.",
       ],
     },
@@ -128,22 +154,30 @@ export const PHASES: Phase[] = [
     name: "Tunes",
     weeks: [7, 9],
     summary:
-      "A standard from the Sonny Clark and Horace Silver orbit. Harris short and long voicings in the right hand, Silver-style comping rhythms, and longer lines in the manner of Sonny Clark.",
+      "Heads by ear and the art of comping. The “Donna Lee” head a section at a time, from the 1947 record with Bud Powell on piano; “Lester Leaps In” on Rhythm changes; Horace Silver's comping on both blues; Harris short and long voicings in the right hand.",
     jazz: [
-      "Head and changes of one standard, chosen together",
+      "“Donna Lee” head by ear, in A♭, a section at a time",
       "Harris short and long voicings (right hand)",
-      "Comping rhythms: short punctuations, Charleston, anticipations",
+      "Comping rhythms: short punctuations, the Charleston, anticipations",
+      "The minor blues in Silver's 6/8 feel",
+    ],
+    tunes: [
+      { vehicle: "indiana", text: "“Donna Lee”: the head by ear in A♭." },
+      { vehicle: "rhythm", text: "“Lester Leaps In”: the riff head by ear, then a chorus." },
+      { vehicle: "blues", text: "Comping a chorus, Silver-style." },
+      { vehicle: "minor-blues", text: "Comping under a melody in 6/8." },
     ],
     bach: ["mm. 1–14 hands separately; mm. 1–8 hands together"],
     technique: ["Voicing the top note", "Repeated-chord control without tension"],
-    ear: ["Sonny Clark Trio (1957)", "Horace Silver's comping behind horns"],
+    ear: ["Sonny Clark Trio (1957) and “Cool Struttin'” (1958)", "Horace Silver: “Doodlin'” and “Señor Blues”"],
     milestone: {
       id: "M3",
       week: 9,
       title: "End of Week 9",
       checks: [
-        "The head and one chorus of solo on the chosen tune, with left-hand guide tones.",
-        "One chorus comping with short and long voicings against a recording or backing track.",
+        "“Donna Lee”: the first 16 bars by ear in A♭, right hand, with the record.",
+        "One chorus comping on the F blues and one on the minor blues, short and long voicings, with the play-along.",
+        "“Lester Leaps In”: the riff head by ear, then one chorus over Rhythm changes.",
       ],
     },
   },
@@ -151,18 +185,23 @@ export const PHASES: Phase[] = [
     id: "P4",
     name: "Solo Piano",
     weeks: [10, 12],
-    summary:
-      "Melody and accompaniment in one pair of hands. A first solo-piano arrangement, a recorded performance, and a look back at the baseline.",
-    jazz: ["Melody over single bass notes and guide tones", "Two-chorus solo on the blues", "Short arrangement of the standard"],
+    summary: "Melody and accompaniment in one pair of hands, on all three tunes, recorded. A look back at the baseline.",
+    jazz: ["“Indiana”: the 1917 melody over guide tones, then a chorus", "The blues: head and two choruses", "Rhythm changes: head and a chorus", "The minor blues: one chorus"],
+    tunes: [
+      { vehicle: "indiana", text: "Melody and a chorus, solo piano." },
+      { vehicle: "blues", text: "Head and two choruses." },
+      { vehicle: "rhythm", text: "Head and a chorus." },
+      { vehicle: "minor-blues", text: "One chorus." },
+    ],
     bach: ["Invention No. 1 complete hands separately; hands together as far as the evidence supports"],
-    technique: ["Balance between hands", "Pedal for legato without blur (if a damper pedal is available)"],
+    technique: ["Balance between hands", "Pedal for legato without blur"],
     ear: ["Transfer tasks in new keys", "Comparing your recording with a reference"],
     milestone: {
       id: "M4",
       week: 12,
       title: "End of Week 12",
       checks: [
-        "A recorded performance: blues (head and two choruses) and the standard.",
+        "A recorded set: “Indiana” (melody and a chorus), the F blues (head and two choruses), Rhythm changes (head and a chorus), the minor blues (a chorus).",
         "Bach Invention No. 1 recorded as far as it is secure.",
         "Baseline repeated and compared.",
       ],

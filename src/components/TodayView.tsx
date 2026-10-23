@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { LESSONS, PHASES, SKILLS, lessonCode } from "@/content";
+import { LESSONS, PHASES, SKILLS, lessonCode, themeVars } from "@/content";
 import { nextStep, plan as makePlan } from "@/lib/planner";
 import { daysBetween, prettyDate, prettyTime, weekdayName } from "@/lib/schedule";
 import { addMark, recordStore, redoAdjustment, sessionStore, undoAdjustment, useStore } from "@/lib/store";
@@ -40,17 +40,21 @@ export function TodayView() {
   const recent = [...record.checkIns].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 3);
 
   return (
-    <div className="wrap">
-      <section className="today-hero" aria-labelledby="today-title">
-        <SleeveStage lesson={lesson} spinning={running} />
-        <div>
-          <p className="today-when">{when}</p>
-          <h1 className="today-title" id="today-title">
+    <>
+      <section className="hero" aria-labelledby="today-title" style={themeVars(lesson.theme)}>
+        <div className="hero-field" data-tour="today-record">
+          <SleeveStage lesson={lesson} spinning={running} />
+        </div>
+        <div className="hero-main" data-read-region data-tour="today-main">
+          <p className="today-when" data-read>{when}</p>
+          <h1 className="today-title" id="today-title" data-read>
             {lesson.title}
           </h1>
-          <p className="today-objective">{lesson.objective}</p>
+          <p className="today-objective" data-read>
+            {lesson.objective}
+          </p>
 
-          <div className="notices">
+          <div className="notices" data-tour="today-notices">
             {record.marks.some((m) => m.kind === "missed" && m.date === today) && p.status !== "done-today" && (
               <div className="notice">
                 <h3>Marked as missed</h3>
@@ -109,7 +113,7 @@ export function TodayView() {
             )}
           </div>
 
-          <div className="btn-row" style={{ marginBottom: 14 }}>
+          <div className="btn-row" style={{ marginBottom: 14 }} data-tour="today-actions">
             <Link className="btn primary" href={`/session/${lesson.id}${version === "essential" ? "?v=essential" : ""}`}>
               {running ? "Resume session" : version === "essential" ? `Start the ${lesson.essential.minutes}-minute version` : "Start session"}
             </Link>
@@ -127,7 +131,7 @@ export function TodayView() {
           </div>
 
           {p.status !== "not-started" && p.status !== "complete" && (
-            <details className="hint" style={{ marginBottom: 18 }}>
+            <details className="hint" style={{ marginBottom: 0 }} data-tour="today-cant">
               <summary>Can&apos;t practice as planned today?</summary>
               <div className="btn-row" style={{ marginTop: 10 }}>
                 <button type="button" className="btn small" onClick={() => addMark({ kind: "short", date: today, minutes: 20 })}>
@@ -148,11 +152,23 @@ export function TodayView() {
             </details>
           )}
 
-          <Tracklist blocks={blocks} linkBase={`/lessons/${lesson.id}`} current={running ? session!.block : -1} />
         </div>
       </section>
 
-      <section className="section" aria-labelledby="week-h">
+      <div className="wrap">
+      <section className="section" aria-labelledby="agenda-h" data-tour="today-agenda" data-read-region>
+        <div className="section-head">
+          <h2 id="agenda-h" data-read>
+            {version === "essential" ? `The ${lesson.essential.minutes}-minute version` : "The session"}
+          </h2>
+          <span className="muted">
+            {blocks.reduce((t, b) => t + b.minutes, 0)} minutes, breaks included
+          </span>
+        </div>
+        <Tracklist blocks={blocks} linkBase={`/lessons/${lesson.id}`} current={running ? session!.block : -1} />
+      </section>
+
+      <section className="section" aria-labelledby="week-h" data-tour="today-week">
         <div className="section-head">
           <h2 id="week-h">Week {lesson.week}</h2>
           <span className="muted">
@@ -232,6 +248,7 @@ export function TodayView() {
           </p>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

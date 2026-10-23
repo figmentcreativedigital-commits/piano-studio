@@ -1,13 +1,27 @@
 import { EXERCISES_W01 } from "./exercises/week01";
 import { LESSONS_W01 } from "./lessons/week01";
-import { WEEK_COLORS } from "./program";
-import type { Exercise, Lesson } from "./types";
+import { sleeveTheme } from "./program";
+import type { Exercise, Lesson, SleeveTheme } from "./types";
 
 export * from "./types";
-export { PROGRAM, BASELINE, PHASES, SKILLS, WEEK_COLORS } from "./program";
+export { PROGRAM, BASELINE, PHASES, SKILLS, SLEEVE_THEMES, PHASE_THEMES, sleeveTheme } from "./program";
+export { VEHICLES, getVehicle } from "./vehicles";
 
 export const EXERCISES: Exercise[] = [...EXERCISES_W01];
-export const LESSONS: Lesson[] = [...LESSONS_W01].map((l) => ({ ...l, color: l.color ?? WEEK_COLORS[(l.week - 1) % WEEK_COLORS.length] }));
+export const LESSONS: Lesson[] = [...LESSONS_W01].map((l) => ({ ...l, theme: l.theme ?? sleeveTheme(l.week, l.day) }));
+
+/** CSS custom properties that paint a sleeve or field in a theme. */
+export function themeVars(t: SleeveTheme | undefined): Record<string, string> {
+  if (!t) return {};
+  return {
+    "--c": `var(--${t.bg})`,
+    "--c-ink": `var(--${t.ink})`,
+    "--c-acc": `var(--${t.acc})`,
+    "--c-edge": t.bg === "white" ? "var(--ice)" : `var(--${t.bg})`,
+    "--field": `var(--${t.field})`,
+    "--label": `var(--${t.acc})`,
+  };
+}
 
 const exById = new Map(EXERCISES.map((e) => [e.id, e]));
 const lessonById = new Map(LESSONS.map((l) => [l.id, l]));

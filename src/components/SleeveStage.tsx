@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Lesson } from "@/content/types";
+import { themeVars } from "@/content";
 import { Sleeve } from "./Sleeve";
 
 /** The sleeve with its record. The record slides out once on arrival and turns only while a session is running. */
@@ -13,7 +14,7 @@ export function SleeveStage({ lesson, spinning = false, slide = true }: { lesson
     return () => clearTimeout(t);
   }, [slide]);
   return (
-    <div className={`sleeve-stage${out ? " out" : ""}${spinning ? " spinning" : ""}`} style={{ ["--label" as string]: lesson.color }}>
+    <div className={`sleeve-stage${out ? " out" : ""}${spinning ? " spinning" : ""}`} style={themeVars(lesson.theme)}>
       <div className="disc" aria-hidden="true" />
       <Sleeve lesson={lesson} />
     </div>
