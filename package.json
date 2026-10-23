@@ -18,6 +18,7 @@
     "@fontsource-variable/archivo": "^5.3.0",
     "@fontsource-variable/source-serif-4": "^5.3.1",
     "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@vercel/functions": "^3.10.3",
     "abcjs": "^6.6.4",
     "next": "^16.4.2",
     "react": "^19.3.1",

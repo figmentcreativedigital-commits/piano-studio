@@ -66,8 +66,20 @@ describe("voice route", () => {
   it("doesn't cache a failure", async () => {
     vi.stubEnv("GOOGLE_TTS_API_KEY", "test-key");
     vi.stubGlobal("fetch", vi.fn(async () => new Response("{}", { status: 403 })));
-    const r = await call(speechKey(NARRATOR_SAMPLE));
+    const r = await call(speechKey(NARRATOR_SAMPLE), NARRATOR_VOICES[2].name);
     expect(r.status).toBe(502);
     expect(r.headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("keeps audio in the runtime cache, so Google is asked once per passage and voice", async () => {
+    vi.stubEnv("GOOGLE_TTS_API_KEY", "test-key");
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ audioContent: Buffer.from("ID3again").toString("base64") }), { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const first = await call(speechKey(NARRATOR_SAMPLE), NARRATOR_VOICES[3].name);
+    const second = await call(speechKey(NARRATOR_SAMPLE), NARRATOR_VOICES[3].name);
+    expect(first.headers.get("x-narration-cache")).toBe("miss");
+    expect(second.headers.get("x-narration-cache")).toBe("hit");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(Buffer.from(await second.arrayBuffer()).toString()).toBe("ID3again");
   });
 });
