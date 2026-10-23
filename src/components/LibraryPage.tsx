@@ -25,7 +25,9 @@ import { Gloss } from "./Gloss";
  *
  * Read aloud: these pages opt in to reading every heading, paragraph and
  * list item (data-read-all), so new writing is read without extra markup.
- * The title and intro carry their exact text for the studio narrator.
+ * Put words in headings, paragraphs and list items; a card or list item is
+ * read through its parts. The title and intro carry their exact text for
+ * the studio narrator (see narrationTexts in src/lib/narration.ts).
  */
 
 export function LibraryPage({
@@ -138,7 +140,7 @@ export function LibraryList({ items }: { items: { title: string; text?: string; 
     <ul className="lib-list">
       {items.map((i) => (
         <li key={i.title + (i.href ?? "")}>
-          {i.href ? <Link href={i.href}>{i.title}</Link> : <strong>{i.title}</strong>}
+          <h3 className="lib-list-title">{i.href ? <Link href={i.href}>{i.title}</Link> : i.title}</h3>
           {i.text && <p>{i.text}</p>}
         </li>
       ))}
@@ -158,8 +160,10 @@ export function LibraryExercises({ match, empty }: { match: (e: Exercise) => boo
   return (
     <LibraryCards>
       {found.map(({ e, first }) => (
-        <LibraryCard key={e.id} href={`/lessons/${first!.id}#ex-${e.id}`} title={e.title} tag={SOURCE_LABEL[e.source.kind]} meta={`First in ${lessonCode(first!)}, ${first!.title}`}>
-          {e.subtitle && <p>{e.subtitle}</p>}
+        <LibraryCard key={e.id} href={`/lessons/${first!.id}#ex-${e.id}`} title={e.title} tag={SOURCE_LABEL[e.source.kind]} meta={e.subtitle}>
+          <p>
+            First in {lessonCode(first!)}, {first!.title}
+          </p>
         </LibraryCard>
       ))}
     </LibraryCards>

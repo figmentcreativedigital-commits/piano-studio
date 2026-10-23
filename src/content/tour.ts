@@ -84,9 +84,9 @@ export const TOUR: TourChapter[] = [
         why: "Breaks are built in for 2 reasons. Short bursts of work with rests in between beat one long push. And your left hand needs the rest.",
       },
       {
-        target: t("today-cant"),
+        target: [t("today-cant"), t("today-actions")],
         title: "When the day doesn't go to plan",
-        body: "Tell it you only have 20 minutes, that you missed today, or that you're away until a certain date. The plan changes and tells you why. You can undo every change.",
+        body: "Once your plan starts, a link under these buttons asks if you can't practice as planned. Tell it you only have 20 minutes, that you missed today, or that you're away. The plan changes and tells you why. You can undo every change.",
       },
     ],
   },
@@ -111,6 +111,7 @@ export const TOUR: TourChapter[] = [
       },
       {
         target: t("help"),
+        top: true,
         title: "Help is always here",
         body: "The question mark button opens help. From there you can take this tour again, or read How it works. That page explains how Woodshed teaches and where the music comes from.",
       },

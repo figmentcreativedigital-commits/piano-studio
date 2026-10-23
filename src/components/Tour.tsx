@@ -209,12 +209,28 @@ export function Tour() {
         return;
       }
       const r0 = el.getBoundingClientRect();
-      const tall = r0.height > window.innerHeight * 0.6;
-      const inView = r0.top >= 72 && r0.bottom <= window.innerHeight - 72;
-      if (!inView) {
-        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        el.scrollIntoView({ block: tall ? "start" : "center", behavior: reduce ? "auto" : "smooth" });
-        await sleep(reduce ? 60 : 520);
+      const vh = window.innerHeight;
+      const tall = r0.height > vh * 0.6;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (window.innerWidth < PHONE) {
+        // Phones: the card is a sheet, so bring the target up near the top
+        // (below the sticky "On this page" bar) and leave the bottom for the card.
+        // Things fixed to the screen, like the tab bar, stay where they are.
+        const fixed = (() => {
+          for (let n: HTMLElement | null = el; n; n = n.parentElement) if (getComputedStyle(n).position === "fixed") return true;
+          return false;
+        })();
+        const inView = r0.top >= 72 && r0.bottom <= vh * 0.42;
+        if (!fixed && !inView && !(step.top && r0.top >= 0 && r0.bottom <= vh * 0.42)) {
+          window.scrollBy({ top: r0.top - 84, behavior: reduce ? "auto" : "smooth" });
+          await sleep(reduce ? 60 : 640);
+        }
+      } else {
+        const inView = r0.top >= 72 && r0.bottom <= vh - 72;
+        if (!inView) {
+          el.scrollIntoView({ block: tall ? "start" : "center", behavior: reduce ? "auto" : "smooth" });
+          await sleep(reduce ? 60 : 520);
+        }
       }
       if (stale()) return;
       const r = el.getBoundingClientRect();
@@ -238,9 +254,15 @@ export function Tour() {
     };
     window.addEventListener("resize", sync);
     window.addEventListener("scroll", sync, { passive: true });
+    // Notation and players render late and can move things without a scroll.
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(sync) : null;
+    ro?.observe(document.body);
+    const settle = window.setInterval(sync, 500);
     return () => {
       window.removeEventListener("resize", sync);
       window.removeEventListener("scroll", sync);
+      ro?.disconnect();
+      window.clearInterval(settle);
     };
   }, [on, step]);
 
@@ -300,8 +322,13 @@ export function Tour() {
     const vh = window.innerHeight;
     if (!box || step?.place === "center") return { left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: Math.min(CARD_W + 60, vw - 32) } as const;
     // Phones: a sheet at the bottom, or at the top when the target is low on
-    // the screen (the tab bar, the help button), so it never covers the target.
-    if (vw < PHONE) return box.top > vh * 0.45 ? ({ left: 12, right: 12, top: 12, width: "auto" } as const) : ({ left: 12, right: 12, bottom: 12, width: "auto" } as const);
+    // the screen (the tab bar, the last thing on a page), whichever covers less.
+    if (vw < PHONE) {
+      const below = vh - (box.top + box.height);
+      const above = box.top;
+      const atTop = below >= cardH + 24 ? false : above >= cardH + 24 ? true : above > below;
+      return atTop ? ({ left: 12, right: 12, top: 12, width: "auto" } as const) : ({ left: 12, right: 12, bottom: 12, width: "auto" } as const);
+    }
     let left = box.left + box.width / 2 - CARD_W / 2;
     left = Math.max(16, Math.min(left, vw - CARD_W - 16));
     const below = vh - (box.top + box.height) - GAP;
@@ -332,6 +359,20 @@ export function Tour() {
           </div>
         </div>
       )}
+      <button
+        ref={fabRef}
+        type="button"
+        className="tour-fab band"
+        data-tour="help"
+        aria-expanded={help}
+        aria-controls="help-menu"
+        onClick={() => (on ? undefined : setHelp((v) => !v))}
+      >
+        <span aria-hidden="true" className="tour-fab-mark">
+          ?
+        </span>
+        <span className="tour-fab-label">Help</span>
+      </button>
       {help && !on && (
         <div className="help-menu band" id="help-menu" role="group" aria-labelledby="help-menu-h">
           <p className="help-menu-h" id="help-menu-h">
@@ -361,20 +402,6 @@ export function Tour() {
           </ul>
         </div>
       )}
-      <button
-        ref={fabRef}
-        type="button"
-        className="tour-fab band"
-        data-tour="help"
-        aria-expanded={help}
-        aria-controls="help-menu"
-        onClick={() => (on ? undefined : setHelp((v) => !v))}
-      >
-        <span aria-hidden="true" className="tour-fab-mark">
-          ?
-        </span>
-        <span className="tour-fab-label">Help</span>
-      </button>
     </div>
   );
 
@@ -385,91 +412,91 @@ export function Tour() {
 
   return (
     <>
-    {fab}
-    <div className="tour-layer" data-tour-ui>
-      {box ? <div className="tour-ring" style={{ top: box.top, left: box.left, width: box.width, height: box.height }} /> : <div className="tour-dim" />}
-      <div className="tour-card" ref={cardRef} tabIndex={-1} style={card as React.CSSProperties} role="dialog" aria-modal="false" aria-labelledby="tour-title" aria-describedby="tour-body">
-        <div className="tour-top">
-          <button type="button" className="tour-chapter" onClick={() => setMenu((v) => !v)} aria-expanded={menu} aria-controls="tour-menu">
-            {step.label}
-            <span aria-hidden="true" className={`chev${menu ? " is-open" : ""}`}>
-              ▾
-            </span>
-          </button>
-          <button type="button" className="tour-x" onClick={stop} aria-label="End the tour">
-            ✕
-          </button>
-        </div>
-        {menu && (
-          <ul className="tour-menu" id="tour-menu">
-            {TOUR.map((c) => {
-              const at = FLAT.findIndex((s) => s.chapter === c.id);
-              return (
-                <li key={c.id}>
-                  <button type="button" className={c.id === step.chapter ? "is-on" : undefined} aria-current={c.id === step.chapter ? "step" : undefined} onClick={() => go(at)}>
-                    {c.label}
-                    <small>
-                      {c.steps.length} {c.steps.length === 1 ? "step" : "steps"}
-                    </small>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-        <h2 id="tour-title" className="tour-title">
-          {step.title}
-        </h2>
-        <p id="tour-body" className="tour-body" aria-live="polite">
-          {step.body}
-        </p>
-        {missing && <p className="tour-warn">That part isn&apos;t on this page right now. Skip ahead with Next.</p>}
-        {why && step.why && (
-          <div className="tour-why">
-            <p className="tour-why-h">Why it&apos;s taught this way</p>
-            <p>{step.why}</p>
-          </div>
-        )}
-        <div className="tour-foot">
-          <span className="tour-count">
-            {within} of {chapterSteps.length}, step {i + 1} of {FLAT.length}
-          </span>
-          <div className="btn-row">
-            <button type="button" className="btn small ghost" onClick={() => go(i - 1)} disabled={i === 0}>
-              Back
+      {fab}
+      <div className="tour-layer" data-tour-ui>
+        {box ? <div className="tour-ring" style={{ top: box.top, left: box.left, width: box.width, height: box.height }} /> : <div className="tour-dim" />}
+        <div className="tour-card" ref={cardRef} tabIndex={-1} style={card as React.CSSProperties} role="dialog" aria-modal="false" aria-labelledby="tour-title" aria-describedby="tour-body">
+          <div className="tour-top">
+            <button type="button" className="tour-chapter" onClick={() => setMenu((v) => !v)} aria-expanded={menu} aria-controls="tour-menu">
+              {step.label}
+              <span aria-hidden="true" className={`chev${menu ? " is-open" : ""}`}>
+                ▾
+              </span>
             </button>
-            <button type="button" className="btn small primary" onClick={() => go(i + 1)}>
-              {i === FLAT.length - 1 ? "Finish" : "Next"}
+            <button type="button" className="tour-x" onClick={stop} aria-label="End the tour">
+              ✕
             </button>
           </div>
-        </div>
-        <div className="tour-switches">
-          <label className="tour-switch">
-            <input type="checkbox" checked={why} onChange={(e) => setWhy(e.target.checked)} />
-            <span aria-hidden="true" />
-            Why it&apos;s taught this way
-          </label>
-          {canSpeak && (
-            <label className="tour-switch">
-              <input
-                type="checkbox"
-                checked={voice}
-                onChange={(e) => {
-                  setVoice(e.target.checked);
-                  if (e.target.checked) read(true, step, why);
-                  else if (reader.state.label === "tour") reader.stop();
-                }}
-              />
-              <span aria-hidden="true" />
-              Read aloud
-            </label>
+          {menu && (
+            <ul className="tour-menu" id="tour-menu">
+              {TOUR.map((c) => {
+                const at = FLAT.findIndex((s) => s.chapter === c.id);
+                return (
+                  <li key={c.id}>
+                    <button type="button" className={c.id === step.chapter ? "is-on" : undefined} aria-current={c.id === step.chapter ? "step" : undefined} onClick={() => go(at)}>
+                      {c.label}
+                      <small>
+                        {c.steps.length} {c.steps.length === 1 ? "step" : "steps"}
+                      </small>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
           )}
-        </div>
-        <div className="tour-rail" aria-hidden="true">
-          <i style={{ width: `${((i + 1) / FLAT.length) * 100}%` }} />
+          <h2 id="tour-title" className="tour-title">
+            {step.title}
+          </h2>
+          <p id="tour-body" className="tour-body" aria-live="polite">
+            {step.body}
+          </p>
+          {missing && <p className="tour-warn">That part isn&apos;t on this page right now. Skip ahead with Next.</p>}
+          {why && step.why && (
+            <div className="tour-why">
+              <p className="tour-why-h">Why it&apos;s taught this way</p>
+              <p>{step.why}</p>
+            </div>
+          )}
+          <div className="tour-foot">
+            <span className="tour-count">
+              {within} of {chapterSteps.length}, step {i + 1} of {FLAT.length}
+            </span>
+            <div className="btn-row">
+              <button type="button" className="btn small ghost" onClick={() => go(i - 1)} disabled={i === 0}>
+                Back
+              </button>
+              <button type="button" className="btn small primary" onClick={() => go(i + 1)}>
+                {i === FLAT.length - 1 ? "Finish" : "Next"}
+              </button>
+            </div>
+          </div>
+          <div className="tour-switches">
+            <label className="tour-switch">
+              <input type="checkbox" checked={why} onChange={(e) => setWhy(e.target.checked)} />
+              <span aria-hidden="true" />
+              Why it&apos;s taught this way
+            </label>
+            {canSpeak && (
+              <label className="tour-switch">
+                <input
+                  type="checkbox"
+                  checked={voice}
+                  onChange={(e) => {
+                    setVoice(e.target.checked);
+                    if (e.target.checked) read(true, step, why);
+                    else if (reader.state.label === "tour") reader.stop();
+                  }}
+                />
+                <span aria-hidden="true" />
+                Read aloud
+              </label>
+            )}
+          </div>
+          <div className="tour-rail" aria-hidden="true">
+            <i style={{ width: `${((i + 1) / FLAT.length) * 100}%` }} />
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

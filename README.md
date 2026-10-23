@@ -33,7 +33,9 @@ Preview any day without touching data: `/?today=2026-10-27`.
 | `src/content/vehicles.ts` | The three tunes: chord charts, recordings, and how each phase uses them. |
 | `src/lib/changes.ts` | Chord symbols to left-hand guide tones (voice-led), engraved parts, and transposition. |
 | `src/lib/speech.ts` | Read-aloud on the browser's own speech synthesis, with a music-aware text normalizer. |
-| `src/content/tour.ts`, `src/components/Tour.tsx` | The guided tour: script and engine. Steps target `data-tour` attributes. |
+| `src/content/tour.ts`, `src/components/Tour.tsx` | The guided tour: script and engine. Steps target `data-tour` attributes. The Help button (?) opens the tour and How it works. |
+| `src/lib/nav.ts` | The five places (Today, Lessons, Tunes, Library, Progress) and the footer sitemap. One nav: pills in the header from 768px, a tab bar at the bottom on phones. |
+| `src/content/library.ts`, `src/components/LibraryPage.tsx` | The Library: who each person is and why they matter here, and the one template every Library page uses. Add content in each page's marked slot under `src/app/library/`. |
 | `public/baseline.html` | The day-one baseline session. |
 
 ## Adding a week

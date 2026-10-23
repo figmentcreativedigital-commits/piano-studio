@@ -55,33 +55,40 @@ export function OnThisPage({ items, tour }: { items: TocItem[]; tour?: string })
     const l = list.current;
     const a = l?.querySelector<HTMLElement>('[aria-current="true"]');
     if (!l || !a || l.scrollWidth <= l.clientWidth) return;
-    const want = a.offsetLeft - (l.clientWidth - a.offsetWidth) / 2;
+    const left = a.getBoundingClientRect().left - l.getBoundingClientRect().left + l.scrollLeft;
+    const want = left - (l.clientWidth - a.offsetWidth) / 2;
     l.scrollTo({ left: Math.max(0, want), behavior: "smooth" });
   }, [active]);
 
   return (
-    <nav ref={nav} className={`toc${stuck ? " is-stuck" : ""}`} aria-label="On this page" data-tour={tour}>
-      <span className="toc-label" aria-hidden="true">
+    <>
+      {/* Sits outside the sticky bar, so the bar keeps one height on phones. */}
+      <p className="toc-label-phone" aria-hidden="true">
         On this page
-      </span>
-      <ol className="toc-list" ref={list}>
-        {items.map((it) => (
-          <li key={it.id}>
-            <a href={`#${it.id}`} aria-current={active === it.id ? "true" : undefined} onClick={() => setActive(it.id)}>
-              {it.short ? (
-                <>
-                  <span className="toc-long">{it.label}</span>
-                  <span className="toc-short" aria-hidden="true">
-                    {it.short}
-                  </span>
-                </>
-              ) : (
-                it.label
-              )}
-            </a>
-          </li>
-        ))}
-      </ol>
-    </nav>
+      </p>
+      <nav ref={nav} className={`toc${stuck ? " is-stuck" : ""}`} aria-label="On this page" data-tour={tour}>
+        <span className="toc-label" aria-hidden="true">
+          On this page
+        </span>
+        <ol className="toc-list" ref={list}>
+          {items.map((it) => (
+            <li key={it.id}>
+              <a href={`#${it.id}`} aria-current={active === it.id ? "true" : undefined} onClick={() => setActive(it.id)}>
+                {it.short ? (
+                  <>
+                    <span className="toc-long">{it.label}</span>
+                    <span className="toc-short" aria-hidden="true">
+                      {it.short}
+                    </span>
+                  </>
+                ) : (
+                  it.label
+                )}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </>
   );
 }

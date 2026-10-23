@@ -320,7 +320,8 @@ export interface CollectOptions {
    * Read every heading, paragraph and list item, not only marked passages.
    * Marked passages keep their exact narrated text. Pages opt in with
    * `data-read-all` (the Library pages do), so new writing there is read
-   * without being registered first.
+   * without being registered first. Containers are read through their parts,
+   * so put words in headings, paragraphs and list items.
    */
   all?: boolean;
 }
@@ -345,7 +346,11 @@ export function collectReadable(root: ParentNode = document, opts: CollectOption
     if (opts.all) {
       // Each passage once: skip anything inside a passage already taken, and navigation.
       if (taken.some((t) => t.contains(el))) continue;
-      if (!el.hasAttribute("data-read") && el.closest("nav, button, summary")) continue;
+      if (!el.hasAttribute("data-read")) {
+        if (el.closest("nav, button, summary")) continue;
+        // A container (a card, a list item with a paragraph) is read through its parts.
+        if (el.querySelector(ALL_SELECTOR)) continue;
+      }
     }
     const d = folded(el);
     if (d) {

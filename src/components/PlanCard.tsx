@@ -9,7 +9,7 @@ export function PlanCard() {
       <div className="plan-card-text">
         <p className="plan-kicker">12 weeks, 4 phases</p>
         <h2 id="plan-h" className="plan-title">
-          Your 12-week plan
+          Your <span className="nowrap">12-week</span> plan
         </h2>
         <p className="plan-lede">See what each phase works on, and the milestone you play at the end of it.</p>
         <Link className="btn primary" href="/roadmap">
