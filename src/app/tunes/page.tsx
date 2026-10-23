@@ -5,6 +5,7 @@ import { TuneChart } from "@/components/TuneChart";
 import { ReadButton } from "@/components/ReadAloud";
 import { TUNES_INTRO, TUNES_TITLE } from "@/lib/narration";
 import { readable } from "@/lib/speech-text";
+import { Gloss } from "@/components/Gloss";
 
 export const metadata: Metadata = {
   title: "The three tunes",
@@ -56,7 +57,7 @@ export default function TunesPage() {
                   <dd>{v.form}</dd>
                 </dl>
                 <p className="tune-summary" {...readable(v.summary)}>
-                  {v.summary}
+                  <Gloss text={v.summary} />
                 </p>
                 <ReadButton label="Read about this tune" what={`tune-${v.id}`} />
               </div>
@@ -84,7 +85,9 @@ export default function TunesPage() {
                 {v.uses.map((u) => (
                   <li key={u.phase}>
                     <b>{phaseName(u.phase)}</b>
-                    <span>{u.text}</span>
+                    <span>
+                      <Gloss text={u.text} />
+                    </span>
                   </li>
                 ))}
               </ol>

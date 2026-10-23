@@ -4,6 +4,7 @@ import { BASELINE, PHASES, getVehicle } from "@/content";
 import { RoadmapNow } from "@/components/RoadmapNow";
 import { ROADMAP_INTRO, ROADMAP_TITLE } from "@/lib/narration";
 import { readable } from "@/lib/speech-text";
+import { Gloss } from "@/components/Gloss";
 
 export const metadata: Metadata = { title: "Roadmap", description: "Twelve weeks in four phases, with milestones you can hear and check." };
 
@@ -62,7 +63,7 @@ export default function RoadmapPage() {
                   {p.name}
                 </h2>
                 <p className="prose" style={{ marginTop: 10 }} {...readable(p.summary)}>
-                  {p.summary}
+                  <Gloss text={p.summary} />
                 </p>
               </div>
               <div className="phase-cols">
@@ -78,19 +79,19 @@ export default function RoadmapPage() {
                 </div>
                 <div>
                   <h3>Jazz</h3>
-                  <ul>{p.jazz.map((x) => <li key={x}>{x}</li>)}</ul>
+                  <ul>{p.jazz.map((x) => <li key={x}><Gloss text={x} /></li>)}</ul>
                 </div>
                 <div>
                   <h3>Bach</h3>
-                  <ul>{p.bach.map((x) => <li key={x}>{x}</li>)}</ul>
+                  <ul>{p.bach.map((x) => <li key={x}><Gloss text={x} /></li>)}</ul>
                 </div>
                 <div>
                   <h3>Technique</h3>
-                  <ul>{p.technique.map((x) => <li key={x}>{x}</li>)}</ul>
+                  <ul>{p.technique.map((x) => <li key={x}><Gloss text={x} /></li>)}</ul>
                 </div>
                 <div>
                   <h3>Ears</h3>
-                  <ul>{p.ear.map((x) => <li key={x}>{x}</li>)}</ul>
+                  <ul>{p.ear.map((x) => <li key={x}><Gloss text={x} /></li>)}</ul>
                 </div>
               </div>
               <div className="milestone">

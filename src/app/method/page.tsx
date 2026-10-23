@@ -3,6 +3,7 @@ import { METHOD, METHOD_INTRO, METHOD_TITLE, plain } from "@/content/method";
 import { NarratorAudition } from "@/components/ReadAloud";
 import { NARRATOR_SAMPLE } from "@/lib/narration";
 import { readable } from "@/lib/speech-text";
+import { Gloss } from "@/components/Gloss";
 
 export const metadata: Metadata = { title: "Method", description: "How Woodshed teaches, where its material comes from, and what happens to your data." };
 
@@ -26,7 +27,13 @@ function Inline({ text }: { text: string }) {
   return (
     <>
       {parts.map((p, i) =>
-        p.startsWith("**") ? <strong key={i}>{p.slice(2, -2)}</strong> : p.startsWith("*") ? <em key={i}>{p.slice(1, -1)}</em> : <span key={i}>{p}</span>,
+        p.startsWith("**") ? (
+          <strong key={i}>{p.slice(2, -2)}</strong>
+        ) : p.startsWith("*") ? (
+          <em key={i}>{p.slice(1, -1)}</em>
+        ) : (
+          <Gloss key={i} text={p} />
+        ),
       )}
     </>
   );
