@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getLibraryEntry } from "@/content/library";
+import { LIBRARY_SECTIONS, getLibraryEntry } from "@/content/library";
 import { LibraryExercises, LibraryPage, LibrarySection } from "@/components/LibraryPage";
 
 const entry = getLibraryEntry("barry");
@@ -17,7 +17,7 @@ export default function BarryPage() {
         ─────────────────────────────────────────────────────────────
       */}
 
-      <LibrarySection title="His method in your lessons" intro="Each card opens the lesson where you first play it.">
+      <LibrarySection title={LIBRARY_SECTIONS.barry.title} intro={LIBRARY_SECTIONS.barry.intro}>
         <LibraryExercises match={(e) => e.source.kind === "harris"} />
       </LibrarySection>
     </LibraryPage>

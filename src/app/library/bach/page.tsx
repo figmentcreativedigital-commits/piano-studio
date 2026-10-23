@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BACH_EDITIONS, BACH_PIECES, BACH_TEXT } from "@/content/bach";
-import { getLibraryEntry } from "@/content/library";
+import { LIBRARY_SECTIONS, getLibraryEntry } from "@/content/library";
 import { LibraryCard, LibraryCards, LibraryExercises, LibraryList, LibraryPage, LibrarySection } from "@/components/LibraryPage";
 
 const entry = getLibraryEntry("bach");
@@ -20,7 +20,7 @@ export default function BachPage() {
         </LibraryCards>
       </LibrarySection>
 
-      <LibrarySection title="Bach in your lessons" intro="Each card opens the lesson where you first play it.">
+      <LibrarySection title={LIBRARY_SECTIONS.bach.title} intro={LIBRARY_SECTIONS.bach.intro}>
         <LibraryExercises match={(e) => e.source.kind === "bach"} />
       </LibrarySection>
 

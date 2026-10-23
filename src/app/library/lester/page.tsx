@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getLibraryEntry } from "@/content/library";
+import { LIBRARY_SECTIONS, getLibraryEntry } from "@/content/library";
 import { LibraryExercises, LibraryPage, LibrarySection } from "@/components/LibraryPage";
 
 const entry = getLibraryEntry("lester");
@@ -17,7 +17,7 @@ export default function LesterPage() {
         ─────────────────────────────────────────────────────────────
       */}
 
-      <LibrarySection title="Lester in your lessons" intro="Each card opens the lesson where you first hear or play it.">
+      <LibrarySection title={LIBRARY_SECTIONS.lester.title} intro={LIBRARY_SECTIONS.lester.intro}>
         <LibraryExercises match={(e) => /lester/i.test(e.id) || /Lester Young/.test(e.recording?.artist ?? "")} />
       </LibrarySection>
     </LibraryPage>

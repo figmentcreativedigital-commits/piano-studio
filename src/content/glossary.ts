@@ -54,4 +54,12 @@ export const GLOSSARY: GlossaryEntry[] = [
   { term: "measure", match: ["measure", "measures"], def: "A small box of beats in written music. In 4/4, each bar has 4 beats." },
   { term: "contrafact", match: ["contrafact"], def: "A new melody written over an older song's chords." },
   { term: "MIDI", match: ["MIDI"], def: "The language a digital piano uses to tell a computer which keys you press." },
+  { term: "the and", match: ["the and of"], def: "The halfway point between two beats. Count “1 and 2 and”: the “and” is the second half of the beat." },
+  { term: "added half step", match: ["added half step", "added half steps"], def: "Barry Harris's rule: add one extra note to a scale, so the chord notes land on the beats." },
+  { term: "surround", match: ["surrounds", "surround"], def: "Play the notes just above and just below a note, then land on it." },
+  { term: "pivot", match: ["pivot"], def: "Barry's word for jumping an octave in the middle of a line, then going on in the same direction." },
+  { term: "triplet", match: ["triplet", "triplets"], def: "Three notes played in the time of two." },
+  { term: "flat 9th", match: ["flat 9th"], def: "The note a half step above the chord's root. On a dominant chord it makes the pull to the next chord stronger." },
+  { term: "root", match: ["the root"], def: "The note a chord is named after. The root of F7 is F." },
+  { term: "melody", match: ["the melody"], def: "The tune itself, the part you would sing. In jazz it's also called the head." },
 ];

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { themeVars } from "@/content";
 import { getLibraryEntry } from "@/content/library";
-import { PARKER_SOLOS, PARKER_TEXT, getParkerSolo, soloMeta } from "@/content/parker";
+import { PARKER_SOLOS, PARKER_TEXT, getParkerSolo, soloFacts, soloKicker } from "@/content/parker";
 import { PARKER_GUIDES } from "@/content/parker-guides";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { glosser } from "@/components/glosser";
@@ -14,7 +14,11 @@ export function generateStaticParams() {
   return PARKER_SOLOS.map((s) => ({ slug: s.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const s = getParkerSolo((await params).slug);
   return s ? { title: `${s.title}: Charlie Parker`, description: s.about } : {};
 }
@@ -23,13 +27,27 @@ function search(q: string) {
   const s = encodeURIComponent(q);
   return [
     { label: "Find on Spotify", href: `https://open.spotify.com/search/${s}` },
-    { label: "Find on YouTube", href: `https://www.youtube.com/results?search_query=${s}` },
+    {
+      label: "Find on YouTube",
+      href: `https://www.youtube.com/results?search_query=${s}`,
+    },
   ];
 }
 
-const FORM = { blues: "Blues", rhythm: "Rhythm changes", indiana: "“Indiana” changes" } as const;
+function Fact({ k, v }: { k: string; v: string }) {
+  return (
+    <>
+      <dt>{k}</dt>
+      <dd>{v}</dd>
+    </>
+  );
+}
 
-export default async function ParkerSoloPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ParkerSoloPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const solo = getParkerSolo((await params).slug);
   if (!solo) notFound();
   const entry = getLibraryEntry("parker");
@@ -37,7 +55,9 @@ export default async function ParkerSoloPage({ params }: { params: Promise<{ slu
   const g = glosser();
   const t = PARKER_TEXT;
   const r = solo.recording;
-  const groups = guide.reduce<{ key: string; label: string; items: typeof guide }[]>((acc, p) => {
+  const groups = guide.reduce<
+    { key: string; label: string; items: typeof guide }[]
+  >((acc, p) => {
     const key = `${p.sec}-${p.chorus}`;
     const label = p.sec === "head" ? "The melody" : `Solo, chorus ${p.chorus}`;
     const last = acc[acc.length - 1];
@@ -52,9 +72,15 @@ export default async function ParkerSoloPage({ params }: { params: Promise<{ slu
     <div className="lib" data-read-all>
       <header className="lib-head" style={themeVars(entry.theme)}>
         <div className="wrap lib-head-in">
-          <Breadcrumbs items={[{ label: "Library", href: "/library" }, { label: "Charlie Parker", href: "/library/parker" }, { label: solo.title }]} />
+          <Breadcrumbs
+            items={[
+              { label: "Library", href: "/library" },
+              { label: "Charlie Parker", href: "/library/parker" },
+              { label: solo.title },
+            ]}
+          />
           <p className="lib-kicker">
-            {FORM[solo.form]} · {soloMeta(solo)}
+            {soloKicker(solo)}
           </p>
           <h1 className="lib-title" {...readable(solo.title)}>
             {solo.title}
@@ -63,8 +89,16 @@ export default async function ParkerSoloPage({ params }: { params: Promise<{ slu
             {g(solo.about)}
           </p>
           <p className="btn-row" data-read-skip>
-            {search(`Charlie Parker ${solo.title.replace(/\s*\(No\. \d\)/, "")}`).map((l) => (
-              <a key={l.href} className="btn small" href={l.href} target="_blank" rel="noreferrer">
+            {search(
+              `Charlie Parker ${solo.title.replace(/\s*\(No\. \d\)/, "")}`,
+            ).map((l) => (
+              <a
+                key={l.href}
+                className="btn small"
+                href={l.href}
+                target="_blank"
+                rel="noreferrer"
+              >
                 {l.label}
               </a>
             ))}
@@ -80,43 +114,39 @@ export default async function ParkerSoloPage({ params }: { params: Promise<{ slu
       <div className="wrap lib-body">
         <LibrarySection title={t.recordTitle}>
           <dl className="facts pk-facts">
-            <dt>Recorded</dt>
-            <dd>{r.date}</dd>
-            <dt>Where</dt>
-            <dd>{r.place}</dd>
-            <dt>Band</dt>
-            <dd>{r.band}</dd>
-            <dt>With</dt>
-            <dd>{r.personnel}</dd>
-            <dt>First issued</dt>
-            <dd>{r.issue}</dd>
-            <dt>Take</dt>
-            <dd>{r.take}</dd>
-            <dt>In your book</dt>
-            <dd>
-              Pages {solo.pages[0]}–{solo.pages[1]}
-            </dd>
+            {soloFacts(solo).map(([k, v]) => (
+              <Fact key={k} k={k} v={v} />
+            ))}
           </dl>
           {r.note && <p className="hint">{r.note}</p>}
         </LibrarySection>
 
-        <LibrarySection title={t.guideTitle} intro={t.guideIntro}>
-          {groups.map((grp) => (
-            <section key={grp.key} className="pk-chorus" aria-label={grp.label}>
-              <h3 className="pk-chorus-title">{grp.label}</h3>
-              <ol className="pk-guide">
-                {grp.items.map((p) => (
-                  <li key={`${p.page}-${p.line}-${p.bar}`}>
-                    <h4 className="pk-where">
-                      Page {p.page}. {p.where}
-                    </h4>
-                    <p>{g(p.text)}</p>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          ))}
-        </LibrarySection>
+        {groups.length > 0 && (
+          <LibrarySection title={t.guideTitle} intro={t.guideIntro}>
+            {groups.map((grp) => (
+              <section
+                key={grp.key}
+                className="pk-chorus"
+                aria-label={grp.label}
+              >
+                <h3 className="pk-chorus-title">{grp.label}</h3>
+                <ol className="pk-guide">
+                  {grp.items.map((p) => (
+                    <li
+                      key={`${p.page}-${p.line}-${p.bar}`}
+                      id={`p${p.page}-${p.line}-${p.bar}`}
+                    >
+                      <h4 className="pk-where">
+                        Page {p.page}. {p.where}
+                      </h4>
+                      <p>{g(p.text)}</p>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ))}
+          </LibrarySection>
+        )}
 
         <LibrarySection title={t.studyTitle} intro={t.studyIntro}>
           <ol className="lib-steps">
@@ -131,7 +161,11 @@ export default async function ParkerSoloPage({ params }: { params: Promise<{ slu
 
         <nav className="pager" aria-label="More Parker solos">
           {prev ? (
-            <Link className="pager-link prev" href={`/library/parker/${prev.slug}`} rel="prev">
+            <Link
+              className="pager-link prev"
+              href={`/library/parker/${prev.slug}`}
+              rel="prev"
+            >
               <span className="pager-dir">Previous solo</span>
               <span className="pager-title">{prev.title}</span>
             </Link>
@@ -139,7 +173,11 @@ export default async function ParkerSoloPage({ params }: { params: Promise<{ slu
             <span />
           )}
           {next ? (
-            <Link className="pager-link next" href={`/library/parker/${next.slug}`} rel="next">
+            <Link
+              className="pager-link next"
+              href={`/library/parker/${next.slug}`}
+              rel="next"
+            >
               <span className="pager-dir">Next solo</span>
               <span className="pager-title">{next.title}</span>
             </Link>

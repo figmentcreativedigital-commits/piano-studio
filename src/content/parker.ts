@@ -930,7 +930,12 @@ export const PARKER_TEXT = {
   guideTitle: "Phrase by phrase",
   guideIntro: "Every phrase Bird plays, in order. Each note was read from the book and checked against Barry's ideas. If the guide and the page ever disagree, trust the page.",
   recordTitle: "The record",
-} as const;
+  habitsTitle: "What Bird does, counted",
+  habitsIntro: (a: { solos: number; notes: number }) =>
+    `Every note of ${a.solos} solos was read from the book and counted. These are his habits on our three tunes.`,
+  conceptsTitle: "Barry's ideas in Bird's playing",
+  conceptsIntro: "Barry Harris built his method on how Bird played. Here is each idea, how often Bird uses it, and where to find it in your book.",
+};
 
 export function soloMeta(s: ParkerSolo): string {
   return `Page ${s.pages[0]} · ${s.key} · ♩ = ${s.tempo}`;
@@ -945,8 +950,29 @@ export function parkerTexts(): string[] {
   const out: string[] = [t.studyTitle, t.studyIntro, t.bookTitle, t.bookIntro, ...t.bookNotes, t.bluesTitle, t.bluesIntro, t.rhythmTitle, t.rhythmIntro, t.indianaTitle, t.indianaIntro, t.guideTitle, t.guideIntro, t.recordTitle];
   for (const s of t.steps) out.push(s.title, s.text);
   for (const s of PARKER_SOLOS) {
-    out.push(s.title, s.about, soloMeta(s), soloRecordLine(s), s.recording.personnel, s.recording.issue, s.recording.take);
+    out.push(s.title, s.about, soloMeta(s), soloKicker(s), soloRecordLine(s));
+    for (const [k, v] of soloFacts(s)) out.push(k, v);
     if (s.recording.note) out.push(s.recording.note);
   }
   return out;
+}
+
+export const FORM_NAME = { blues: "Blues", rhythm: "Rhythm changes", indiana: "“Indiana” changes" } as const;
+
+export function soloKicker(s: ParkerSolo): string {
+  return `${FORM_NAME[s.form]} · ${soloMeta(s)}`;
+}
+
+/** The facts table on a solo page: label and value, in order. */
+export function soloFacts(s: ParkerSolo): [string, string][] {
+  const r = s.recording;
+  return [
+    ["Recorded", r.date],
+    ["Where", r.place],
+    ["Band", r.band],
+    ["With", r.personnel],
+    ["First issued", r.issue],
+    ["Take", r.take],
+    ["In your book", `Pages ${s.pages[0]}–${s.pages[1]}`],
+  ];
 }

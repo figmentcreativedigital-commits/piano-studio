@@ -89,3 +89,10 @@ export const RECORDINGS_CARD = {
 export function getLibraryEntry(id: LibraryId): LibraryEntry {
   return LIBRARY.find((e) => e.id === id)!;
 }
+
+/** Section headings on the Library pages, shared with the narrator. */
+export const LIBRARY_SECTIONS = {
+  lester: { title: "Lester in your lessons", intro: "Each card opens the lesson where you first hear or play it." },
+  barry: { title: "His method in your lessons", intro: "Each card opens the lesson where you first play it." },
+  bach: { title: "Bach in your lessons", intro: "Each card opens the lesson where you first play it." },
+} as const;

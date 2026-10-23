@@ -1,6 +1,6 @@
-import { EXERCISES, LESSONS, PHASES, PROGRAM, SKILLS, VEHICLES, getVehicle } from "@/content";
+import { EXERCISES, LESSONS, PHASES, PROGRAM, SKILLS, VEHICLES, getVehicle, lessonCode } from "@/content";
 import type { Exercise } from "@/content/types";
-import { LIBRARY, LIBRARY_INTRO, LIBRARY_TITLE, RECORDINGS_CARD } from "@/content/library";
+import { LIBRARY, LIBRARY_INTRO, LIBRARY_SECTIONS, LIBRARY_TITLE, RECORDINGS_CARD } from "@/content/library";
 import { bachTexts } from "@/content/bach";
 import { parkerTexts } from "@/content/parker";
 import { METHOD, METHOD_INTRO, METHOD_TITLE, plain } from "@/content/method";
@@ -96,7 +96,10 @@ export const agendaHeading = (minutes?: number) => (minutes ? `The ${minutes}-mi
 export function narrationTexts(): string[] {
   const out: string[] = [NARRATOR_SAMPLE, TUNES_TITLE, TUNES_INTRO, ROADMAP_TITLE, ROADMAP_INTRO, COMPLETE_LINE, agendaHeading(), HOW_TITLE, COMMON_MISTAKES];
   out.push(LIBRARY_TITLE, LIBRARY_INTRO, RECORDINGS_CARD.name, RECORDINGS_CARD.blurb);
-  for (const e of LIBRARY) out.push(e.name, e.blurb, e.intro);
+  for (const e of LIBRARY) out.push(e.name, e.blurb, e.intro, e.kicker);
+  for (const x of Object.values(LIBRARY_SECTIONS)) out.push(x.title, x.intro);
+  for (const e of EXERCISES) if (e.subtitle) out.push(e.subtitle);
+  for (const l of LESSONS) out.push(`First in ${lessonCode(l)}, ${l.title}`);
   out.push(...bachTexts(), ...parkerTexts(), "Bach in your lessons", "Each card opens the lesson where you first play it.");
   const starts = new Set(Object.values(PROGRAM.schedule).map((s) => s.start));
   for (const l of LESSONS) {
