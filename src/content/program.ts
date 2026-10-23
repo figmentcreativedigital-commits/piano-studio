@@ -96,12 +96,12 @@ export const PHASES: Phase[] = [
     tunes: [
       { vehicle: "blues", text: "F blues, two choruses, hands taking turns." },
       { vehicle: "minor-blues", text: "C minor blues: guide tones, and Cm6–B° movement on bars 1–4." },
-      { vehicle: "indiana", text: "Bars 1–8 in left-hand guide tones." },
+      { vehicle: "indiana", text: "Bars 1–8 in left-hand guide tones; the first phrase of Lester's 1942 second solo by ear, in A♭." },
       { vehicle: "rhythm", text: "The bridge in left-hand guide tones." },
     ],
     bach: ["Invention No. 1, BWV 772: mm. 1–4, each hand alone, then m. 1 hands together"],
     technique: ["Arm-weight touch", "Thumb travel in the right hand", "Light left-hand shapes with fingers 2–5"],
-    ear: ["Sing then play", "Lester Young, “Oh, Lady Be Good!” (1936), first phrases, in G and moved to F", "Lester Young, “Indiana” (1942)", "Chord quality by ear: sixth or diminished"],
+    ear: ["Sing then play", "Lester Young, “Oh, Lady Be Good!” (1936), first phrases, in G and moved to F", "Lester Young, “Indiana” (1942, with Nat King Cole): the first phrase of his second solo, in A♭", "Chord quality by ear: sixth or diminished"],
     milestone: {
       id: "M1",
       week: 3,
@@ -112,7 +112,7 @@ export const PHASES: Phase[] = [
         "C minor blues: one chorus of left-hand guide tones with the play-along at ♩ = 72.",
         "“Indiana” bars 1–8 and the Rhythm bridge: left-hand guide tones with the play-along at ♩ = 66.",
         "Bach, Invention No. 1, mm. 1–4, each hand alone at ♩ = 50, three clean runs.",
-        "Sing and then play Lester's first two phrases by ear, in G and in F.",
+        "Sing and then play Lester's first two phrases of “Oh, Lady Be Good!” by ear, in G and in F. Sing the first phrase of his second solo on “Indiana” (1942) with the record.",
       ],
     },
   },

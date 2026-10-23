@@ -157,7 +157,7 @@ export const VEHICLES: Vehicle[] = [
     form: "32 bars, ABAC",
     tempo: 66,
     summary:
-      "Bebop's favorite standard to rewrite. Charlie Parker's “Donna Lee” is a new line on these changes, in A♭, and Bud Powell is the pianist on its first recording. Lester Young recorded “Indiana” more than once. Learn the changes in F first, then move them to A♭.",
+      "Bebop's favorite standard to rewrite. Charlie Parker's “Donna Lee” is a new line on these changes, in A♭, and Bud Powell is the pianist on its first recording. Lester Young's 1942 trio record with Nat King Cole, the reference for his playing on this tune, is in A♭ too. Learn the changes in F first, then move them to A♭, where Lester and Bird play them.",
     chart: [
       { mark: "A", bars: ["F6", "D7", "G7", "G7", "Gm7", "C7", "F6", "Cm7 F7"] },
       { mark: "B", bars: ["Bb6", "Eb7", "F6", "D7", "G7", "G7", "Gm7", "C7"] },
@@ -170,16 +170,24 @@ export const VEHICLES: Vehicle[] = [
       abcKey: "Ab",
       steps: 2,
       semitones: 3,
-      note: "The same changes up a minor third, in A♭: the key of “Donna Lee”, and the key the Barry Book uses for “Indiana”.",
+      note: "The same changes up a minor third, in A♭: the key of “Donna Lee”, of Lester Young's 1942 “Indiana”, and of the Barry Book's chart.",
     },
     uses: [
-      { phase: "P1", text: "F6 movement over the opening bar (Week 1, Friday), then the D7–G7–C7 chain in the left hand (Week 3)." },
+      { phase: "P1", text: "F6 movement over the opening bar (Week 1, Friday). Week 3: the D7–G7–C7 chain in the left hand, and the first phrase of Lester's second solo (1942) by ear, in A♭." },
       { phase: "P2", text: "The whole form in guide tones; Harris lines over the chain of dominants; the minor ii–V (Em7♭5 to A7) into D minor." },
       { phase: "P3", text: "The “Donna Lee” head by ear, a section at a time, from the 1947 record with Bud Powell on piano." },
       { phase: "P4", text: "Solo piano: the “Indiana” melody over guide tones, then a chorus." },
     ],
     family: ["“Donna Lee” (Charlie Parker, 1947, in A♭)"],
     recordings: [
+      {
+        artist: "Lester Young Trio",
+        title: "Indiana",
+        recorded: "July 1942, Los Angeles (Philo)",
+        detail: "With Nat King Cole and Red Callender. Lester states the tune, Cole solos, then Lester returns, and that second solo is the reference here. In A♭, the key of “Donna Lee” (measured from the recording).",
+        note: "Week 3: sing the first phrase of the second solo with the record, then find it in A♭. Lester also recorded the tune in 1944 (Savoy) and with Oscar Peterson in 1952.",
+        sourceUrl: "https://adp.library.ucsb.edu/index.php/objects/refer/421212",
+      },
       {
         artist: "Bud Powell Trio",
         title: "Indiana",
@@ -195,14 +203,6 @@ export const VEHICLES: Vehicle[] = [
         detail: "With Bud Powell, Tommy Potter and Max Roach. The line on these changes, in A♭.",
         note: "Sing the first four bars of the head until you can hold it without the record.",
         sourceUrl: "https://www.jazzdisco.org/bud-powell/catalog/",
-      },
-      {
-        artist: "Lester Young Trio",
-        title: "Indiana",
-        recorded: "July 1942, Los Angeles (Philo)",
-        detail: "With Nat King Cole and Red Callender. Lester states the tune, Cole solos, then Lester comes back.",
-        note: "Lester also recorded it in 1944 (Savoy) and with Oscar Peterson in 1952.",
-        sourceUrl: "https://adp.library.ucsb.edu/index.php/objects/refer/421212",
       },
     ],
     theme: { bg: "navy", ink: "white", acc: "cyan", field: "cyan" },
