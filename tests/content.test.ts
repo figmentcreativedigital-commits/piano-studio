@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { EXERCISES, LESSONS, PROGRAM, SKILLS, getExercise } from "@/content";
 import { barLength, splitRaw } from "@/lib/abc-check";
@@ -141,5 +142,17 @@ describe("chord spelling", () => {
     expect(midiOf("Ab4")).toBe(68);
     expect(midiOf("Eb3")).toBe(51);
     expect(midiOf("B3")).toBe(59);
+  });
+});
+
+describe("internal links", () => {
+  it("every exercise link points at a page that exists", () => {
+    const routes = new Set(["/", "/lessons", "/tunes", "/roadmap", "/listening", "/progress", "/method", "/check-in"]);
+    for (const e of EXERCISES) {
+      if (!e.link) continue;
+      const href = e.link.href.split("#")[0].split("?")[0];
+      const ok = routes.has(href) || existsSync(`public${href}`) || /^\/(lessons|session)\/W\d\dD\d\d$/.test(href);
+      expect(ok, `${e.id} → ${e.link.href}`).toBe(true);
+    }
   });
 });

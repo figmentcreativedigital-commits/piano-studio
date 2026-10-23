@@ -836,7 +836,7 @@ export const EXERCISES_W01: Exercise[] = [
     check: "Summary sent.",
     easier: "Tasks 1, 2 and 4 only.",
     skills: [],
-    link: { label: "Open the baseline", href: "/baseline" },
+    link: { label: "Open the baseline", href: "/baseline.html" },
   },
   {
     id: "review-w01",
