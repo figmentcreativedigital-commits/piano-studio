@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Piano Baseline Session</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@400;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: one lesson-book column under a sticky metronome strip; one task at a time; notation and keyboards sit on "paper" cards that stay light in both themes, like a lit music desk. */
+:root {
+  --bg: #E9ECEF;
+  --surface: #FFFFFF;
+  --surface-2: #F3F5F7;
+  --ink: #111418;
+  --muted: #56606D;
+  --line: #CDD3DA;
+  --paper: #FFFFFF;
+  --paper-ink: #0E1012;
+  --paper-line: #D6D9DD;
+  --rh: #2347C5;
+  --lh: #B4500C;
+  --mark-rh: #2347C5;
+  --mark-lh: #B4500C;
+  --mark-neutral: #3A3F46;
+  --hl: #2347C5;
+  --key-white: #FFFFFF;
+  --key-black: #17191C;
+  --focus: #2347C5;
+  --ok: #1F7346;
+  --stop: #B42318;
+  --btn-bg: #111418;
+  --btn-ink: #FFFFFF;
+  --font-display: "Libre Franklin", "Franklin Gothic Medium", "Arial Narrow", system-ui, sans-serif;
+  --font-ui: "Libre Franklin", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1013; --surface: #161A1F; --surface-2: #1D2228; --ink: #E7EAEE; --muted: #9CA5B0; --line: #2C333C;
+    --paper: #F5F4F0; --paper-ink: #0E1012; --paper-line: #D6D6D0;
+    --rh: #93ABFF; --lh: #FF9F5E; --focus: #93ABFF; --ok: #5CC28C; --stop: #FF6F61;
+    --btn-bg: #E7EAEE; --btn-ink: #0D1013; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1013; --surface: #161A1F; --surface-2: #1D2228; --ink: #E7EAEE; --muted: #9CA5B0; --line: #2C333C;
+  --paper: #F5F4F0; --paper-ink: #0E1012; --paper-line: #D6D6D0;
+  --rh: #93ABFF; --lh: #FF9F5E; --focus: #93ABFF; --ok: #5CC28C; --stop: #FF6F61;
+  --btn-bg: #E7EAEE; --btn-ink: #0D1013; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 920px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Header */
+.masthead { padding-block: 28px 24px; display: grid; gap: 14px; }
+.masthead > * { margin: 0; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+h1 { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; font-size: clamp(42px, 9vw, 88px); line-height: .88; letter-spacing: -.015em; margin: 0; text-wrap: balance; }
+h1 span { display: block; font-weight: 300; font-size: .42em; letter-spacing: .02em; line-height: 1.1; margin-top: .25em; text-transform: none; }
+.lead { max-width: 62ch; margin: 0; font-size: 18px; }
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); }
+.legend div { padding: 10px 14px 10px 0; font-family: var(--font-ui); font-size: 14px; line-height: 1.35; min-width: 0; }
+.legend b { display: block; font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.hand-rh { color: var(--rh); font-weight: 700; }
+.hand-lh { color: var(--lh); font-weight: 700; }
+.stoprule { font-family: var(--font-ui); font-size: 14px; background: var(--surface); border-left: 4px solid var(--stop); padding: 10px 14px; max-width: 70ch; }
+
+/* Sticky metronome strip */
+.transport { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: var(--surface); border-block: 1px solid var(--line); }
+.transport .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding-block: 8px; }
+.t-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.beats { display: flex; gap: 6px; }
+.beats i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line); display: block; }
+.beats i.on { background: var(--ink); border-color: var(--ink); }
+.beats i.on.accent { background: var(--rh); border-color: var(--rh); }
+.tempo { display: flex; align-items: center; gap: 4px; font-family: var(--font-ui); }
+.tempo output, .tempo input { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 22px; font-weight: 500; width: 4.2ch; text-align: center; background: transparent; border: none; padding: 0; -moz-appearance: textfield; appearance: textfield; }
+.tempo input::-webkit-inner-spin-button, .tempo input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.tempo .note { font-size: 20px; }
+.status { font-family: var(--font-ui); font-size: 14px; color: var(--muted); min-width: 12ch; }
+
+.btn { font-family: var(--font-ui); font-weight: 700; font-size: 15px; min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 4px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; touch-action: manipulation; }
+.btn:hover { background: var(--surface-2); }
+.btn.primary { background: var(--btn-bg); color: var(--btn-ink); border-color: var(--btn-bg); }
+.btn.primary:hover { filter: brightness(1.15); }
+.btn.small { min-height: 36px; min-width: 36px; padding: 0 10px; font-size: 14px; }
+.btn.icon { padding: 0; width: 44px; font-size: 20px; }
+.seg { display: inline-flex; border: 1.5px solid var(--ink); border-radius: 4px; overflow: hidden; }
+.seg button { font-family: var(--font-ui); font-weight: 600; font-size: 14px; min-height: 41px; padding: 0 12px; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+.seg button + button { border-left: 1.5px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--btn-bg); color: var(--btn-ink); }
+
+/* Task navigation */
+.tasknav { padding-block: 18px 6px; }
+.tasknav ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.tasknav button { font-family: var(--font-ui); font-size: 14px; font-weight: 600; min-height: 40px; padding: 0 12px 0 10px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.tasknav button .n { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.tasknav button .dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--line); }
+.tasknav button.done .dot { background: var(--ok); border-color: var(--ok); }
+.tasknav button[aria-current="step"] { border-color: var(--ink); background: var(--btn-bg); color: var(--btn-ink); }
+.tasknav button[aria-current="step"] .n { color: inherit; opacity: .75; }
+
+/* Task panel */
+.task { padding-block: 14px 8px; display: grid; gap: 18px; }
+.task-head { display: grid; gap: 6px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+.task-meta { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+h2 { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 5vw, 40px); line-height: 1.05; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h3 { font-family: var(--font-ui); font-weight: 800; font-size: 17px; margin: 0; letter-spacing: .01em; }
+.checks { margin: 0; max-width: 66ch; color: var(--muted); }
+.checks strong { color: var(--ink); font-weight: 600; }
+.steps { margin: 0; padding-left: 1.4em; max-width: 66ch; display: grid; gap: 6px; }
+.steps li::marker { font-family: var(--font-mono); font-size: .85em; color: var(--muted); }
+.note-line { font-size: 15px; color: var(--muted); max-width: 66ch; margin: 0; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.cols > * { min-width: 0; }
+
+.exercise { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; display: grid; gap: 0; overflow: hidden; }
+.ex-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 12px 14px 10px; }
+.ex-id { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--muted); }
+.ex-title { font-family: var(--font-ui); font-weight: 700; font-size: 16px; }
+.ex-sub { font-family: var(--font-ui); font-size: 14px; color: var(--muted); }
+.paper { background: var(--paper); color: var(--paper-ink); border-block: 1px solid var(--paper-line); padding: 6px 8px; position: relative; min-width: 0; }
+.score { min-height: 60px; }
+.score svg { display: block; max-width: 100%; }
+.score .abcjs-chord { font-family: var(--font-display); font-weight: 700; }
+.score .abcjs-annotation { font-family: var(--font-ui); font-weight: 700; }
+.score .abcjs-bar-number { font-family: var(--font-body); font-style: italic; }
+.score .abcjs-tempo, .score .abcjs-tempo text { font-family: var(--font-ui); }
+.score .is-on { color: var(--hl); fill: var(--hl); }
+.paper.hidden-notes .score svg { visibility: hidden; }
+.veil { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 12px; text-align: center; font-family: var(--font-ui); font-size: 15px; }
+.paper.hidden-notes .veil { display: flex; }
+.veil .btn { border-color: var(--paper-ink); color: var(--paper-ink); background: var(--paper); }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 10px 14px 12px; }
+.controls .tempo output, .controls .tempo input { font-size: 18px; }
+.ctl-label { font-family: var(--font-ui); font-size: 13px; color: var(--muted); }
+.toggle { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 14px; min-height: 44px; cursor: pointer; }
+.toggle input { width: 20px; height: 20px; accent-color: var(--ink); }
+
+.kbd { padding: 10px 8px 6px; overflow-x: auto; }
+.kbd svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.kbd-cap { font-family: var(--font-ui); font-size: 13px; padding: 0 6px 8px; color: var(--paper-ink); opacity: .75; }
+
+/* Self-assessment */
+.rubric { display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; }
+.rubric > h3 { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.rubric > h3 small { font-weight: 400; font-size: 13px; color: var(--muted); font-family: var(--font-ui); }
+fieldset.q { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; min-width: 0; }
+fieldset.q legend { font-family: var(--font-ui); font-size: 15px; font-weight: 600; padding: 0; margin-bottom: 6px; }
+.opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.opt span { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 12px; border: 1.5px solid var(--line); border-radius: 4px; font-family: var(--font-ui); font-size: 14px; line-height: 1.25; background: var(--surface); }
+.opt input:checked + span { background: var(--btn-bg); color: var(--btn-ink); border-color: var(--btn-bg); }
+.opt input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.opt:hover span { border-color: var(--ink); }
+.field { display: grid; gap: 6px; }
+.field label { font-family: var(--font-ui); font-size: 15px; font-weight: 600; }
+.field .hint { font-family: var(--font-ui); font-size: 13px; color: var(--muted); font-weight: 400; }
+textarea, input[type="text"], input[type="number"].plain { width: 100%; border: 1.5px solid var(--line); border-radius: 4px; background: var(--surface); padding: 10px 12px; font-family: var(--font-ui); font-size: 15px; line-height: 1.4; }
+textarea { min-height: 74px; resize: vertical; }
+.inline-num { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 14px; color: var(--muted); }
+.inline-num input { width: 5.5ch; border: 1.5px solid var(--line); border-radius: 4px; background: var(--surface); padding: 6px 8px; font-family: var(--font-mono); font-size: 15px; text-align: center; color: var(--ink); }
+
+.pager { display: flex; justify-content: space-between; gap: 10px; padding-block: 18px 28px; border-top: 1px solid var(--line); margin-top: 8px; flex-wrap: wrap; }
+.results { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 14px; margin: 0; max-height: 420px; overflow: auto; }
+.copied { font-family: var(--font-ui); font-size: 14px; color: var(--ok); min-height: 1.4em; }
+.footnote { font-family: var(--font-ui); font-size: 13px; color: var(--muted); max-width: 70ch; margin: 0; }
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .transport .wrap { gap: 8px 10px; }
+  .status { flex-basis: 100%; order: 9; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0}</style>
+</head>
+<body>
+<p style="font-family:system-ui;font-size:14px;padding:10px max(16px,env(safe-area-inset-left,0px));margin:0"><a href="/">Back to Woodshed</a></p>
+
+
+<header class="wrap masthead">
+  <div class="eyebrow"><span>Piano Studio</span><span>Session D0</span><span>About 20 minutes</span></div>
+  <h1>Baseline<span>Reading, pulse, coordination, touch and recall</span></h1>
+  <p class="lead">Six short tasks at the piano. None of them test speed or stamina. Each one shows me something specific about what your hands can do today, so the first week's lessons start at the right level. Rate each task honestly, then send me the summary on the last tab.</p>
+  <div class="legend" role="list">
+    <div role="listitem"><b>Octaves</b>Middle C is <strong>C4</strong>. C3 is the octave below, C5 the octave above.</div>
+    <div role="listitem"><b>Fingers</b>Numbers in the music are fingers: thumb = 1, little finger = 5. They are never scale degrees.</div>
+    <div role="listitem"><b>Hands</b><span class="hand-rh">Blue = right hand</span>, <span class="hand-lh">orange = left hand</span> on the keyboard diagrams.</div>
+    <div role="listitem"><b>Sound</b>Playback uses a simple synthesized tone. It shows rhythm and pitch, not piano sound.</div>
+  </div>
+  <p class="stoprule"><strong>Stop rule.</strong> Pain, numbness or strain ends that task. Skip it, note where you felt it, and move on. <strong>Left hand:</strong> the left thumb rests on the key surface and doesn't play; any ache at the base of the thumb means right hand only for the rest of the session.</p>
+</header>
+
+<div class="transport" id="transport">
+  <div class="wrap">
+    <span class="t-label">Click</span>
+    <div class="beats" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="tempo">
+      <button class="btn small icon" type="button" id="mt-down" aria-label="Slower">−</button>
+      <span class="note" aria-hidden="true">♩=</span>
+      <input id="mt-tempo" type="number" min="30" max="220" value="72" inputmode="numeric" aria-label="Metronome tempo, quarter notes per minute">
+      <button class="btn small icon" type="button" id="mt-up" aria-label="Faster">+</button>
+    </div>
+    <div class="seg" role="group" aria-label="Click pattern">
+      <button type="button" data-mode="every" aria-pressed="true">Every beat</button>
+      <button type="button" data-mode="twofour" aria-pressed="false">2 &amp; 4</button>
+      <button type="button" data-mode="gap" aria-pressed="false">4 on, 4 off</button>
+    </div>
+    <button class="btn primary" type="button" id="mt-toggle" aria-pressed="false">Start click</button>
+    <span class="status" id="mt-status" aria-live="polite">Stopped</span>
+  </div>
+</div>
+
+<main class="wrap">
+  <nav class="tasknav" aria-label="Tasks">
+    <ol id="tasknav"></ol>
+  </nav>
+
+  <!-- 0 SETUP -->
+  <section class="task" data-task="setup" aria-labelledby="h-setup">
+    <div class="task-head">
+      <div class="task-meta">Task 0 · 2 min · Not scored</div>
+      <h2 id="h-setup">Sit, settle, and find your reach</h2>
+      <p class="checks"><strong>What this tells me:</strong> how far your right hand opens comfortably, which decides how wide the first right-hand voicings can be. The left hand skips this check; its shapes stay within a fourth for now.</p>
+    </div>
+    <ol class="steps">
+      <li>Sit on the front half of the bench, centered around D4 or E4, feet flat. Forearms roughly level with the keys, elbows a little in front of your body.</li>
+      <li>Let your arms hang, then bring your hands to the keys in the shape they had at your sides. Curved, not clawed.</li>
+      <li><span class="hand-rh">Right hand:</span> thumb on C4. Without stretching hard, see which of the marked keys your little finger covers easily.</li>
+      <li><span class="hand-lh">Left hand:</span> no reach test. Rest it on C3–F3 with fingers 5-4-3-2 and notice whether anything aches at rest.</li>
+    </ol>
+    <div class="cols">
+      <div class="exercise"><div class="ex-head"><span class="ex-title">Right-hand reach</span><span class="ex-sub">thumb on C4</span></div><div class="paper"><div class="kbd" data-kbd="reachRH"></div></div></div>
+      <div class="exercise"><div class="ex-head"><span class="ex-title">Left-hand resting position</span><span class="ex-sub">fingers 5-4-3-2, thumb off</span></div><div class="paper"><div class="kbd" data-kbd="restLH"></div></div></div>
+    </div>
+    <div class="rubric">
+      <h3>How it went</h3>
+      <div data-q="setup.rh"></div>
+      <div data-q="setup.lh"></div>
+      <div data-q="setup.seat"></div>
+    </div>
+  </section>
+
+  <!-- 1 PULSE -->
+  <section class="task" data-task="pulse" aria-labelledby="h-pulse" hidden>
+    <div class="task-head">
+      <div class="task-meta">Task 1 · 3 min · Pulse</div>
+      <h2 id="h-pulse">Keep time when the click goes away</h2>
+      <p class="checks"><strong>What this tells me:</strong> whether your time is internal or leans on the click, and how natural 2 and 4 feel under your hands. Your guitar time should carry over; this checks that it does at the keyboard.</p>
+    </div>
+    <p class="note-line">All three use <span class="hand-rh">right-hand finger 3 on C4</span>. Play from the key surface with a loose wrist. Volume doesn't matter.</p>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">1a</span><span class="ex-title">Gap click</span><span class="ex-sub">♩ = 72 · 4 bars of click, 4 bars silent, repeating</span></div>
+      <div class="paper"><div class="score" data-ex="p1a"></div></div>
+      <div class="controls"><button class="btn primary" type="button" data-preset="72|gap">Start this click</button><span class="ctl-label">Play quarter notes through two full cycles. Listen for where you land when the click returns.</span></div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">1b</span><span class="ex-title">Click on 2 and 4</span><span class="ex-sub">♩ = 96 · count 1 2 3 4 aloud for the first bar</span></div>
+      <div class="paper"><div class="score" data-ex="p1b"></div></div>
+      <div class="controls"><button class="btn primary" type="button" data-preset="96|twofour">Start this click</button><span class="ctl-label">Quarter notes for 16 bars. The clicks are the backbeat.</span></div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">1c</span><span class="ex-title">Swung eighths on one note</span><span class="ex-sub">♩ = 96 · click on 2 and 4</span></div>
+      <div class="paper"><div class="score" data-ex="p1c"></div></div>
+      <div class="controls" data-player="p1c"></div>
+      <p class="note-line" style="padding: 0 14px 12px">Written as straight eighths, played swung, as in any big-band part marked "Swing." Use the same click as 1b. Hear it first if you like.</p>
+    </div>
+    <div class="rubric">
+      <h3>How it went</h3>
+      <div data-q="pulse.gap"></div>
+      <div data-q="pulse.24"></div>
+      <div data-q="pulse.swing"></div>
+    </div>
+  </section>
+
+  <!-- 2 HANDS -->
+  <section class="task" data-task="hands" aria-labelledby="h-hands" hidden>
+    <div class="task-head">
+      <div class="task-meta">Task 2 · 4 min · Coordination</div>
+      <h2 id="h-hands">Four fingers, each hand, then both</h2>
+      <p class="checks"><strong>What this tells me:</strong> finger evenness (especially 4 and 5), where tension shows up, and whether your hands stay together. Parallel motion uses different fingers in each hand at the same moment, which is the harder of the two. Both patterns use four fingers per hand, so the left thumb never plays.</p>
+    </div>
+    <ol class="steps">
+      <li>Click on every beat at ♩ = 72. One note per click.</li>
+      <li>2a right hand alone, twice. Then left hand alone, twice. Then hands together, twice.</li>
+      <li>2b hands together, twice. The left hand starts with finger 2 and walks down.</li>
+      <li>2c only if 2a felt easy: eighth notes at ♩ = 60.</li>
+      <li>Stop after two clean passes, or as soon as it stops feeling easy.</li>
+    </ol>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">2a</span><span class="ex-title">Parallel motion</span><span class="ex-sub">an octave apart · left thumb off · ♩ = 72</span></div>
+      <div class="paper"><div class="score" data-ex="h2a"></div><div class="kbd" data-kbd="parallel"></div></div>
+      <div class="controls" data-player="h2a"></div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">2b</span><span class="ex-title">Contrary motion</span><span class="ex-sub">right thumb on C4, left finger 2 on C3 · ♩ = 72</span></div>
+      <div class="paper"><div class="score" data-ex="h2b"></div><div class="kbd" data-kbd="contrary"></div></div>
+      <div class="controls" data-player="h2b"></div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">2c</span><span class="ex-title">Parallel motion in eighths</span><span class="ex-sub">optional · ♩ = 60</span></div>
+      <div class="paper"><div class="score" data-ex="h2c"></div></div>
+      <div class="controls" data-player="h2c"></div>
+    </div>
+    <div class="rubric">
+      <h3>How it went <small>Even = equal volume and spacing; tense = gripping, wrist or forearm tightening</small></h3>
+      <div data-q="hands.rh"></div>
+      <div data-q="hands.lh"></div>
+      <div data-q="hands.par"></div>
+      <div data-q="hands.con"></div>
+      <div data-q="hands.eighths"></div>
+      <div class="field"><label for="n-hands">Fingers or spots that felt weak or tight <span class="hint">optional</span></label><textarea id="n-hands" data-note="notes.hands" placeholder="e.g. LH 4 lifts early; right forearm tightens in 2a together"></textarea></div>
+    </div>
+  </section>
+
+  <!-- 3 BALANCE -->
+  <section class="task" data-task="balance" aria-labelledby="h-balance" hidden>
+    <div class="task-head">
+      <div class="task-meta">Task 3 · 3 min · Touch and balance</div>
+      <h2 id="h-balance">Melody over a held left hand</h2>
+      <p class="checks"><strong>What this tells me:</strong> whether you can already voice a melody above an accompaniment, and how holding a light left-hand shape feels. Balance is the first thing that makes simple piano sound like music.</p>
+    </div>
+    <ol class="steps">
+      <li>Left hand alone: play and hold each two-note shape for its full value with fingers 5 and 2. Notice whether your hand grips while holding.</li>
+      <li>Hands together at an even <em>mezzo-forte</em>.</li>
+      <li>Again with the melody forward: right hand singing, left hand <em>pianissimo</em> underneath. Weight into the right-hand keys; the left hand barely goes down.</li>
+      <li>Optional: reverse it. Left hand clearly louder, melody soft.</li>
+    </ol>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">3</span><span class="ex-title">Melody over guide tones</span><span class="ex-sub">original study · ♩ = 72 · no pedal</span></div>
+      <div class="paper"><div class="score" data-ex="b3"></div></div>
+      <div class="controls" data-player="b3"></div>
+      <p class="note-line" style="padding: 0 14px 12px">Playback demonstrates the target balance, with the left hand at about half the right hand's level. The left hand plays guide tones in close position: E and A (3rd and 6th) for C6, F and B (7th and 3rd) for G7. Each moves by step into the next. Barry Harris's own voicings come later in the course.</p>
+    </div>
+    <div class="cols">
+      <div class="exercise"><div class="ex-head"><span class="ex-title">C6 guide tones + right-hand position</span><span class="ex-sub">bars 1, 3 and 4 (beats 3–4)</span></div><div class="paper"><div class="kbd" data-kbd="shellC6"></div></div></div>
+      <div class="exercise"><div class="ex-head"><span class="ex-title">G7 guide tones</span><span class="ex-sub">bar 2 and bar 4 (beats 1–2)</span></div><div class="paper"><div class="kbd" data-kbd="shellG7"></div></div></div>
+    </div>
+    <div class="rubric">
+      <h3>How it went</h3>
+      <div data-q="bal.forward"></div>
+      <div data-q="bal.hold"></div>
+      <div data-q="bal.reverse"></div>
+    </div>
+  </section>
+
+  <!-- 4 READING -->
+  <section class="task" data-task="reading" aria-labelledby="h-reading" hidden>
+    <div class="task-head">
+      <div class="task-meta">Task 4 · 5 min · Reading</div>
+      <h2 id="h-reading">Read it once, keep going</h2>
+      <p class="checks"><strong>What this tells me:</strong> your reading speed in each clef and with both hands, which sets how much of each lesson I write out versus teach by ear.</p>
+    </div>
+    <ol class="steps">
+      <li>Pick a tempo slow enough that you won't need to stop, even ♩ = 40. Set it on the click strip.</li>
+      <li>Count one bar in, then play each excerpt <strong>once</strong>. Keep the pulse going through mistakes, and look a beat ahead.</li>
+      <li>Rate it and note the tempo you used. Then hear it if you want to check.</li>
+      <li>Stop at the first excerpt that feels like decoding. That tells me what I need to know.</li>
+    </ol>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">4a</span><span class="ex-title">Treble clef, right hand</span><span class="ex-sub">C major · quarters and halves</span></div>
+      <div class="paper"><div class="score" data-ex="r4a"></div></div>
+      <div class="controls" data-player="r4a"></div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">4b</span><span class="ex-title">Bass clef, left hand</span><span class="ex-sub">F major</span></div>
+      <div class="paper"><div class="score" data-ex="r4b"></div></div>
+      <div class="controls" data-player="r4b"></div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">4c</span><span class="ex-title">Treble clef, eighth notes</span><span class="ex-sub">B♭ major · one accidental · play straight</span></div>
+      <div class="paper"><div class="score" data-ex="r4c"></div></div>
+      <div class="controls" data-player="r4c"></div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">4d</span><span class="ex-title">Hands together</span><span class="ex-sub">G major</span></div>
+      <div class="paper"><div class="score" data-ex="r4d"></div></div>
+      <div class="controls" data-player="r4d"></div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">4e</span><span class="ex-title">Ceiling check: Bach, Invention No. 1 in C major, BWV 772, mm. 1–2</span><span class="ex-sub">optional · right hand first · ♩ = 50 or slower</span></div>
+      <div class="paper"><div class="score" data-ex="r4e"></div></div>
+      <div class="controls" data-player="r4e"></div>
+      <p class="note-line" style="padding: 0 14px 12px">Bach's notes as they appear in the Peters edition you sent, with ornaments, fingerings and editorial markings left off. The ♩ = 50 is a practice tempo, not Bach's; his manuscript gives no tempo. If the right hand is comfortable, try m. 1 hands together; the left hand enters on beat 3 and needs no thumb (fingers 5-4-3-2-4-3-5).</p>
+    </div>
+    <div class="rubric">
+      <h3>How it went</h3>
+      <div data-q="read.a" data-tempo="60"></div>
+      <div data-q="read.b" data-tempo="60"></div>
+      <div data-q="read.c" data-tempo="60"></div>
+      <div data-q="read.d" data-tempo="60"></div>
+      <div data-q="read.e" data-tempo="50"></div>
+    </div>
+  </section>
+
+  <!-- 5 EARS -->
+  <section class="task" data-task="ears" aria-labelledby="h-ears" hidden>
+    <div class="task-head">
+      <div class="task-meta">Task 5 · 3 min · Ear to keys</div>
+      <h2 id="h-ears">Hear it, sing it, find it</h2>
+      <p class="checks"><strong>What this tells me:</strong> how quickly what you hear turns into the right keys. On guitar that path is well worn. On piano it has to be rebuilt, and how far along it is decides how much I teach by ear.</p>
+    </div>
+    <ol class="steps">
+      <li>Play the phrase twice. Notes stay hidden.</li>
+      <li>Sing it back once.</li>
+      <li>Find it on the keyboard from the marked starting note, right hand, in time if you can.</li>
+      <li>Then reveal the notes to check.</li>
+    </ol>
+    <div class="cols">
+      <div class="exercise">
+        <div class="ex-head"><span class="ex-id">5a</span><span class="ex-title">Phrase A</span><span class="ex-sub">starts on E4 · ♩ = 80</span></div>
+        <div class="paper hidden-notes" id="veil-e5a"><div class="score" data-ex="e5a"></div><div class="veil"><span>Notes hidden</span><button class="btn small" type="button" data-reveal="veil-e5a">Show notes</button></div></div>
+        <div class="paper"><div class="kbd" data-kbd="startE4"></div></div>
+        <div class="controls" data-player="e5a"></div>
+      </div>
+      <div class="exercise">
+        <div class="ex-head"><span class="ex-id">5b</span><span class="ex-title">Phrase B</span><span class="ex-sub">starts on C5 · swing · ♩ = 104</span></div>
+        <div class="paper hidden-notes" id="veil-e5b"><div class="score" data-ex="e5b"></div><div class="veil"><span>Notes hidden</span><button class="btn small" type="button" data-reveal="veil-e5b">Show notes</button></div></div>
+        <div class="paper"><div class="kbd" data-kbd="startC5"></div></div>
+        <div class="controls" data-player="e5b"></div>
+      </div>
+    </div>
+    <div class="exercise">
+      <div class="ex-head"><span class="ex-id">5c</span><span class="ex-title">A tune you already know</span><span class="ex-sub">right hand · its usual key</span></div>
+      <p class="note-line" style="padding: 0 14px 14px">Play the first four bars of a head you know well by ear, such as a blues head you've played on guitar. No looking it up first.</p>
+    </div>
+    <div class="rubric">
+      <h3>How it went</h3>
+      <div data-q="ear.a"></div>
+      <div data-q="ear.asing"></div>
+      <div data-q="ear.b"></div>
+      <div data-q="ear.bsing"></div>
+      <div data-q="ear.tune"></div>
+      <div class="field"><label for="n-tune">Which tune?</label><input type="text" id="n-tune" data-note="ear.tuneName" placeholder="e.g. Sonnymoon for Two"></div>
+    </div>
+  </section>
+
+  <!-- 6 SEND -->
+  <section class="task" data-task="send" aria-labelledby="h-send" hidden>
+    <div class="task-head">
+      <div class="task-meta">Task 6 · Wrap-up</div>
+      <h2 id="h-send">Answer six questions and send it</h2>
+      <p class="checks"><strong>What happens next:</strong> I set your baseline, write the 12-week roadmap and the first seven lessons, and put the sessions on your calendar.</p>
+    </div>
+    <div class="rubric">
+      <h3>Over the whole session</h3>
+      <div data-q="comfort"></div>
+      <div class="field"><label for="n-play">Anything you can play now <span class="hint">pieces, a blues, voicings, chord-melody</span></label><textarea id="n-play" data-note="play.now"></textarea></div>
+      <div class="field"><label for="n-gen">Anything else you noticed <span class="hint">optional</span></label><textarea id="n-gen" data-note="notes.general"></textarea></div>
+    </div>
+    <div class="rubric">
+      <h3>The six questions <small>Short answers are fine. You can also answer in chat.</small></h3>
+      <div class="field"><label for="i1">1 · Instrument and devices</label><span class="hint">Acoustic or digital (make and model), weighted action, which pedals. What sits at the piano: iPad, laptop? Can the piano connect by USB-MIDI?</span><textarea id="i1" data-note="intake.1"></textarea></div>
+      <div class="field"><label for="i2">2 · Reading and repertoire</label><span class="hint">Treble and bass clef: note by note, slow but steady, or fluent? Any hands-together playing so far?</span><textarea id="i2" data-note="intake.2"></textarea></div>
+      <div class="field"><label for="i3">3 · Physical</label><span class="hint">Any hand, wrist, arm, shoulder or neck discomfort, past injuries, or tension habits from guitar. Anything to avoid.</span><textarea id="i3" data-note="intake.3"></textarea></div>
+      <div class="field"><label for="i4">4 · Schedule and calendar</label><span class="hint">Start date, Eastern time confirmed, practice windows on weekdays and weekends. A new "Piano" calendar (you create it, I fill it) or your main one? May I check your calendars for conflicts?</span><textarea id="i4" data-note="intake.4"></textarea></div>
+      <div class="field"><label for="i5">5 · Taste and balance</label><span class="hint">Tracks by Powell, Silver or Clark you love; a Bach piece you'd like to play eventually; your jazz/Bach split (my default is about 70/30).</span><textarea id="i5" data-note="intake.5"></textarea></div>
+      <div class="field"><label for="i6">6 · Evidence and build</label><span class="hint">Can you send short phone video or audio, or MIDI? For the app: which GitHub account or org, same Vercel account, and one practice device or several?</span><textarea id="i6" data-note="intake.6"></textarea></div>
+    </div>
+    <div class="rubric">
+      <h3>Summary to send</h3>
+      <pre class="results" id="results" tabindex="0"></pre>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button class="btn primary" type="button" id="copy">Copy summary</button><span class="copied" id="copied" aria-live="polite"></span></div>
+      <p class="footnote">Paste it into our conversation. A 30–60 second phone video helps too: side angle, hands, wrists and forearms in frame, playing 2a and task 3. I can't listen to audio, but I can measure note timing in a recording and look at frames for hand shape and posture. I'll tell you exactly which of those I was able to do.</p>
+      <p class="footnote">Your ratings and notes are saved in this browser only, so you can stop and come back.</p>
+    </div>
+  </section>
+
+  <div class="pager">
+    <button class="btn" type="button" id="prev">← Back</button>
+    <button class="btn primary" type="button" id="next">Next</button>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/abcjs@6.6.4/dist/abcjs-basic-min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Data ---------- */
+  const TASKS = [
+    { id: "setup", label: "Setup" }, { id: "pulse", label: "Pulse" }, { id: "hands", label: "Hands" },
+    { id: "balance", label: "Balance" }, { id: "reading", label: "Reading" }, { id: "ears", label: "Ears" }, { id: "send", label: "Send" }
+  ];
+
+  // Exercises: single source for notation and playback. Pitches in ABC: C = C4 (middle C), c = C5, C, = C3, C,, = C2.
+  const EX = {
+    p1a: { L: "1/4", key: "C", tempo: 72, raw: "|: !3!C C C C :|", label: "1a" },
+    p1b: { L: "1/4", key: "C", tempo: 96, raw: "|: !3!C C C C :|", label: "1b" },
+    p1c: { L: "1/4", key: "C", tempo: 96, qText: "Swing", swing: true, clickMode: "twofour", raw: "|: !3!C/C/ C/C/ C/C/ C/C/ :|", label: "1c" },
+    h2a: { L: "1/4", key: "C", tempo: 72, rh: ["!1!C D E !4!F", "E D C D", "E F E D", "C4"], lh: ["!5!C, D, E, !2!F,", "E, D, C, D,", "E, F, E, D,", "C,4"] },
+    h2b: { L: "1/4", key: "C", tempo: 72, rh: ["!1!C D E !4!F", "E D C D", "E F E D", "C4"], lh: ["!2!C, B,, A,, !5!G,,", "A,, B,, C, B,,", "A,, G,, A,, B,,", "C,4"] },
+    h2c: { L: "1/8", key: "C", tempo: 60, rh: ["!1!CDE!4!F EDCD", "EFED C4"], lh: ["!5!C,D,E,!2!F, E,D,C,D,", "E,F,E,D, C,4"] },
+    b3: { L: "1/4", key: "C", tempo: 72, gain: [1, 0.45],
+      rh: ["\"C6\"!3!E !4!F !5!G E", "\"G7\"!2!D E F D", "\"C6\"E G F E", "\"G7\"D2 \"C6\"C2"],
+      lh: ["[!5!E,!2!A,]4", "[!5!F,!2!B,]4", "[E,A,]4", "[F,B,]2 [E,A,]2"] },
+    r4a: { L: "1/4", key: "C", tempo: 60, bars: ["G E F D", "E G A2", "G F E D", "C4"] },
+    r4b: { L: "1/4", key: "F", clef: "bass", tempo: 60, bars: ["F,, A,, C, A,,", "B,,2 G,,2", "C, E, F, C,", "F,,4"] },
+    r4c: { L: "1/8", key: "Bb", tempo: 60, bars: ["B2 d2 cBAG", "F2 GA B2 z2", "dc=Bc dfec", "B8"] },
+    r4d: { L: "1/4", key: "G", tempo: 60, rh: ["B c d B", "A2 G2", "A B c A", "B4"], lh: ["G,4", "D,2 B,,2", "C,4", "G,,4"] },
+    r4e: { L: "1/16", key: "C", meter: "C", tempo: 50, qText: "Practice tempo", hands: "RH", dense: true,
+      rh: ["zCDE FDEC G2c2B2c2", "dGAB cABG d2g2f2g2"], lh: ["z8 zC,D,E, F,D,E,C,", "G,2G,,2 z4 zG,A,B, CA,B,G,"] },
+    e5a: { L: "1/8", key: "C", tempo: 80, bars: ["EGAG ED C2"] },
+    e5b: { L: "1/8", key: "C", tempo: 104, qText: "Swing", swing: true, clickMode: "twofour", bars: ["c_BAG _E=E G2"] }
+  };
+
+  const Q = {
+    "setup.rh": ["Right hand: the widest reach that feels easy", ["7th (B4)", "Octave (C5)", "9th (D5)", "10th (E5)"]],
+    "setup.lh": ["Left hand at rest on C3–F3", ["Comfortable", "Aware of the thumb base", "Aches at rest"]],
+    "setup.seat": ["Sitting at the keys", ["Comfortable", "Adjusted something", "Something hurts or strains"]],
+    "pulse.gap": ["1a · When the click came back, you were", ["Together with it", "Slightly off, settled in a beat", "Clearly ahead or behind", "Lost the beat in the gap"]],
+    "pulse.24": ["1b · Quarter notes against clicks on 2 and 4", ["Felt natural", "Needed concentration", "Kept flipping the beat"]],
+    "pulse.swing": ["1c · Swung eighths on one note", ["Relaxed and even", "Swung, but tense or rushing", "Hard to keep going", "Skipped"]],
+    "hands.rh": ["2a · Right hand alone", ["Even and relaxed", "Uneven or tense", "Broke down"]],
+    "hands.lh": ["2a · Left hand alone", ["Even and relaxed", "Uneven or tense", "Broke down"]],
+    "hands.par": ["2a · Hands together, parallel", ["Even and relaxed", "Uneven or tense", "Broke down"]],
+    "hands.con": ["2b · Hands together, contrary", ["Even and relaxed", "Uneven or tense", "Broke down"]],
+    "hands.eighths": ["2c · Eighth notes (optional)", ["Even and relaxed", "Uneven or tense", "Broke down", "Skipped"]],
+    "bal.forward": ["Melody clearly louder than the left hand", ["Yes, easily", "Partly", "Not yet"]],
+    "bal.hold": ["Holding the left-hand guide tones", ["Relaxed", "Some tension", "Thumb base ached"]],
+    "bal.reverse": ["Reversed balance, left hand louder (optional)", ["Yes", "Partly", "Not yet", "Skipped"]],
+    "read.a": ["4a · Treble, right hand", ["Kept going, steady pulse", "Stopped a few times", "Note by note", "Skipped"]],
+    "read.b": ["4b · Bass, left hand", ["Kept going, steady pulse", "Stopped a few times", "Note by note", "Skipped"]],
+    "read.c": ["4c · Treble, eighth notes", ["Kept going, steady pulse", "Stopped a few times", "Note by note", "Skipped"]],
+    "read.d": ["4d · Hands together", ["Kept going, steady pulse", "Stopped a few times", "Note by note", "Skipped"]],
+    "read.e": ["4e · Bach, mm. 1–2", ["Kept going, steady pulse", "Stopped a few times", "Note by note", "Skipped"]],
+    "ear.a": ["5a · Found phrase A", ["In 1–2 tries", "After several tries", "Not yet"]],
+    "ear.asing": ["5a · Sang it back first", ["Accurately", "Mostly", "Not really"]],
+    "ear.b": ["5b · Found phrase B", ["In 1–2 tries", "After several tries", "Not yet"]],
+    "ear.bsing": ["5b · Sang it back first", ["Accurately", "Mostly", "Not really"]],
+    "ear.tune": ["5c · A tune you know, by ear", ["Came out easily", "Found it with some hunting", "Struggled", "Skipped"]],
+    "comfort": ["Physical comfort", ["No discomfort", "Some tension (say where below)", "Pain or strain, I stopped"]]
+  };
+
+  /* ---------- State (this browser only) ---------- */
+  const STORE = "pianoStudio.d0.v1";
+  let state = { answers: {}, notes: {}, tempos: {}, task: 0 };
+  try { const s = JSON.parse(localStorage.getItem(STORE) || "null"); if (s && typeof s === "object") state = Object.assign(state, s); } catch (e) {}
+  function save() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
+
+  /* ---------- Notation ---------- */
+  const FMT = ["%%measurenb 0", "%%stretchlast 1", "%%gchordfont Helvetica 17 bold", "%%annotationfont Helvetica 14 bold", "%%tempofont Helvetica 14 bold", "%%measurefont Times 12 italic"];
+  const exState = {};
+  function exS(id) {
+    if (!exState[id]) exState[id] = { tempo: EX[id].tempo, hands: EX[id].hands || "both", loop: false, click: true };
+    return exState[id];
+  }
+
+  function buildAbc(ex, bpl) {
+    const h = ["X:1"].concat(FMT, ["M:" + (ex.meter || "4/4"), "L:" + ex.L]);
+    h.push("Q:" + (ex.qText ? "\"" + ex.qText + "\" " : "") + "1/4=" + ex.tempo);
+    const two = !!(ex.rh && ex.lh);
+    h.push("K:" + ex.key + (!two && ex.clef === "bass" ? " clef=bass" : ""));
+    if (ex.raw) { h.push(ex.raw); return h.join("\n"); }
+    if (two) {
+      h.push("%%score {RH | LH}", "V:RH clef=treble", "V:LH clef=bass");
+      const n = ex.rh.length;
+      for (let i = 0; i < n; i += bpl) {
+        const end = i + bpl >= n;
+        h.push("[V:RH] " + ex.rh.slice(i, i + bpl).join(" | ") + (end ? " |]" : " |"));
+        h.push("[V:LH] " + ex.lh.slice(i, i + bpl).join(" | ") + (end ? " |]" : " |"));
+      }
+    } else {
+      const n = ex.bars.length;
+      for (let i = 0; i < n; i += bpl) h.push(ex.bars.slice(i, i + bpl).join(" | ") + (i + bpl >= n ? " |]" : " |"));
+    }
+    return h.join("\n");
+  }
+
+  function renderScore(el) {
+    if (typeof ABCJS === "undefined") { el.textContent = "Notation library didn't load. Check your connection and reload."; return; }
+    const id = el.dataset.ex, ex = EX[id];
+    const w = el.clientWidth;
+    if (!w) return;
+    if (el._w === w && ex.visual) return;
+    el._w = w;
+    // Notes are drawn larger on wide screens (read from the bench) and never wider than the card.
+    const scale = w >= 700 ? 1.22 : w >= 520 ? 1.08 : 0.94;
+    const bpl = ex.dense ? (w >= 620 ? 2 : 1) : (w >= 520 ? 4 : 2);
+    const staffwidth = Math.max(220, Math.floor(w / scale) - 24);
+    const res = ABCJS.renderAbc(el, buildAbc(ex, bpl), { add_classes: true, responsive: "resize", staffwidth: staffwidth, paddingleft: 6, paddingright: 6, paddingtop: 4, paddingbottom: 4 });
+    ex.visual = res && res[0];
+  }
+  function renderVisible() {
+    document.querySelectorAll(".task:not([hidden]) .score[data-ex]").forEach(renderScore);
+  }
+
+  /* ---------- Keyboard diagrams ---------- */
+  const NAMES = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+  function midi(n) { const m = /^([A-G])(#|b)?(-?\d)$/.exec(n); return 12 * (parseInt(m[3], 10) + 1) + NAMES[m[1]] + (m[2] === "#" ? 1 : m[2] === "b" ? -1 : 0); }
+  const isBlack = m => [1, 3, 6, 8, 10].includes(((m % 12) + 12) % 12);
+  const KBD = {
+    reachRH: { from: "C4", to: "G5", marks: [["C4", "R", "1"]], targets: [["B4", "7th"], ["C5", "8ve"], ["D5", "9th"], ["E5", "10th"]], label: "Right thumb on C4; targets B4, C5, D5, E5" },
+    restLH: { from: "A2", to: "C4", marks: [["C3", "L", "5"], ["D3", "L", "4"], ["E3", "L", "3"], ["F3", "L", "2"]], label: "Left hand resting on C3 to F3, fingers 5 to 2; thumb off the keys" },
+    parallel: { from: "C3", to: "A4", marks: [["C3", "L", "5"], ["D3", "L", "4"], ["E3", "L", "3"], ["F3", "L", "2"], ["C4", "R", "1"], ["D4", "R", "2"], ["E4", "R", "3"], ["F4", "R", "4"]], label: "Left hand fingers 5 to 2 on C3 to F3, thumb off; right hand 1 to 4 on C4 to F4" },
+    contrary: { from: "F2", to: "A4", marks: [["G2", "L", "5"], ["A2", "L", "4"], ["B2", "L", "3"], ["C3", "L", "2"], ["C4", "R", "1"], ["D4", "R", "2"], ["E4", "R", "3"], ["F4", "R", "4"]], label: "Left hand finger 2 on C3 walking down to 5 on G2, thumb off; right hand thumb on C4 up to F4" },
+    shellC6: { from: "C3", to: "B4", marks: [["E3", "L", "5"], ["A3", "L", "2"], ["C4", "R", "1"], ["D4", "R", "2"], ["E4", "R", "3"], ["F4", "R", "4"], ["G4", "R", "5"]], label: "C6 guide tones: left 5 on E3, left 2 on A3; right hand on C4 to G4" },
+    shellG7: { from: "C3", to: "D4", marks: [["F3", "L", "5"], ["B3", "L", "2"]], label: "G7 guide tones: left 5 on F3, left 2 on B3" },
+    startE4: { from: "C4", to: "C5", targets: [["E4", "start"]], label: "Phrase A starts on E4" },
+    startC5: { from: "C4", to: "E5", targets: [["C5", "start"]], label: "Phrase B starts on C5" }
+  };
+  function kbdSVG(spec) {
+    const lo = midi(spec.from), hi = midi(spec.to);
+    const WW = 26, WH = 120, BW = 16, BH = 76;
+    const whites = []; for (let m = lo; m <= hi; m++) if (!isBlack(m)) whites.push(m);
+    const xOf = {}; whites.forEach((m, i) => { xOf[m] = i * WW; });
+    const W = whites.length * WW, H = WH + 22;
+    let s = '<svg width="' + Math.round((W + 2) * 1.15) + '" height="' + Math.round((H + 2) * 1.15) + '" viewBox="-1 -1 ' + (W + 2) + " " + (H + 2) + '" role="img" aria-label="' + spec.label + '" xmlns="http://www.w3.org/2000/svg">';
+    whites.forEach(m => { s += '<rect x="' + xOf[m] + '" y="0" width="' + WW + '" height="' + WH + '" rx="2" fill="var(--key-white)" stroke="var(--paper-ink)" stroke-width="1"/>'; });
+    for (let m = lo; m <= hi; m++) if (isBlack(m) && xOf[m - 1] !== undefined) {
+      const x = xOf[m - 1] + WW - BW / 2; s += '<rect x="' + x + '" y="0" width="' + BW + '" height="' + BH + '" rx="1.5" fill="var(--key-black)"/>';
+    }
+    whites.forEach(m => { if (m % 12 === 0) { const oct = m / 12 - 1; s += '<text x="' + (xOf[m] + WW / 2) + '" y="' + (WH + 16) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="' + (oct === 4 ? 700 : 400) + '" fill="var(--paper-ink)">C' + oct + "</text>"; } });
+    const cx = m => isBlack(m) ? xOf[m - 1] + WW : xOf[m] + WW / 2;
+    const cy = m => isBlack(m) ? BH - 16 : WH - 22;
+    (spec.targets || []).forEach(([n, lab]) => {
+      const m = midi(n), x = cx(m), y = cy(m), pw = Math.max(22, lab.length * 6.4 + 6);
+      s += '<rect x="' + (x - pw / 2) + '" y="' + (y - 10) + '" width="' + pw + '" height="20" rx="10" fill="var(--paper)" stroke="var(--mark-neutral)" stroke-width="1.5" stroke-dasharray="3 2"/>';
+      s += '<text x="' + x + '" y="' + (y + 4) + '" text-anchor="middle" font-family="Libre Franklin, system-ui, sans-serif" font-size="10" font-weight="700" fill="var(--mark-neutral)">' + lab + "</text>";
+    });
+    (spec.marks || []).forEach(([n, hand, lab]) => {
+      const m = midi(n), x = cx(m), y = cy(m), col = hand === "R" ? "var(--mark-rh)" : "var(--mark-lh)";
+      s += '<circle cx="' + x + '" cy="' + y + '" r="10.5" fill="' + col + '"/>';
+      s += '<text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-family="Libre Franklin, system-ui, sans-serif" font-size="13" font-weight="800" fill="#fff">' + lab + "</text>";
+    });
+    return s + "</svg>";
+  }
+  document.querySelectorAll("[data-kbd]").forEach(el => {
+    const spec = KBD[el.dataset.kbd]; el.innerHTML = kbdSVG(spec);
+    const cap = document.createElement("div"); cap.className = "kbd-cap"; cap.textContent = spec.label; el.after(cap);
+  });
+
+  /* ---------- Audio ---------- */
+  let ctx = null, master = null, wake = null;
+  function ensureAudio() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return false;
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = 0.7;
+      const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 4;
+      master.connect(comp); comp.connect(ctx.destination);
+    }
+    if (ctx.state === "suspended") ctx.resume();
+    if (!wake && navigator.wakeLock) navigator.wakeLock.request("screen").then(w => { wake = w; w.addEventListener("release", () => { wake = null; }); }).catch(() => {});
+    return true;
+  }
+  const PARTIALS = [[1, 1], [2, 0.42], [3, 0.16], [4, 0.07]];
+  function tone(t, pitch, dur, vel, bucket) {
+    const f = 440 * Math.pow(2, (pitch - 69) / 12);
+    const g = ctx.createGain(); const peak = 0.2 * vel;
+    const decay = 0.3 + 1.3 * Math.max(0, Math.min(1, (88 - pitch) / 48));
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), t + 0.006);
+    g.gain.setTargetAtTime(0, t + 0.012, decay);
+    g.gain.setTargetAtTime(0, t + dur, 0.05);
+    g.connect(master);
+    PARTIALS.forEach(([mul, amp]) => {
+      if (f * mul > 12000) return;
+      const o = ctx.createOscillator(); const og = ctx.createGain();
+      o.frequency.value = f * mul; og.gain.value = amp; o.connect(og); og.connect(g);
+      o.start(t); o.stop(t + dur + 0.4); bucket.push(o);
+    });
+  }
+  function click(t, accent, bucket, soft) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.value = accent ? 1760 : 1320;
+    const p = (accent ? 0.5 : 0.36) * (soft ? 0.6 : 1);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(p, t + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.05); bucket.push(o);
+  }
+  function stopNodes(list) { list.forEach(n => { try { n.stop(0); } catch (e) {} try { n.disconnect(); } catch (e) {} }); list.length = 0; }
+
+  /* ---------- Metronome strip ---------- */
+  const dots = Array.from(document.querySelectorAll(".beats i"));
+  const mt = { on: false, mode: "every", tempo: 72, next: 0, beat: 0, bar: 0, timer: null, raf: null, queue: [], nodes: [] };
+  const tempoIn = document.getElementById("mt-tempo"), toggleBtn = document.getElementById("mt-toggle"), statusEl = document.getElementById("mt-status");
+  function clampT(v) { v = parseInt(v, 10); return isNaN(v) ? 72 : Math.max(30, Math.min(220, v)); }
+  function setTempo(v) { mt.tempo = clampT(v); tempoIn.value = mt.tempo; }
+  function setMode(m) { mt.mode = m; document.querySelectorAll(".seg [data-mode]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m))); if (!mt.on) statusEl.textContent = "Stopped"; }
+  function audibleBeat(beat, bar) {
+    if (mt.mode === "twofour") return beat === 1 || beat === 3;
+    if (mt.mode === "gap") return bar % 8 < 4;
+    return true;
+  }
+  function mtSchedule() {
+    while (mt.next < ctx.currentTime + 0.12) {
+      const aud = audibleBeat(mt.beat, mt.bar);
+      if (aud) click(mt.next, mt.beat === 0 && mt.mode === "every", mt.nodes);
+      mt.queue.push({ t: mt.next, beat: mt.beat, bar: mt.bar, aud: aud });
+      mt.next += 60 / mt.tempo;
+      mt.beat = (mt.beat + 1) % 4; if (mt.beat === 0) mt.bar++;
+    }
+    if (mt.nodes.length > 200) mt.nodes.splice(0, 100);
+  }
+  function mtDraw() {
+    const now = ctx.currentTime; let ev = null;
+    while (mt.queue.length && mt.queue[0].t <= now) ev = mt.queue.shift();
+    if (ev) {
+      dots.forEach((d, i) => { d.classList.toggle("on", ev.aud && i === ev.beat); d.classList.toggle("accent", ev.aud && i === 0 && mt.mode === "every"); });
+      statusEl.textContent = mt.mode === "gap" ? (ev.aud ? "Click on" : "Silent: keep going") : mt.mode === "twofour" ? "Clicks on 2 and 4" : "Every beat";
+    }
+    if (mt.on) mt.raf = requestAnimationFrame(mtDraw);
+  }
+  function startMetro() {
+    if (!ensureAudio()) { statusEl.textContent = "Audio isn't available in this browser"; return; }
+    stopPlayer();
+    mt.on = true; mt.beat = 0; mt.bar = 0; mt.queue = []; mt.next = ctx.currentTime + 0.1;
+    mt.timer = setInterval(mtSchedule, 25); mtSchedule(); mt.raf = requestAnimationFrame(mtDraw);
+    toggleBtn.textContent = "Stop click"; toggleBtn.setAttribute("aria-pressed", "true");
+  }
+  function stopMetro() {
+    if (!mt.on) return;
+    mt.on = false; clearInterval(mt.timer); cancelAnimationFrame(mt.raf); stopNodes(mt.nodes); mt.queue = [];
+    dots.forEach(d => d.classList.remove("on", "accent"));
+    toggleBtn.textContent = "Start click"; toggleBtn.setAttribute("aria-pressed", "false"); statusEl.textContent = "Stopped";
+  }
+  toggleBtn.addEventListener("click", () => mt.on ? stopMetro() : startMetro());
+  document.getElementById("mt-down").addEventListener("click", () => setTempo(mt.tempo - 2));
+  document.getElementById("mt-up").addEventListener("click", () => setTempo(mt.tempo + 2));
+  tempoIn.addEventListener("change", () => setTempo(tempoIn.value));
+  document.querySelectorAll(".seg [data-mode]").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+  document.querySelectorAll("[data-preset]").forEach(b => b.addEventListener("click", () => {
+    const [t, m] = b.dataset.preset.split("|"); setTempo(t); setMode(m); stopMetro(); startMetro();
+  }));
+
+  /* ---------- Exercise player ---------- */
+  const pl = { id: null, run: 0, nodes: [], timer: null, raf: null, queue: [], lit: [], end: 0 };
+  // Swing warps beat time so the off-beat eighth lands at 62% of the beat; notation stays straight.
+  function warp(b, swing) {
+    if (!swing) return b;
+    const i = Math.floor(b + 1e-9), f = b - i, r = 0.62;
+    return i + (f <= 0.5 ? (f / 0.5) * r : r + ((f - 0.5) / 0.5) * (1 - r));
+  }
+  function clearLit() { pl.lit.forEach(e => e.classList.remove("is-on")); pl.lit = []; }
+  function stopPlayer() {
+    pl.run++; clearTimeout(pl.timer); cancelAnimationFrame(pl.raf);
+    if (ctx) stopNodes(pl.nodes);
+    pl.queue = []; clearLit();
+    const prev = pl.id; pl.id = null; if (prev) syncPlayBtn(prev);
+  }
+  function playEx(id) {
+    const ex = EX[id];
+    if (!ex.visual) renderScore(document.querySelector('.score[data-ex="' + id + '"]'));
+    if (!ex.visual || !ensureAudio()) return;
+    stopMetro(); stopPlayer();
+    const st = exS(id), run = pl.run; pl.id = id; syncPlayBtn(id);
+    const au = ex.visual.setUpAudio({ qpm: st.tempo, chordsOff: true });
+    const timing = ex.visual.setTiming(st.tempo, 0).filter(e => e.type === "event");
+    const beat = 60 / st.tempo, total = Math.round(au.totalDuration * 4 * 1000) / 1000;
+    const two = !!(ex.rh && ex.lh);
+    let t0 = ctx.currentTime + 0.12;
+    for (let k = 0; k < 4; k++) click(t0 + k * beat, k === 0, pl.nodes);
+    t0 += 4 * beat;
+    const runOnce = start => {
+      au.tracks.forEach((tr, vi) => {
+        if (two && st.hands === "RH" && vi !== 0) return;
+        if (two && st.hands === "LH" && vi !== 1) return;
+        const g = ex.gain ? ex.gain[vi] || 1 : 1;
+        tr.forEach(n => {
+          if (n.cmd !== "note") return;
+          const ts = start + warp(n.start * 4, ex.swing) * beat, te = start + warp((n.start + n.duration) * 4, ex.swing) * beat;
+          tone(ts, n.pitch, Math.max(0.06, te - ts - 0.02), Math.min(1, (n.volume || 90) / 110) * g, pl.nodes);
+        });
+      });
+      if (st.click) for (let b = 0; b < total; b++) {
+        if (ex.clickMode === "twofour" && b % 4 !== 1 && b % 4 !== 3) continue;
+        click(start + b * beat, false, pl.nodes, true);
+      }
+      timing.forEach(e => {
+        const els = []; (e.elements || []).forEach(a => (Array.isArray(a) ? a : [a]).forEach(x => x && els.push(x)));
+        pl.queue.push({ t: start + warp(e.milliseconds / 1000 / beat, ex.swing) * beat, els: els });
+      });
+      pl.end = start + total * beat;
+      pl.queue.push({ t: pl.end, els: [] });
+    };
+    runOnce(t0);
+    const tick = () => {
+      if (run !== pl.run) return;
+      const now = ctx.currentTime;
+      if (now > pl.end - 0.3 && st.loop && pl.queue.length <= 1) runOnce(pl.end);
+      if (now > pl.end + 0.5 && !st.loop) { stopPlayer(); return; }
+      if (pl.nodes.length > 600) pl.nodes.splice(0, 300);
+      pl.timer = setTimeout(tick, 60);
+    };
+    const draw = () => {
+      if (run !== pl.run) return;
+      const now = ctx.currentTime; let ev = null;
+      while (pl.queue.length && pl.queue[0].t <= now) ev = pl.queue.shift();
+      if (ev) { clearLit(); ev.els.forEach(e => { e.classList.add("is-on"); pl.lit.push(e); }); }
+      pl.raf = requestAnimationFrame(draw);
+    };
+    tick(); pl.raf = requestAnimationFrame(draw);
+  }
+  function syncPlayBtn(id) {
+    const b = document.querySelector('[data-player="' + id + '"] .play');
+    if (!b) return;
+    const on = pl.id === id;
+    b.textContent = on ? "■ Stop" : "▶ " + (b.dataset.verb || "Play");
+    b.setAttribute("aria-pressed", String(on));
+  }
+  function buildControls(box) {
+    const id = box.dataset.player, ex = EX[id], st = exS(id);
+    const reading = id.startsWith("r4"), ear = id.startsWith("e5");
+    const verb = reading ? "Hear it (after your try)" : ear ? "Play phrase" : "Hear it";
+    const two = !!(ex.rh && ex.lh);
+    let h = '<button class="btn primary play" type="button" aria-pressed="false" data-verb="' + verb + '">▶ ' + verb + "</button>";
+    h += '<div class="tempo"><button class="btn small icon" type="button" data-d="-2" aria-label="Slower">−</button><span class="note" aria-hidden="true">♩=</span><input type="number" min="30" max="220" value="' + st.tempo + '" aria-label="Playback tempo" inputmode="numeric"><button class="btn small icon" type="button" data-d="2" aria-label="Faster">+</button></div>';
+    if (two) h += '<div class="seg" role="group" aria-label="Hands"><button type="button" data-h="both" aria-pressed="' + (st.hands === "both") + '">Both</button><button type="button" data-h="RH" aria-pressed="' + (st.hands === "RH") + '">RH</button><button type="button" data-h="LH" aria-pressed="' + (st.hands === "LH") + '">LH</button></div>';
+    h += '<label class="toggle"><input type="checkbox" data-o="loop"' + (st.loop ? " checked" : "") + "> Loop</label>";
+    h += '<label class="toggle"><input type="checkbox" data-o="click"' + (st.click ? " checked" : "") + "> Click</label>";
+    box.innerHTML = h;
+    const tIn = box.querySelector("input[type=number]");
+    const setT = v => { st.tempo = clampT(v); tIn.value = st.tempo; if (pl.id === id) playEx(id); };
+    box.querySelector(".play").addEventListener("click", () => pl.id === id ? stopPlayer() : playEx(id));
+    box.querySelectorAll("[data-d]").forEach(b => b.addEventListener("click", () => setT(st.tempo + parseInt(b.dataset.d, 10))));
+    tIn.addEventListener("change", () => setT(tIn.value));
+    box.querySelectorAll("[data-h]").forEach(b => b.addEventListener("click", () => {
+      st.hands = b.dataset.h; box.querySelectorAll("[data-h]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); if (pl.id === id) playEx(id);
+    }));
+    box.querySelectorAll("[data-o]").forEach(c => c.addEventListener("change", () => { st[c.dataset.o] = c.checked; }));
+  }
+  document.querySelectorAll("[data-player]").forEach(buildControls);
+  document.querySelectorAll("[data-reveal]").forEach(b => b.addEventListener("click", () => {
+    const p = document.getElementById(b.dataset.reveal); p.classList.remove("hidden-notes");
+    const sc = p.querySelector(".score"); sc._w = 0; renderScore(sc);
+  }));
+
+  /* ---------- Self-assessment ---------- */
+  document.querySelectorAll("[data-q]").forEach(box => {
+    const key = box.dataset.q, [q, opts] = Q[key];
+    const fs = document.createElement("fieldset"); fs.className = "q";
+    let h = "<legend>" + q + '</legend><div class="opts">';
+    opts.forEach((o, i) => {
+      const id = "q-" + key.replace(/\W/g, "-") + "-" + i;
+      h += '<label class="opt" for="' + id + '"><input type="radio" id="' + id + '" name="' + key + '" value="' + o.replace(/"/g, "&quot;") + '"' + (state.answers[key] === o ? " checked" : "") + "><span>" + o + "</span></label>";
+    });
+    h += "</div>";
+    if (box.dataset.tempo) {
+      const v = state.tempos[key] || box.dataset.tempo, tid = "t-" + key.replace(/\W/g, "-");
+      h += '<label class="inline-num" for="' + tid + '">Tempo you used: ♩ = <input type="number" id="' + tid + '" min="20" max="220" value="' + v + '" data-tempo-for="' + key + '"></label>';
+    }
+    fs.innerHTML = h; box.replaceWith(fs);
+  });
+  document.addEventListener("change", e => {
+    const t = e.target;
+    if (t.matches(".q input[type=radio]")) { state.answers[t.name] = t.value; save(); refresh(); }
+    if (t.matches("[data-tempo-for]")) { state.tempos[t.dataset.tempoFor] = t.value; save(); refresh(); }
+  });
+  document.querySelectorAll("[data-note]").forEach(el => {
+    if (state.notes[el.dataset.note]) el.value = state.notes[el.dataset.note];
+    el.addEventListener("input", () => { state.notes[el.dataset.note] = el.value; save(); refresh(); });
+  });
+
+  /* ---------- Summary ---------- */
+  const A = k => state.answers[k] || "—";
+  const T = (k, d) => { const v = state.tempos[k] || d; return state.answers[k] && state.answers[k] !== "Skipped" ? " @ ♩=" + v : ""; };
+  const N = k => (state.notes[k] || "").trim() || "—";
+  function summary() {
+    const d = new Date();
+    const date = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    return [
+      "PIANO STUDIO · BASELINE D0 · " + date,
+      "",
+      "0 Setup: reach RH " + A("setup.rh") + " · LH at rest " + A("setup.lh") + " · seating " + A("setup.seat"),
+      "1 Pulse: gap click ♩=72 " + A("pulse.gap") + " · 2&4 ♩=96 " + A("pulse.24") + " · swing 8ths " + A("pulse.swing"),
+      "2 Hands: RH " + A("hands.rh") + " · LH " + A("hands.lh") + " · parallel " + A("hands.par") + " · contrary " + A("hands.con") + " · 8ths " + A("hands.eighths"),
+      "  notes: " + N("notes.hands"),
+      "3 Balance: melody forward " + A("bal.forward") + " · holding guide tones " + A("bal.hold") + " · reversed " + A("bal.reverse"),
+      "4 Reading: 4a treble " + A("read.a") + T("read.a", 60) + " · 4b bass " + A("read.b") + T("read.b", 60) + " · 4c 8ths " + A("read.c") + T("read.c", 60) + " · 4d hands together " + A("read.d") + T("read.d", 60) + " · 4e Bach " + A("read.e") + T("read.e", 50),
+      "5 Ears: A " + A("ear.a") + " (sang: " + A("ear.asing") + ") · B " + A("ear.b") + " (sang: " + A("ear.bsing") + ") · tune by ear " + A("ear.tune") + " (" + N("ear.tuneName") + ")",
+      "Comfort: " + A("comfort"),
+      "Can play now: " + N("play.now"),
+      "Other notes: " + N("notes.general"),
+      "",
+      "Q1 Instrument/devices: " + N("intake.1"),
+      "Q2 Reading/repertoire: " + N("intake.2"),
+      "Q3 Physical: " + N("intake.3"),
+      "Q4 Schedule/calendar: " + N("intake.4"),
+      "Q5 Taste/balance: " + N("intake.5"),
+      "Q6 Evidence/build: " + N("intake.6")
+    ].join("\n");
+  }
+  const resultsEl = document.getElementById("results");
+  function refresh() {
+    resultsEl.textContent = summary();
+    TASKS.forEach((t, i) => {
+      const sec = document.querySelector('[data-task="' + t.id + '"]');
+      const any = Array.from(sec.querySelectorAll(".q input[type=radio]")).some(r => r.checked);
+      const b = document.querySelector('#tasknav [data-i="' + i + '"]'); if (b) b.classList.toggle("done", any);
+    });
+  }
+  document.getElementById("copy").addEventListener("click", () => {
+    const msg = document.getElementById("copied"), text = summary();
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(resultsEl); const s = getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = "Selected. Use your device's copy command."; };
+    try { navigator.clipboard.writeText(text).then(() => { msg.textContent = "Copied. Paste it into our conversation."; }, fallback); } catch (e) { fallback(); }
+  });
+
+  /* ---------- Navigation ---------- */
+  const navOl = document.getElementById("tasknav");
+  navOl.innerHTML = TASKS.map((t, i) => '<li><button type="button" data-i="' + i + '"><span class="n">' + i + '</span>' + t.label + '<span class="dot" aria-hidden="true"></span></button></li>').join("");
+  const prevB = document.getElementById("prev"), nextB = document.getElementById("next");
+  function show(i, focus) {
+    i = Math.max(0, Math.min(TASKS.length - 1, i)); state.task = i; save();
+    stopPlayer();
+    document.querySelectorAll("[data-task]").forEach(s => { s.hidden = s.dataset.task !== TASKS[i].id; });
+    navOl.querySelectorAll("button").forEach(b => b.toggleAttribute("aria-current", false));
+    const cur = navOl.querySelector('[data-i="' + i + '"]'); cur.setAttribute("aria-current", "step");
+    prevB.disabled = i === 0; prevB.style.visibility = i === 0 ? "hidden" : "visible";
+    nextB.style.visibility = i === TASKS.length - 1 ? "hidden" : "visible";
+    if (i < TASKS.length - 1) nextB.textContent = "Next: " + TASKS[i + 1].label + " →";
+    renderVisible();
+    if (focus) { const h = document.querySelector('[data-task="' + TASKS[i].id + '"] h2'); h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); document.querySelector(".tasknav").scrollIntoView({ block: "start", behavior: "auto" }); }
+  }
+  navOl.addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if (b) show(parseInt(b.dataset.i, 10), true); });
+  prevB.addEventListener("click", () => show(state.task - 1, true));
+  nextB.addEventListener("click", () => show(state.task + 1, true));
+
+  let rt = null;
+  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (!pl.id) renderVisible(); }, 150); });
+
+  const start = () => { show(state.task || 0, false); refresh(); };
+  if (document.fonts && document.fonts.ready) { let done = false; document.fonts.ready.then(() => { if (!done) { done = true; start(); } }); setTimeout(() => { if (!done) { done = true; start(); } }, 1200); } else start();
+})();
+</script>
+
+</body>
+</html>
