@@ -64,24 +64,26 @@ export function BachScore({ piece }: { piece: BachPiece }) {
   const all = range[0] === 1 && range[1] === piece.bars;
   return (
     <div className="bach-score">
-      <div className="bach-sections" role="group" aria-label="Choose bars to play">
-        <button type="button" className="chip" aria-pressed={all} onClick={() => setRange([1, piece.bars])}>
-          All {piece.bars} bars
-        </button>
-        {piece.sections.map((s) => (
-          <button
-            key={s.bars.join("-")}
-            type="button"
-            className="chip"
-            aria-pressed={range[0] === s.bars[0] && range[1] === s.bars[1]}
-            onClick={() => setRange(s.bars)}
-          >
-            Bars {s.bars[0]}–{s.bars[1]}
+      <div className="bach-controls">
+        <span className="seg bach-sections" role="group" aria-label="Choose the bars to play">
+          <button type="button" aria-pressed={all} onClick={() => setRange([1, piece.bars])}>
+            All {piece.bars} bars
           </button>
-        ))}
+          {piece.sections.map((s) => (
+            <button
+              key={s.bars.join("-")}
+              type="button"
+              aria-pressed={range[0] === s.bars[0] && range[1] === s.bars[1]}
+              onClick={() => setRange(s.bars)}
+            >
+              {s.bars[0]}–{s.bars[1]}
+            </button>
+          ))}
+        </span>
         {piece.harmony && (
-          <label className="chip-toggle">
-            <input type="checkbox" checked={chords} onChange={(e) => setChords(e.target.checked)} /> Show the chords
+          <label className="chip">
+            <input type="checkbox" checked={chords} onChange={(e) => setChords(e.target.checked)} />
+            <span>Show the chords</span>
           </label>
         )}
       </div>

@@ -327,3 +327,40 @@ export const BACH_PIECES: BachPiece[] = [
 export function getBachPiece(id: string): BachPiece | undefined {
   return BACH_PIECES.find((p) => p.id === id);
 }
+
+/** Words on the Bach pages, kept here so the page and the narrator use the same text. */
+export const BACH_TEXT = {
+  piecesTitle: "The pieces",
+  piecesIntro: "Each piece has its full score. You can play it back, slow it down, and practice one section at a time.",
+  editionsTitle: "Your books",
+  editionsIntro: "These are the two editions you have. The page numbers in Woodshed match them.",
+  playTitle: "Play it",
+  playIntro: "Pick a section, then press Play. Change the tempo or play one hand at a time.",
+  builtTitle: "How it's built",
+  chordsTitle: "One chord per bar",
+  chordsIntro: "Read the chords like a lead sheet. Then hear how each one leads to the next.",
+  leftTitle: "Your left hand",
+} as const;
+
+export function bachSectionHeading(s: BachSection): string {
+  return `Bars ${s.bars[0]}–${s.bars[1]}: ${s.title}`;
+}
+
+export function bachBookLine(p: BachPiece): string {
+  return `In your book: ${BACH_EDITIONS[p.edition.book as "inventions" | "wtc1"].title}, page ${p.edition.page}.`;
+}
+
+export function bachCredit(p: BachPiece): string {
+  const ed = BACH_EDITIONS[p.edition.book as "inventions" | "wtc1"];
+  return `Score: the notes come from the Bach-Gesellschaft edition, typeset by the Mutopia Project. They match ${ed.editor}'s edition (${ed.license}, ${ed.source}).`;
+}
+
+export function bachTexts(): string[] {
+  const out: string[] = Object.values(BACH_TEXT);
+  for (const e of [BACH_EDITIONS.inventions, BACH_EDITIONS.wtc1]) out.push(e.title, `Edited by ${e.editor}. License: ${e.license}.`);
+  for (const p of BACH_PIECES) {
+    out.push(p.title, p.summary, p.leftHand, bachBookLine(p), bachCredit(p), `${p.bwv} · ${p.bars} bars`, `${p.bars} bars`);
+    for (const s of p.sections) out.push(bachSectionHeading(s), s.text);
+  }
+  return out;
+}

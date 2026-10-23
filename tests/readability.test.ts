@@ -1,3 +1,5 @@
+import { BACH_PIECES, BACH_TEXT } from "@/content/bach";
+import { PARKER_SOLOS } from "@/content/parker";
 import { describe, expect, it } from "vitest";
 import { BASELINE, EXERCISES, LESSONS, PHASES, VEHICLES } from "@/content";
 import { LIBRARY, LIBRARY_INTRO, RECORDINGS_CARD } from "@/content/library";
@@ -76,6 +78,13 @@ export function prose(): Field[] {
   }
   add("tunes intro", TUNES_INTRO);
   add("roadmap intro", ROADMAP_INTRO);
+  for (const p of BACH_PIECES) {
+    add(`bach ${p.id} summary`, p.summary);
+    add(`bach ${p.id} left hand`, p.leftHand);
+    p.sections.forEach((s) => add(`bach ${p.id} ${s.title}`, s.text));
+  }
+  for (const [k, v] of Object.entries(BACH_TEXT)) add(`bach text ${k}`, v);
+  for (const s of PARKER_SOLOS) add(`parker ${s.slug} about`, s.about);
   return f;
 }
 

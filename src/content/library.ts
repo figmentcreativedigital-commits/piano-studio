@@ -47,9 +47,9 @@ export const LIBRARY: LibraryEntry[] = [
     href: "/library/bach",
     name: "Bach",
     kicker: "Composer, 1685–1750",
-    blurb: "Short pieces you play slowly and understand.",
+    blurb: "Short pieces you play slowly and understand, with full scores.",
     intro:
-      "Johann Sebastian Bach was a German composer. His inventions are short pieces where each hand plays its own line. You play them next to the jazz, slowly, and you learn how each line is built.",
+      "Johann Sebastian Bach was a German composer. In his inventions, each hand plays its own line. In his C major prelude, every bar is one chord. You play them next to the jazz, slowly, and learn how they are built.",
     monogram: "JSB",
     theme: { bg: "night", ink: "white", acc: "orchid", field: "cyan" },
   },
