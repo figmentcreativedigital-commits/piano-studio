@@ -1,0 +1,4155 @@
+{
+ "exercises": {
+  "tech-drop": {
+   "data": {
+    "id": "tech-drop",
+    "kind": "technique",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "both",
+    "tempo": {
+     "start": 40
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "tempo": 40,
+     "rh": [
+      "!3!C2 z2",
+      "C2 z2"
+     ],
+     "lh": [
+      "z2 !3!C,2",
+      "z2 C,2"
+     ]
+    },
+    "keyboard": [
+     {
+      "from": "A2",
+      "to": "E4",
+      "marks": [
+       [
+        "C3",
+        "L",
+        "3"
+       ],
+       [
+        "C4",
+        "R",
+        "3"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "touch"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "C3",
+     "C4"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": [
+     "C3",
+     "C4"
+    ]
+   }
+  },
+  "tech-thumb": {
+   "data": {
+    "id": "tech-thumb",
+    "kind": "technique",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "RH",
+    "tempo": {
+     "start": 50,
+     "target": 60
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "tempo": 50,
+     "bars": [
+      "!1!C !2!D !3!E !1!F",
+      "!3!E !2!D !1!C2",
+      "!1!F !2!G !3!_A !1!=A",
+      "!3!_A !2!G !1!F2"
+     ]
+    },
+    "skills": [
+     "rh-thumb"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "Ab4",
+     "Ab4",
+     "C4",
+     "C4",
+     "D4",
+     "D4",
+     "E4",
+     "E4",
+     "F4",
+     "F4",
+     "F4",
+     "G4",
+     "G4"
+    ],
+    "fingering": [],
+    "steps": [
+     "A4",
+     "Ab4",
+     "E4",
+     "F4",
+     "F4"
+    ],
+    "check": [
+     "♩=60"
+    ],
+    "easier": [
+     "E4",
+     "F4"
+    ],
+    "captions": []
+   }
+  },
+  "tech-shape": {
+   "data": {
+    "id": "tech-shape",
+    "kind": "technique",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "RH",
+    "tempo": {
+     "start": 50
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "tempo": 50,
+     "bars": [
+      "\"C6\"[!1!C!2!E!4!G!5!A]2 z2",
+      "\"B°\"[!1!D!2!F!4!_A!5!B]2 z2",
+      "\"C6\"[CEGA]2 z2",
+      "\"B°\"[DF_AB]2 z2"
+     ]
+    },
+    "keyboard": [
+     {
+      "from": "B3",
+      "to": "C5",
+      "marks": [
+       [
+        "C4",
+        "R",
+        "1"
+       ],
+       [
+        "E4",
+        "R",
+        "2"
+       ],
+       [
+        "G4",
+        "R",
+        "4"
+       ],
+       [
+        "A4",
+        "R",
+        "5"
+       ]
+      ]
+     },
+     {
+      "from": "B3",
+      "to": "C5",
+      "marks": [
+       [
+        "D4",
+        "R",
+        "1"
+       ],
+       [
+        "F4",
+        "R",
+        "2"
+       ],
+       [
+        "Ab4",
+        "R",
+        "4"
+       ],
+       [
+        "B4",
+        "R",
+        "5"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "touch",
+     "c6dim-chords"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "Ab4",
+     "B4",
+     "C4",
+     "C6",
+     "D4",
+     "E4",
+     "F4",
+     "G4"
+    ],
+    "fingering": [
+     "1-2-4-5"
+    ],
+    "steps": [
+     "C6"
+    ],
+    "check": [],
+    "easier": [],
+    "captions": [
+     "1-2-4-5",
+     "1-2-4-5",
+     "A4",
+     "Ab4",
+     "B4",
+     "C4",
+     "C6",
+     "D4",
+     "E4",
+     "F4",
+     "G4"
+    ]
+   }
+  },
+  "tech-lh52": {
+   "data": {
+    "id": "tech-lh52",
+    "kind": "technique",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "LH",
+    "tempo": {
+     "start": 60
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "F",
+     "clef": "bass",
+     "tempo": 60,
+     "bars": [
+      "\"F7\"[!5!_E,!2!A,] z z2",
+      "\"Bb7\"[!5!D,!2!_A,] z z2",
+      "\"C7\"[!5!E,!2!B,] z z2",
+      "\"F7\"[_E,A,] z z2"
+     ]
+    },
+    "keyboard": [
+     {
+      "from": "C3",
+      "to": "C4",
+      "marks": [
+       [
+        "Eb3",
+        "L",
+        "5"
+       ],
+       [
+        "A3",
+        "L",
+        "2"
+       ]
+      ]
+     },
+     {
+      "from": "C3",
+      "to": "C4",
+      "marks": [
+       [
+        "D3",
+        "L",
+        "5"
+       ],
+       [
+        "Ab3",
+        "L",
+        "2"
+       ]
+      ]
+     },
+     {
+      "from": "C3",
+      "to": "C4",
+      "marks": [
+       [
+        "E3",
+        "L",
+        "5"
+       ],
+       [
+        "Bb3",
+        "L",
+        "2"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "lh-light",
+     "blues-guide"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A3",
+     "Ab3",
+     "Bb3",
+     "Bb7",
+     "C7",
+     "D3",
+     "E3",
+     "Eb3",
+     "F7"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=60"
+    ],
+    "easier": [
+     "D3",
+     "E3",
+     "Eb3",
+     "Eb3"
+    ],
+    "captions": [
+     "A3",
+     "Ab3",
+     "Bb3",
+     "Bb7",
+     "C7",
+     "D3",
+     "E3",
+     "Eb3",
+     "F7"
+    ]
+   }
+  },
+  "tech-five-g": {
+   "data": {
+    "id": "tech-five-g",
+    "kind": "technique",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "RH",
+    "tempo": {
+     "start": 72
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "G",
+     "tempo": 72,
+     "bars": [
+      "!1!G A B c",
+      "!5!d c B A",
+      "G4"
+     ]
+    },
+    "skills": [
+     "touch"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "B4",
+     "C5",
+     "D5",
+     "G4"
+    ],
+    "fingering": [
+     "1-2-3-4-5",
+     "5-4-3-2-1"
+    ],
+    "steps": [],
+    "check": [
+     "♩=72",
+     "♩=80"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "h-scale": {
+   "data": {
+    "id": "h-scale",
+    "kind": "harris",
+    "source": {
+     "kind": "harris",
+     "status": "checked-in-class",
+     "refs": [
+      {
+       "url": "https://www.youtube.com/watch?v=-jO-sIrjTqg&t=68s"
+      },
+      {
+       "url": "https://barryharrismethod.com/method/9.3"
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=7reOAaveCi0&t=80s"
+      }
+     ]
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 50,
+     "target": 60
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "tempo": 50,
+     "bars": [
+      "!1!C !2!D !3!E !1!F",
+      "!2!G !3!_A !1!=A !2!B",
+      "!3!c !2!B !1!=A !3!_A",
+      "!2!G !1!F !3!E !2!D",
+      "!1!C4"
+     ]
+    },
+    "keyboard": [
+     {
+      "from": "B3",
+      "to": "D5",
+      "marks": [
+       [
+        "C4",
+        "R",
+        "1"
+       ],
+       [
+        "D4",
+        "R",
+        "2"
+       ],
+       [
+        "E4",
+        "R",
+        "3"
+       ],
+       [
+        "F4",
+        "R",
+        "1"
+       ],
+       [
+        "G4",
+        "R",
+        "2"
+       ],
+       [
+        "Ab4",
+        "R",
+        "3"
+       ],
+       [
+        "A4",
+        "R",
+        "1"
+       ],
+       [
+        "B4",
+        "R",
+        "2"
+       ],
+       [
+        "C5",
+        "R",
+        "3"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "c6dim-line",
+     "rh-thumb"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "Ab4",
+     "B4",
+     "C4",
+     "C5",
+     "D4",
+     "E4",
+     "F4",
+     "G4"
+    ],
+    "fingering": [
+     "1-2-3",
+     "3-2-1",
+     "3-2-1",
+     "3-2-1"
+    ],
+    "steps": [],
+    "check": [
+     "♩=60"
+    ],
+    "easier": [],
+    "captions": [
+     "1-2-3",
+     "C4",
+     "C5"
+    ]
+   }
+  },
+  "h-scale-8": {
+   "data": {
+    "id": "h-scale-8",
+    "kind": "harris",
+    "source": {
+     "kind": "harris",
+     "status": "checked-in-class",
+     "refs": [
+      {
+       "url": "https://www.youtube.com/watch?v=-jO-sIrjTqg&t=68s"
+      },
+      {
+       "url": "https://barryharrismethod.com/method/9.3"
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=7reOAaveCi0&t=80s"
+      }
+     ]
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 50,
+     "target": 72
+    },
+    "notation": {
+     "unit": "1/8",
+     "key": "C",
+     "tempo": 50,
+     "bars": [
+      "!3!c!2!B!1!A!3!_A !2!G!1!F!3!E!2!D",
+      "!1!C8",
+      "!1!C!2!D!3!E!1!F !2!G!3!_A!1!=A!2!B",
+      "!3!c8"
+     ]
+    },
+    "skills": [
+     "c6dim-line",
+     "time-24"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "A4",
+     "Ab4",
+     "Ab4",
+     "B4",
+     "B4",
+     "C4",
+     "C4",
+     "C5",
+     "C5",
+     "D4",
+     "D4",
+     "E4",
+     "E4",
+     "F4",
+     "F4",
+     "G4",
+     "G4"
+    ],
+    "fingering": [],
+    "steps": [
+     "C6",
+     "♩=72"
+    ],
+    "check": [
+     "♩=60"
+    ],
+    "easier": [
+     "♩=40"
+    ],
+    "captions": []
+   }
+  },
+  "h-move-5": {
+   "data": {
+    "id": "h-move-5",
+    "kind": "harris",
+    "source": {
+     "kind": "harris",
+     "status": "checked-in-class",
+     "refs": [
+      {
+       "url": "https://www.youtube.com/watch?v=-jO-sIrjTqg&t=68s"
+      },
+      {
+       "url": "https://barryharrismethod.com/method/9.3"
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=7reOAaveCi0&t=80s"
+      }
+     ]
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 50,
+     "target": 60
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "tempo": 50,
+     "barsPerLine": 4,
+     "chords": [
+      {
+       "notes": [
+        "C4",
+        "E4",
+        "G4",
+        "A4"
+       ],
+       "beats": 2,
+       "symbol": "C6",
+       "fingers": [
+        1,
+        2,
+        4,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "D4",
+        "F4",
+        "Ab4",
+        "B4"
+       ],
+       "beats": 2,
+       "symbol": "B°",
+       "fingers": [
+        1,
+        2,
+        4,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "E4",
+        "G4",
+        "A4",
+        "C5"
+       ],
+       "beats": 2,
+       "symbol": "C6",
+       "fingers": [
+        1,
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "F4",
+        "Ab4",
+        "B4",
+        "D5"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "G4",
+        "A4",
+        "C5",
+        "E5"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      },
+      {
+       "notes": [
+        "F4",
+        "Ab4",
+        "B4",
+        "D5"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "E4",
+        "G4",
+        "A4",
+        "C5"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      },
+      {
+       "notes": [
+        "D4",
+        "F4",
+        "Ab4",
+        "B4"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "C4",
+        "E4",
+        "G4",
+        "A4"
+       ],
+       "beats": 4,
+       "symbol": "C6"
+      }
+     ]
+    },
+    "skills": [
+     "c6dim-chords"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "A4",
+     "A4",
+     "A4",
+     "Ab4",
+     "Ab4",
+     "B4",
+     "B4",
+     "C4",
+     "C4",
+     "C5",
+     "C5",
+     "C6",
+     "C6",
+     "C6",
+     "C6",
+     "D4",
+     "D5",
+     "E4",
+     "E4",
+     "E4",
+     "E5",
+     "F4",
+     "F4",
+     "G4",
+     "G4",
+     "G4",
+     "G4"
+    ],
+    "fingering": [
+     "1-2-3-5",
+     "1-2-4-5",
+     "A4",
+     "B4",
+     "C4",
+     "D4"
+    ],
+    "steps": [
+     "A4",
+     "B4",
+     "C5",
+     "D5",
+     "E5"
+    ],
+    "check": [
+     "♩=60"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "h-move-oct": {
+   "data": {
+    "id": "h-move-oct",
+    "kind": "harris",
+    "source": {
+     "kind": "harris",
+     "status": "checked-in-class",
+     "refs": [
+      {
+       "url": "https://www.youtube.com/watch?v=-jO-sIrjTqg&t=68s"
+      },
+      {
+       "url": "https://barryharrismethod.com/method/9.3"
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=7reOAaveCi0&t=80s"
+      }
+     ]
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 50,
+     "target": 60
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "tempo": 50,
+     "barsPerLine": 4,
+     "chords": [
+      {
+       "notes": [
+        "C4",
+        "E4",
+        "G4",
+        "A4"
+       ],
+       "beats": 2,
+       "symbol": "C6",
+       "fingers": [
+        1,
+        2,
+        4,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "D4",
+        "F4",
+        "Ab4",
+        "B4"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "E4",
+        "G4",
+        "A4",
+        "C5"
+       ],
+       "beats": 2,
+       "symbol": "C6",
+       "fingers": [
+        1,
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "F4",
+        "Ab4",
+        "B4",
+        "D5"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "G4",
+        "A4",
+        "C5",
+        "E5"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      },
+      {
+       "notes": [
+        "Ab4",
+        "B4",
+        "D5",
+        "F5"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "A4",
+        "C5",
+        "E5",
+        "G5"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      },
+      {
+       "notes": [
+        "B4",
+        "D5",
+        "F5",
+        "Ab5"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "C5",
+        "E5",
+        "G5",
+        "A5"
+       ],
+       "beats": 4,
+       "symbol": "C6",
+       "fingers": [
+        1,
+        2,
+        4,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "B4",
+        "D5",
+        "F5",
+        "Ab5"
+       ],
+       "beats": 2,
+       "symbol": "B°",
+       "fingers": [
+        1,
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "A4",
+        "C5",
+        "E5",
+        "G5"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      },
+      {
+       "notes": [
+        "Ab4",
+        "B4",
+        "D5",
+        "F5"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "G4",
+        "A4",
+        "C5",
+        "E5"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      },
+      {
+       "notes": [
+        "F4",
+        "Ab4",
+        "B4",
+        "D5"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "E4",
+        "G4",
+        "A4",
+        "C5"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      },
+      {
+       "notes": [
+        "D4",
+        "F4",
+        "Ab4",
+        "B4"
+       ],
+       "beats": 2,
+       "symbol": "B°",
+       "fingers": [
+        1,
+        2,
+        4,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "C4",
+        "E4",
+        "G4",
+        "A4"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      }
+     ]
+    },
+    "skills": [
+     "c6dim-chords"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "A4",
+     "A5",
+     "Ab4",
+     "Ab5",
+     "B4",
+     "B4",
+     "C4",
+     "C5",
+     "C5",
+     "C6",
+     "C6",
+     "C6",
+     "C6",
+     "C6",
+     "D4",
+     "D5",
+     "E4",
+     "E5",
+     "F4",
+     "F5",
+     "G4",
+     "G5"
+    ],
+    "fingering": [
+     "1-2-3-5",
+     "1-2-4-5"
+    ],
+    "steps": [
+     "A4",
+     "A5"
+    ],
+    "check": [
+     "♩=60"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "h-melody": {
+   "data": {
+    "id": "h-melody",
+    "kind": "harris",
+    "source": {
+     "kind": "adaptation",
+     "status": "secondary-sources",
+     "refs": [
+      {
+       "url": "https://www.youtube.com/watch?v=-jO-sIrjTqg&t=68s"
+      },
+      {
+       "url": "https://barryharrismethod.com/method/9.3"
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=7reOAaveCi0&t=80s"
+      }
+     ]
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 50,
+     "target": 72
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "tempo": 50,
+     "chords": [
+      {
+       "notes": [
+        "A4",
+        "C5",
+        "E5",
+        "G5"
+       ],
+       "beats": 1,
+       "symbol": "C6",
+       "fingers": [
+        1,
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "C5",
+        "E5",
+        "G5",
+        "A5"
+       ],
+       "beats": 1,
+       "fingers": [
+        1,
+        2,
+        4,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "A4",
+        "C5",
+        "E5",
+        "G5"
+       ],
+       "beats": 1
+      },
+      {
+       "notes": [
+        "G4",
+        "A4",
+        "C5",
+        "E5"
+       ],
+       "beats": 1,
+       "fingers": [
+        1,
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "F4",
+        "Ab4",
+        "B4",
+        "D5"
+       ],
+       "beats": 2,
+       "symbol": "B°"
+      },
+      {
+       "notes": [
+        "E4",
+        "G4",
+        "A4",
+        "C5"
+       ],
+       "beats": 2,
+       "symbol": "C6"
+      }
+     ]
+    },
+    "skills": [
+     "c6dim-melody",
+     "c6dim-chords"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "A4",
+     "A4",
+     "A4",
+     "A5",
+     "A5",
+     "Ab4",
+     "B4",
+     "C5",
+     "C5",
+     "C5",
+     "C5",
+     "C5",
+     "C5",
+     "D5",
+     "D5",
+     "E4",
+     "E5",
+     "E5",
+     "E5",
+     "E5",
+     "E5",
+     "F4",
+     "G4",
+     "G4",
+     "G5",
+     "G5",
+     "G5",
+     "G5",
+     "G5"
+    ],
+    "fingering": [
+     "1-2-3-5",
+     "1-2-4-5",
+     "A5",
+     "C5",
+     "E5",
+     "G5"
+    ],
+    "steps": [],
+    "check": [
+     "♩=60"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "h-transfer-f": {
+   "data": {
+    "id": "h-transfer-f",
+    "kind": "harris",
+    "source": {
+     "kind": "harris",
+     "status": "checked-in-class",
+     "refs": [
+      {
+       "url": "https://www.youtube.com/watch?v=-jO-sIrjTqg&t=68s"
+      },
+      {
+       "url": "https://barryharrismethod.com/method/9.3"
+      },
+      {
+       "url": "https://www.youtube.com/watch?v=7reOAaveCi0&t=80s"
+      }
+     ]
+    },
+    "hands": "RH",
+    "vehicle": "indiana",
+    "key": "F",
+    "tempo": {
+     "start": 50
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "F",
+     "tempo": 50,
+     "barsPerLine": 4,
+     "chords": [
+      {
+       "notes": [
+        "F4",
+        "A4",
+        "C5",
+        "D5"
+       ],
+       "beats": 2,
+       "symbol": "F6",
+       "fingers": [
+        1,
+        2,
+        4,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "G4",
+        "Bb4",
+        "Db5",
+        "E5"
+       ],
+       "beats": 2,
+       "symbol": "E°",
+       "fingers": [
+        1,
+        2,
+        4,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "A4",
+        "C5",
+        "D5",
+        "F5"
+       ],
+       "beats": 2,
+       "symbol": "F6",
+       "fingers": [
+        1,
+        2,
+        3,
+        5
+       ]
+      },
+      {
+       "notes": [
+        "G4",
+        "Bb4",
+        "Db5",
+        "E5"
+       ],
+       "beats": 2,
+       "symbol": "E°"
+      },
+      {
+       "notes": [
+        "F4",
+        "A4",
+        "C5",
+        "D5"
+       ],
+       "beats": 4,
+       "symbol": "F6"
+      }
+     ]
+    },
+    "skills": [
+     "f6dim-transfer"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "A4",
+     "A4",
+     "Bb4",
+     "Bb4",
+     "C5",
+     "C5",
+     "C5",
+     "D5",
+     "D5",
+     "D5",
+     "Db5",
+     "Db5",
+     "E5",
+     "E5",
+     "F4",
+     "F4",
+     "F5",
+     "F5",
+     "F6",
+     "F6",
+     "F6",
+     "G4",
+     "G4"
+    ],
+    "fingering": [
+     "1-2-3-4",
+     "1-2-3-4",
+     "1-2-3-5",
+     "1-2-4-5"
+    ],
+    "steps": [
+     "D7",
+     "F3",
+     "F6",
+     "F6"
+    ],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "b-lh-gt": {
+   "data": {
+    "id": "b-lh-gt",
+    "kind": "blues",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "LH",
+    "vehicle": "blues",
+    "key": "F",
+    "tempo": {
+     "start": 72,
+     "target": 80
+    },
+    "notation": {
+     "unit": "1/4",
+     "key": "F",
+     "clef": "bass",
+     "tempo": 72,
+     "clickMode": "twofour",
+     "barsPerLine": 4,
+     "bars": [
+      "\"F7\"[!5!_E,!2!A,] z z2",
+      "\"Bb7\"[!5!D,!2!_A,] z z2",
+      "\"F7\"[_E,A,] z z2",
+      "\"F7\"[_E,A,] z z2",
+      "\"Bb7\"[D,_A,] z z2",
+      "\"Bb7\"[D,_A,] z z2",
+      "\"F7\"[_E,A,] z z2",
+      "\"F7\"[_E,A,] z z2",
+      "\"C7\"[!5!E,!2!B,] z z2",
+      "\"Bb7\"[D,_A,] z z2",
+      "\"F7\"[_E,A,] z z2",
+      "\"C7\"[E,B,] z z2"
+     ]
+    },
+    "keyboard": [
+     {
+      "from": "C3",
+      "to": "C4",
+      "marks": [
+       [
+        "Eb3",
+        "L",
+        "5"
+       ],
+       [
+        "A3",
+        "L",
+        "2"
+       ]
+      ]
+     },
+     {
+      "from": "C3",
+      "to": "C4",
+      "marks": [
+       [
+        "D3",
+        "L",
+        "5"
+       ],
+       [
+        "Ab3",
+        "L",
+        "2"
+       ]
+      ]
+     },
+     {
+      "from": "C3",
+      "to": "C4",
+      "marks": [
+       [
+        "E3",
+        "L",
+        "5"
+       ],
+       [
+        "Bb3",
+        "L",
+        "2"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "blues-guide",
+     "lh-light",
+     "time-24"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A3",
+     "Ab3",
+     "Bb3",
+     "Bb7",
+     "Bb7",
+     "Bb7",
+     "Bb7",
+     "Bb7",
+     "C7",
+     "C7",
+     "C7",
+     "D3",
+     "E3",
+     "Eb3",
+     "F7",
+     "F7",
+     "F7",
+     "F7",
+     "F7",
+     "F7",
+     "F7"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=80"
+    ],
+    "easier": [],
+    "captions": [
+     "A3",
+     "Ab3",
+     "Bb3",
+     "Bb7",
+     "C7",
+     "D3",
+     "E3",
+     "Eb3",
+     "F7"
+    ]
+   }
+  },
+  "b-riff": {
+   "data": {
+    "id": "b-riff",
+    "kind": "blues",
+    "source": {
+     "kind": "original"
+    },
+    "hands": "RH",
+    "vehicle": "blues",
+    "key": "F",
+    "tempo": {
+     "start": 72,
+     "target": 80
+    },
+    "notation": {
+     "unit": "1/8",
+     "key": "F",
+     "tempo": 72,
+     "swing": true,
+     "clickMode": "twofour",
+     "raw": "|: z !1!F !2!_A!3!B !4!c2 !2!A2 | !1!F2 z2 z4 :|"
+    },
+    "skills": [
+     "blues-riff",
+     "time-24"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "Ab4",
+     "Ab4",
+     "Bb4",
+     "C5",
+     "F4",
+     "F4"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=80"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "b-ht": {
+   "data": {
+    "id": "b-ht",
+    "kind": "blues",
+    "source": {
+     "kind": "original"
+    },
+    "hands": "both",
+    "vehicle": "blues",
+    "key": "F",
+    "tempo": {
+     "start": 66,
+     "target": 80
+    },
+    "notation": {
+     "unit": "1/8",
+     "key": "F",
+     "tempo": 66,
+     "swing": true,
+     "clickMode": "twofour",
+     "barsPerLine": 4,
+     "rh": [
+      "\"F7\"z F _AB c2 A2",
+      "\"Bb7\"F2 z2 z4",
+      "\"F7\"z F _AB c2 A2",
+      "\"F7\"F2 z2 z4",
+      "\"Bb7\"z F _AB c2 A2",
+      "\"Bb7\"F2 z2 z4",
+      "\"F7\"z F _AB c2 A2",
+      "\"F7\"F2 z2 z4",
+      "\"C7\"z F _AB c2 A2",
+      "\"Bb7\"F2 z2 z4",
+      "\"F7\"z F _AB c2 A2",
+      "\"C7\"F2 z2 z4"
+     ],
+     "lh": [
+      "[_E,A,]2 z2 z4",
+      "[D,_A,]2 z2 z4",
+      "[_E,A,]2 z2 z4",
+      "[_E,A,]2 z2 z4",
+      "[D,_A,]2 z2 z4",
+      "[D,_A,]2 z2 z4",
+      "[_E,A,]2 z2 z4",
+      "[_E,A,]2 z2 z4",
+      "[E,B,]2 z2 z4",
+      "[D,_A,]2 z2 z4",
+      "[_E,A,]2 z2 z4",
+      "[E,B,]2 z2 z4"
+     ],
+     "gain": [
+      1,
+      0.6
+     ]
+    },
+    "skills": [
+     "blues-ht",
+     "blues-guide",
+     "blues-riff",
+     "time-24"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [
+     "♩=66"
+    ],
+    "check": [
+     "♩=72",
+     "♩=80"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "bach-subj": {
+   "data": {
+    "id": "bach-subj",
+    "kind": "bach",
+    "source": {
+     "kind": "bach",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://imslp.org/wiki/Inventions_and_Sinfonias,_BWV_772-801_(Bach,_Johann_Sebastian)"
+      }
+     ]
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 40,
+     "target": 50
+    },
+    "notation": {
+     "meter": "2/4",
+     "unit": "1/16",
+     "key": "C",
+     "tempo": 40,
+     "bars": [
+      "z!1!C!2!D!3!E !4!F!2!D!3!E!1!C"
+     ]
+    },
+    "skills": [
+     "bach-inv1-m1-rh"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "C4",
+     "C4",
+     "D4",
+     "D4",
+     "E4",
+     "E4",
+     "F4"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "bach-m1-rh": {
+   "data": {
+    "id": "bach-m1-rh",
+    "kind": "bach",
+    "source": {
+     "kind": "bach",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://imslp.org/wiki/Inventions_and_Sinfonias,_BWV_772-801_(Bach,_Johann_Sebastian)"
+      }
+     ]
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 40,
+     "target": 50
+    },
+    "notation": {
+     "meter": "C",
+     "unit": "1/16",
+     "key": "C",
+     "tempo": 40,
+     "bars": [
+      "z!1!C!2!D!3!E !4!F!2!D!3!E!1!C !2!G2!5!c2 !4!B2!5!c2"
+     ]
+    },
+    "skills": [
+     "bach-inv1-m1-rh"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "B4",
+     "C4",
+     "C4",
+     "C5",
+     "C5",
+     "D4",
+     "D4",
+     "E4",
+     "E4",
+     "F4",
+     "G4"
+    ],
+    "fingering": [
+     "1-2-3-4-2-3-1"
+    ],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "bach-m1-lh": {
+   "data": {
+    "id": "bach-m1-lh",
+    "kind": "bach",
+    "source": {
+     "kind": "bach",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://imslp.org/wiki/Inventions_and_Sinfonias,_BWV_772-801_(Bach,_Johann_Sebastian)"
+      }
+     ]
+    },
+    "hands": "LH",
+    "key": "C",
+    "tempo": {
+     "start": 40
+    },
+    "notation": {
+     "meter": "C",
+     "unit": "1/16",
+     "key": "C",
+     "clef": "bass",
+     "tempo": 40,
+     "bars": [
+      "z8 z!5!C,!4!D,!3!E, !2!F,!4!D,!3!E,!5!C,"
+     ]
+    },
+    "skills": [
+     "bach-inv1-m1-lh",
+     "lh-light"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "C3",
+     "C3",
+     "D3",
+     "D3",
+     "E3",
+     "E3",
+     "F3"
+    ],
+    "fingering": [
+     "5-4-3-2-4-3-5"
+    ],
+    "steps": [
+     "5-4-3-2-4-3-5"
+    ],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "bach-m1-ht": {
+   "data": {
+    "id": "bach-m1-ht",
+    "kind": "bach",
+    "source": {
+     "kind": "bach",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://imslp.org/wiki/Inventions_and_Sinfonias,_BWV_772-801_(Bach,_Johann_Sebastian)"
+      }
+     ]
+    },
+    "hands": "both",
+    "key": "C",
+    "tempo": {
+     "start": 36,
+     "target": 40
+    },
+    "notation": {
+     "meter": "C",
+     "unit": "1/16",
+     "key": "C",
+     "tempo": 36,
+     "rh": [
+      "z!1!C!2!D!3!E !4!F!2!D!3!E!1!C !2!G2!5!c2 !4!B2!5!c2"
+     ],
+     "lh": [
+      "z8 z!5!C,!4!D,!3!E, !2!F,!4!D,!3!E,!5!C,"
+     ]
+    },
+    "skills": [
+     "bach-inv1-m1-ht"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [
+     "♩=36"
+    ],
+    "check": [
+     "♩=36"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "bach-m2-rh": {
+   "data": {
+    "id": "bach-m2-rh",
+    "kind": "bach",
+    "source": {
+     "kind": "bach",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://imslp.org/wiki/Inventions_and_Sinfonias,_BWV_772-801_(Bach,_Johann_Sebastian)"
+      }
+     ]
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 40
+    },
+    "notation": {
+     "meter": "C",
+     "unit": "1/16",
+     "key": "C",
+     "tempo": 40,
+     "bars": [
+      "!2!d!1!G!2!A!3!B !4!c!2!A!3!B!1!G !2!d2!5!g2 !4!f2!5!g2"
+     ]
+    },
+    "skills": [
+     "bach-inv1-m2-rh"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "A4",
+     "B4",
+     "B4",
+     "C5",
+     "D5",
+     "D5",
+     "F5",
+     "G4",
+     "G4",
+     "G5",
+     "G5"
+    ],
+    "fingering": [],
+    "steps": [
+     "D5"
+    ],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "ear-quality": {
+   "data": {
+    "id": "ear-quality",
+    "kind": "ear",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "RH",
+    "tempo": {
+     "start": 60
+    },
+    "skills": [
+     "ear-quality"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "ear-recall-1": {
+   "data": {
+    "id": "ear-recall-1",
+    "kind": "ear",
+    "source": {
+     "kind": "original"
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 72
+    },
+    "hideNotation": true,
+    "notation": {
+     "unit": "1/8",
+     "key": "C",
+     "tempo": 72,
+     "bars": [
+      "cBA_A G2 E2"
+     ]
+    },
+    "keyboard": [
+     {
+      "from": "C4",
+      "to": "E5",
+      "targets": [
+       [
+        "C5",
+        "start"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "ear-sing",
+     "c6dim-line"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [
+     "C5"
+    ],
+    "check": [],
+    "easier": [
+     "♩=56"
+    ],
+    "captions": [
+     "C5"
+    ]
+   }
+  },
+  "ear-recall-2": {
+   "data": {
+    "id": "ear-recall-2",
+    "kind": "ear",
+    "source": {
+     "kind": "original"
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 72
+    },
+    "hideNotation": true,
+    "notation": {
+     "unit": "1/8",
+     "key": "C",
+     "tempo": 72,
+     "bars": [
+      "EFG_A =A2 G2"
+     ]
+    },
+    "keyboard": [
+     {
+      "from": "C4",
+      "to": "C5",
+      "targets": [
+       [
+        "E4",
+        "start"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "ear-sing",
+     "c6dim-line"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [
+     "E4"
+    ],
+    "check": [],
+    "easier": [],
+    "captions": [
+     "E4"
+    ]
+   }
+  },
+  "ear-recall-3": {
+   "data": {
+    "id": "ear-recall-3",
+    "kind": "ear",
+    "source": {
+     "kind": "original"
+    },
+    "hands": "RH",
+    "key": "F",
+    "tempo": {
+     "start": 88
+    },
+    "hideNotation": true,
+    "notation": {
+     "unit": "1/8",
+     "key": "F",
+     "tempo": 88,
+     "swing": true,
+     "clickMode": "twofour",
+     "bars": [
+      "F_ABc A2 F2"
+     ]
+    },
+    "keyboard": [
+     {
+      "from": "C4",
+      "to": "C5",
+      "targets": [
+       [
+        "F4",
+        "start"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "ear-sing"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [
+     "F4"
+    ],
+    "check": [],
+    "easier": [],
+    "captions": [
+     "F4"
+    ]
+   }
+  },
+  "lis-lester-1": {
+   "data": {
+    "id": "lis-lester-1",
+    "kind": "listening",
+    "source": {
+     "kind": "recording",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://gwallter.com/music/lester-young-and-oh-lady-be-good.html"
+      }
+     ]
+    },
+    "hands": "RH",
+    "tempo": {
+     "start": 0
+    },
+    "recording": {
+     "artist": "Jones-Smith Incorporated (Lester Young, tenor saxophone)",
+     "album": "Released on Vocalion; reissued in Lester Young with Count Basie, Columbia/Okeh/Vocalion sessions",
+     "recorded": "November 9, 1936, Chicago",
+     "personnel": "Lester Young (ts), Carl Smith (tp), Count Basie (p), Walter Page (b), Jo Jones (d)",
+     "sourceUrl": "https://gwallter.com/music/lester-young-and-oh-lady-be-good.html"
+    },
+    "skills": [
+     "lester-1",
+     "ear-sing"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "lester-by-ear": {
+   "data": {
+    "id": "lester-by-ear",
+    "kind": "ear",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "RH",
+    "vehicle": "indiana",
+    "key": "G",
+    "tempo": {
+     "start": 0
+    },
+    "keyboard": [
+     {
+      "from": "F4",
+      "to": "A5",
+      "targets": [
+       [
+        "D5",
+        "start"
+       ]
+      ]
+     }
+    ],
+    "skills": [
+     "lester-1",
+     "ear-sing"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "D5"
+    ],
+    "fingering": [],
+    "steps": [
+     "C5",
+     "D5",
+     "F3"
+    ],
+    "check": [],
+    "easier": [],
+    "captions": [
+     "D5"
+    ]
+   }
+  },
+  "lis-bud-celia": {
+   "data": {
+    "id": "lis-bud-celia",
+    "kind": "listening",
+    "source": {
+     "kind": "recording",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://en.wikipedia.org/wiki/Jazz_Giant"
+      }
+     ]
+    },
+    "hands": "both",
+    "tempo": {
+     "start": 0
+    },
+    "recording": {
+     "artist": "Bud Powell Trio",
+     "album": "Jazz Giant (Norgran/Verve); also in The Complete Bud Powell on Verve",
+     "recorded": "February 23, 1949",
+     "personnel": "Bud Powell (p), Ray Brown (b), Max Roach (d)",
+     "sourceUrl": "https://en.wikipedia.org/wiki/Jazz_Giant"
+    },
+    "skills": [
+     "blues-guide"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "lis-clark": {
+   "data": {
+    "id": "lis-clark",
+    "kind": "listening",
+    "source": {
+     "kind": "recording",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://en.wikipedia.org/wiki/Sonny_Clark_Trio"
+      }
+     ]
+    },
+    "hands": "RH",
+    "tempo": {
+     "start": 0
+    },
+    "recording": {
+     "artist": "Sonny Clark",
+     "album": "Sonny Clark Trio (Blue Note BLP 1579)",
+     "recorded": "October 13, 1957",
+     "sourceUrl": "https://en.wikipedia.org/wiki/Sonny_Clark_Trio"
+    },
+    "skills": [
+     "ear-sing"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "lis-silver": {
+   "data": {
+    "id": "lis-silver",
+    "kind": "listening",
+    "source": {
+     "kind": "recording",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://en.wikipedia.org/wiki/Horace_Silver_and_the_Jazz_Messengers"
+      }
+     ]
+    },
+    "hands": "both",
+    "tempo": {
+     "start": 0
+    },
+    "recording": {
+     "artist": "Horace Silver and the Jazz Messengers",
+     "album": "Horace Silver and the Jazz Messengers (Blue Note BLP 1518)",
+     "recorded": "November 13, 1954",
+     "personnel": "Horace Silver (p), Kenny Dorham (tp), Hank Mobley (ts), Doug Watkins (b), Art Blakey (d)",
+     "sourceUrl": "https://en.wikipedia.org/wiki/Horace_Silver_and_the_Jazz_Messengers"
+    },
+    "skills": [
+     "time-24"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "read-01": {
+   "data": {
+    "kind": "reading",
+    "source": {
+     "kind": "original"
+    },
+    "tempo": {
+     "start": 40
+    },
+    "id": "read-01",
+    "hands": "RH",
+    "key": "C",
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "tempo": 40,
+     "bars": [
+      "C E D F",
+      "E G F2",
+      "E D F E",
+      "C4"
+     ]
+    },
+    "skills": [
+     "reading-treble"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "A4",
+     "C4"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "read-02": {
+   "data": {
+    "kind": "reading",
+    "source": {
+     "kind": "original"
+    },
+    "tempo": {
+     "start": 40
+    },
+    "id": "read-02",
+    "hands": "LH",
+    "key": "C",
+    "notation": {
+     "unit": "1/4",
+     "key": "C",
+     "clef": "bass",
+     "tempo": 40,
+     "bars": [
+      "C, D, E, C,",
+      "F, E, D,2",
+      "E, F, E, D,",
+      "C,4"
+     ]
+    },
+    "skills": [
+     "reading-bass"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "C3",
+     "F3"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "read-03": {
+   "data": {
+    "kind": "reading",
+    "source": {
+     "kind": "original"
+    },
+    "tempo": {
+     "start": 40
+    },
+    "id": "read-03",
+    "hands": "RH",
+    "key": "F",
+    "notation": {
+     "unit": "1/4",
+     "key": "F",
+     "tempo": 40,
+     "bars": [
+      "F A G B",
+      "A c B2",
+      "A G F G",
+      "F4"
+     ]
+    },
+    "skills": [
+     "reading-treble"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "C5",
+     "F4"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "read-04": {
+   "data": {
+    "kind": "reading",
+    "source": {
+     "kind": "original"
+    },
+    "tempo": {
+     "start": 40
+    },
+    "id": "read-04",
+    "hands": "LH",
+    "key": "G",
+    "notation": {
+     "unit": "1/4",
+     "key": "G",
+     "clef": "bass",
+     "tempo": 40,
+     "bars": [
+      "G,, A,, B,, G,,",
+      "C, B,, A,,2",
+      "B,, C, B,, A,,",
+      "G,,4"
+     ]
+    },
+    "skills": [
+     "reading-bass"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "C3",
+     "G2"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "read-05": {
+   "data": {
+    "kind": "reading",
+    "source": {
+     "kind": "original"
+    },
+    "tempo": {
+     "start": 40
+    },
+    "id": "read-05",
+    "hands": "RH",
+    "key": "G",
+    "notation": {
+     "unit": "1/4",
+     "key": "G",
+     "tempo": 40,
+     "bars": [
+      "G B A G",
+      "F G A2",
+      "B d c B",
+      "G4"
+     ]
+    },
+    "skills": [
+     "reading-treble"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "D5",
+     "F#4"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "read-06": {
+   "data": {
+    "kind": "reading",
+    "source": {
+     "kind": "original"
+    },
+    "tempo": {
+     "start": 40
+    },
+    "id": "read-06",
+    "hands": "LH",
+    "key": "F",
+    "notation": {
+     "unit": "1/4",
+     "key": "F",
+     "clef": "bass",
+     "tempo": 40,
+     "bars": [
+      "F,, G,, A,, F,,",
+      "B,, A,, G,,2",
+      "A,, B,, A,, G,,",
+      "F,,4"
+     ]
+    },
+    "skills": [
+     "reading-bass"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "Bb2",
+     "F2"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "read-07": {
+   "data": {
+    "kind": "reading",
+    "source": {
+     "kind": "original"
+    },
+    "tempo": {
+     "start": 40
+    },
+    "id": "read-07",
+    "hands": "RH",
+    "key": "C",
+    "notation": {
+     "unit": "1/8",
+     "key": "C",
+     "tempo": 40,
+     "bars": [
+      "C2 E2 G2 E2",
+      "FEDC D4",
+      "E2 G2 A2 G2",
+      "c8"
+     ]
+    },
+    "skills": [
+     "reading-treble"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "C4",
+     "C5"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "♩=40"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "free-c6": {
+   "data": {
+    "id": "free-c6",
+    "kind": "free",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "RH",
+    "key": "C",
+    "tempo": {
+     "start": 72
+    },
+    "skills": [
+     "c6dim-line",
+     "time-24"
+    ]
+   },
+   "tokens": {
+    "spelling": [
+     "C4",
+     "C6"
+    ],
+    "fingering": [],
+    "steps": [],
+    "check": [
+     "C6"
+    ],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "baseline": {
+   "data": {
+    "id": "baseline",
+    "kind": "baseline",
+    "source": {
+     "kind": "baseline"
+    },
+    "hands": "both",
+    "tempo": {
+     "start": 60
+    },
+    "skills": [],
+    "link": {
+     "href": "/baseline.html"
+    }
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "review-w01": {
+   "data": {
+    "id": "review-w01",
+    "kind": "review",
+    "source": {
+     "kind": "adaptation"
+    },
+    "hands": "both",
+    "tempo": {
+     "start": 60
+    },
+    "skills": []
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  }
+ },
+ "lessons": {
+  "W01D01": {
+   "data": {
+    "id": "W01D01",
+    "week": 1,
+    "day": 1,
+    "date": "2026-10-24",
+    "start": "10:00",
+    "minutes": 120,
+    "focus": [
+     "c6dim-line",
+     "bach-inv1-m1-rh",
+     "lester-1",
+     "touch"
+    ],
+    "blocks": [
+     {
+      "id": "a1",
+      "side": "A",
+      "kind": "setup",
+      "minutes": 5
+     },
+     {
+      "id": "a2",
+      "side": "A",
+      "kind": "baseline",
+      "minutes": 15,
+      "exerciseIds": [
+       "baseline"
+      ]
+     },
+     {
+      "id": "a3",
+      "side": "A",
+      "kind": "break",
+      "minutes": 3
+     },
+     {
+      "id": "a4",
+      "side": "A",
+      "kind": "baseline",
+      "minutes": 12,
+      "exerciseIds": [
+       "baseline"
+      ]
+     },
+     {
+      "id": "a5",
+      "side": "A",
+      "kind": "technique",
+      "minutes": 8,
+      "exerciseIds": [
+       "tech-drop"
+      ]
+     },
+     {
+      "id": "a6",
+      "side": "A",
+      "kind": "harris",
+      "minutes": 12,
+      "exerciseIds": [
+       "h-scale"
+      ]
+     },
+     {
+      "id": "b0",
+      "side": "B",
+      "kind": "break",
+      "minutes": 7
+     },
+     {
+      "id": "b1",
+      "side": "B",
+      "kind": "harris",
+      "minutes": 10,
+      "exerciseIds": [
+       "h-scale-8"
+      ]
+     },
+     {
+      "id": "b2",
+      "side": "B",
+      "kind": "bach",
+      "minutes": 13,
+      "exerciseIds": [
+       "bach-subj"
+      ]
+     },
+     {
+      "id": "b3",
+      "side": "B",
+      "kind": "listening",
+      "minutes": 10,
+      "exerciseIds": [
+       "lis-lester-1"
+      ]
+     },
+     {
+      "id": "b4",
+      "side": "B",
+      "kind": "reading",
+      "minutes": 5,
+      "exerciseIds": [
+       "read-01"
+      ]
+     },
+     {
+      "id": "b5",
+      "side": "B",
+      "kind": "free",
+      "minutes": 10,
+      "exerciseIds": [
+       "free-c6"
+      ]
+     },
+     {
+      "id": "b6",
+      "side": "B",
+      "kind": "retrieval",
+      "minutes": 10
+     }
+    ],
+    "applies": [],
+    "essential": {
+     "minutes": 20,
+     "blocks": [
+      {
+       "id": "e1",
+       "kind": "checkin",
+       "minutes": 2
+      },
+      {
+       "id": "e2",
+       "kind": "baseline",
+       "minutes": 12,
+       "exerciseIds": [
+        "baseline"
+       ]
+      },
+      {
+       "id": "e3",
+       "kind": "harris",
+       "minutes": 4,
+       "exerciseIds": [
+        "h-scale"
+       ]
+      },
+      {
+       "id": "e4",
+       "kind": "retrieval",
+       "minutes": 2
+      }
+     ]
+    }
+   },
+   "tokens": {
+    "objective": [],
+    "application": [],
+    "blocks": [
+     [
+      "D4",
+      "E4"
+     ],
+     [],
+     [],
+     [],
+     [],
+     [
+      "♩=50"
+     ],
+     [],
+     [
+      "C6",
+      "♩=50"
+     ],
+     [],
+     [],
+     [
+      "♩=40"
+     ],
+     [
+      "C6",
+      "♩=72"
+     ],
+     [],
+     [],
+     [],
+     [],
+     []
+    ]
+   }
+  },
+  "W01D02": {
+   "data": {
+    "id": "W01D02",
+    "week": 1,
+    "day": 2,
+    "date": "2026-10-25",
+    "start": "13:00",
+    "minutes": 120,
+    "focus": [
+     "c6dim-chords",
+     "blues-guide",
+     "bach-inv1-m1-rh",
+     "ear-quality"
+    ],
+    "blocks": [
+     {
+      "id": "a1",
+      "side": "A",
+      "kind": "checkin",
+      "minutes": 4
+     },
+     {
+      "id": "a2",
+      "side": "A",
+      "kind": "retrieval",
+      "minutes": 4,
+      "exerciseIds": [
+       "h-scale",
+       "bach-subj"
+      ]
+     },
+     {
+      "id": "a3",
+      "side": "A",
+      "kind": "technique",
+      "minutes": 8,
+      "exerciseIds": [
+       "tech-shape"
+      ]
+     },
+     {
+      "id": "a4",
+      "side": "A",
+      "kind": "harris",
+      "minutes": 24,
+      "exerciseIds": [
+       "h-move-5"
+      ]
+     },
+     {
+      "id": "a5",
+      "side": "A",
+      "kind": "ear",
+      "minutes": 8,
+      "exerciseIds": [
+       "ear-quality"
+      ]
+     },
+     {
+      "id": "a6",
+      "side": "A",
+      "kind": "break",
+      "minutes": 6
+     },
+     {
+      "id": "b1",
+      "side": "B",
+      "kind": "technique",
+      "minutes": 6,
+      "exerciseIds": [
+       "tech-lh52"
+      ]
+     },
+     {
+      "id": "b2",
+      "side": "B",
+      "kind": "blues",
+      "minutes": 20,
+      "exerciseIds": [
+       "b-lh-gt"
+      ]
+     },
+     {
+      "id": "b3",
+      "side": "B",
+      "kind": "break",
+      "minutes": 3
+     },
+     {
+      "id": "b4",
+      "side": "B",
+      "kind": "bach",
+      "minutes": 14,
+      "exerciseIds": [
+       "bach-m1-rh"
+      ]
+     },
+     {
+      "id": "b5",
+      "side": "B",
+      "kind": "listening",
+      "minutes": 10,
+      "exerciseIds": [
+       "lis-bud-celia"
+      ]
+     },
+     {
+      "id": "b6",
+      "side": "B",
+      "kind": "reading",
+      "minutes": 5,
+      "exerciseIds": [
+       "read-02"
+      ]
+     },
+     {
+      "id": "b7",
+      "side": "B",
+      "kind": "retrieval",
+      "minutes": 8
+     }
+    ],
+    "applies": [
+     "blues"
+    ],
+    "essential": {
+     "minutes": 20,
+     "blocks": [
+      {
+       "id": "e1",
+       "kind": "checkin",
+       "minutes": 2
+      },
+      {
+       "id": "e2",
+       "kind": "harris",
+       "minutes": 8,
+       "exerciseIds": [
+        "h-move-5"
+       ]
+      },
+      {
+       "id": "e3",
+       "kind": "blues",
+       "minutes": 5,
+       "exerciseIds": [
+        "b-lh-gt"
+       ]
+      },
+      {
+       "id": "e4",
+       "kind": "bach",
+       "minutes": 3,
+       "exerciseIds": [
+        "bach-m1-rh"
+       ]
+      },
+      {
+       "id": "e5",
+       "kind": "retrieval",
+       "minutes": 2
+      }
+     ]
+    }
+   },
+   "tokens": {
+    "objective": [
+     "C6"
+    ],
+    "application": [],
+    "blocks": [
+     [],
+     [],
+     [],
+     [
+      "♩=50"
+     ],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [
+      "♩=50"
+     ],
+     [],
+     [],
+     []
+    ]
+   }
+  },
+  "W01D03": {
+   "data": {
+    "id": "W01D03",
+    "week": 1,
+    "day": 3,
+    "date": "2026-10-26",
+    "start": "07:30",
+    "minutes": 60,
+    "focus": [
+     "c6dim-chords",
+     "blues-riff",
+     "bach-inv1-m1-lh",
+     "rh-thumb"
+    ],
+    "blocks": [
+     {
+      "id": "1",
+      "kind": "checkin",
+      "minutes": 3
+     },
+     {
+      "id": "2",
+      "kind": "technique",
+      "minutes": 7,
+      "exerciseIds": [
+       "tech-thumb"
+      ]
+     },
+     {
+      "id": "3",
+      "kind": "harris",
+      "minutes": 16,
+      "exerciseIds": [
+       "h-move-oct"
+      ]
+     },
+     {
+      "id": "4",
+      "kind": "break",
+      "minutes": 2
+     },
+     {
+      "id": "5",
+      "kind": "blues",
+      "minutes": 7,
+      "exerciseIds": [
+       "b-riff"
+      ]
+     },
+     {
+      "id": "6",
+      "kind": "blues",
+      "minutes": 7,
+      "exerciseIds": [
+       "b-ht"
+      ]
+     },
+     {
+      "id": "7",
+      "kind": "bach",
+      "minutes": 10,
+      "exerciseIds": [
+       "bach-m1-lh"
+      ]
+     },
+     {
+      "id": "8",
+      "kind": "reading",
+      "minutes": 4,
+      "exerciseIds": [
+       "read-03"
+      ]
+     },
+     {
+      "id": "9",
+      "kind": "retrieval",
+      "minutes": 4
+     }
+    ],
+    "applies": [
+     "blues"
+    ],
+    "essential": {
+     "minutes": 15,
+     "blocks": [
+      {
+       "id": "e1",
+       "kind": "checkin",
+       "minutes": 1
+      },
+      {
+       "id": "e2",
+       "kind": "harris",
+       "minutes": 6,
+       "exerciseIds": [
+        "h-move-oct"
+       ]
+      },
+      {
+       "id": "e3",
+       "kind": "blues",
+       "minutes": 4,
+       "exerciseIds": [
+        "b-riff"
+       ]
+      },
+      {
+       "id": "e4",
+       "kind": "bach",
+       "minutes": 3,
+       "exerciseIds": [
+        "bach-m1-lh"
+       ]
+      },
+      {
+       "id": "e5",
+       "kind": "retrieval",
+       "minutes": 1
+      }
+     ]
+    }
+   },
+   "tokens": {
+    "objective": [],
+    "application": [],
+    "blocks": [
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     []
+    ]
+   }
+  },
+  "W01D04": {
+   "data": {
+    "id": "W01D04",
+    "week": 1,
+    "day": 4,
+    "date": "2026-10-27",
+    "start": "07:30",
+    "minutes": 60,
+    "focus": [
+     "lester-1",
+     "c6dim-chords",
+     "bach-inv1-m1-lh",
+     "bach-inv1-m2-rh"
+    ],
+    "blocks": [
+     {
+      "id": "1",
+      "kind": "checkin",
+      "minutes": 3
+     },
+     {
+      "id": "2",
+      "kind": "technique",
+      "minutes": 6,
+      "exerciseIds": [
+       "tech-five-g"
+      ]
+     },
+     {
+      "id": "3",
+      "kind": "ear",
+      "minutes": 14,
+      "exerciseIds": [
+       "lis-lester-1",
+       "lester-by-ear"
+      ]
+     },
+     {
+      "id": "4",
+      "kind": "break",
+      "minutes": 2
+     },
+     {
+      "id": "5",
+      "kind": "harris",
+      "minutes": 10,
+      "exerciseIds": [
+       "h-move-oct"
+      ]
+     },
+     {
+      "id": "6",
+      "kind": "bach",
+      "minutes": 10,
+      "exerciseIds": [
+       "bach-m1-rh",
+       "bach-m1-lh",
+       "bach-m2-rh"
+      ]
+     },
+     {
+      "id": "7",
+      "kind": "reading",
+      "minutes": 4,
+      "exerciseIds": [
+       "read-04"
+      ]
+     },
+     {
+      "id": "8",
+      "kind": "listening",
+      "minutes": 7,
+      "exerciseIds": [
+       "lis-clark"
+      ]
+     },
+     {
+      "id": "9",
+      "kind": "retrieval",
+      "minutes": 4
+     }
+    ],
+    "applies": [
+     "indiana"
+    ],
+    "essential": {
+     "minutes": 20,
+     "blocks": [
+      {
+       "id": "e1",
+       "kind": "checkin",
+       "minutes": 2
+      },
+      {
+       "id": "e2",
+       "kind": "ear",
+       "minutes": 8,
+       "exerciseIds": [
+        "lester-by-ear"
+       ]
+      },
+      {
+       "id": "e3",
+       "kind": "harris",
+       "minutes": 5,
+       "exerciseIds": [
+        "h-move-oct"
+       ]
+      },
+      {
+       "id": "e4",
+       "kind": "bach",
+       "minutes": 3,
+       "exerciseIds": [
+        "bach-subj",
+        "bach-m1-lh"
+       ]
+      },
+      {
+       "id": "e5",
+       "kind": "retrieval",
+       "minutes": 2
+      }
+     ]
+    }
+   },
+   "tokens": {
+    "objective": [],
+    "application": [
+     "C5",
+     "F3"
+    ],
+    "blocks": [
+     [],
+     [],
+     [
+      "C5",
+      "D5",
+      "F3"
+     ],
+     [],
+     [
+      "A5",
+      "C5",
+      "C6"
+     ],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     []
+    ]
+   }
+  },
+  "W01D05": {
+   "data": {
+    "id": "W01D05",
+    "week": 1,
+    "day": 5,
+    "date": "2026-10-28",
+    "start": "07:30",
+    "minutes": 60,
+    "focus": [
+     "blues-ht",
+     "c6dim-line",
+     "bach-inv1-m2-rh",
+     "ear-sing"
+    ],
+    "blocks": [
+     {
+      "id": "1",
+      "kind": "checkin",
+      "minutes": 3
+     },
+     {
+      "id": "2",
+      "kind": "technique",
+      "minutes": 5,
+      "exerciseIds": [
+       "tech-shape",
+       "tech-lh52"
+      ]
+     },
+     {
+      "id": "3",
+      "kind": "harris",
+      "minutes": 10,
+      "exerciseIds": [
+       "h-scale-8"
+      ]
+     },
+     {
+      "id": "4",
+      "kind": "blues",
+      "minutes": 15,
+      "exerciseIds": [
+       "b-ht"
+      ]
+     },
+     {
+      "id": "5",
+      "kind": "break",
+      "minutes": 2
+     },
+     {
+      "id": "6",
+      "kind": "bach",
+      "minutes": 11,
+      "exerciseIds": [
+       "bach-m2-rh"
+      ]
+     },
+     {
+      "id": "7",
+      "kind": "ear",
+      "minutes": 7,
+      "exerciseIds": [
+       "ear-recall-1",
+       "ear-recall-2"
+      ]
+     },
+     {
+      "id": "8",
+      "kind": "reading",
+      "minutes": 4,
+      "exerciseIds": [
+       "read-05"
+      ]
+     },
+     {
+      "id": "9",
+      "kind": "retrieval",
+      "minutes": 3
+     }
+    ],
+    "applies": [
+     "blues"
+    ],
+    "essential": {
+     "minutes": 20,
+     "blocks": [
+      {
+       "id": "e1",
+       "kind": "checkin",
+       "minutes": 2
+      },
+      {
+       "id": "e2",
+       "kind": "blues",
+       "minutes": 8,
+       "exerciseIds": [
+        "b-ht"
+       ]
+      },
+      {
+       "id": "e3",
+       "kind": "harris",
+       "minutes": 4,
+       "exerciseIds": [
+        "h-scale-8"
+       ]
+      },
+      {
+       "id": "e4",
+       "kind": "bach",
+       "minutes": 4,
+       "exerciseIds": [
+        "bach-m2-rh"
+       ]
+      },
+      {
+       "id": "e5",
+       "kind": "retrieval",
+       "minutes": 2
+      }
+     ]
+    }
+   },
+   "tokens": {
+    "objective": [],
+    "application": [],
+    "blocks": [
+     [],
+     [],
+     [
+      "C4",
+      "C5",
+      "E5"
+     ],
+     [
+      "♩=66"
+     ],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [
+      "C5"
+     ],
+     [],
+     []
+    ]
+   }
+  },
+  "W01D06": {
+   "data": {
+    "id": "W01D06",
+    "week": 1,
+    "day": 6,
+    "date": "2026-10-29",
+    "start": "07:30",
+    "minutes": 60,
+    "focus": [
+     "c6dim-melody",
+     "bach-inv1-m1-ht",
+     "blues-ht"
+    ],
+    "blocks": [
+     {
+      "id": "1",
+      "kind": "checkin",
+      "minutes": 3
+     },
+     {
+      "id": "2",
+      "kind": "technique",
+      "minutes": 5,
+      "exerciseIds": [
+       "tech-shape"
+      ]
+     },
+     {
+      "id": "3",
+      "kind": "harris",
+      "minutes": 15,
+      "exerciseIds": [
+       "h-melody"
+      ]
+     },
+     {
+      "id": "4",
+      "kind": "break",
+      "minutes": 2
+     },
+     {
+      "id": "5",
+      "kind": "bach",
+      "minutes": 12,
+      "exerciseIds": [
+       "bach-m1-ht"
+      ]
+     },
+     {
+      "id": "6",
+      "kind": "blues",
+      "minutes": 10,
+      "exerciseIds": [
+       "b-ht"
+      ]
+     },
+     {
+      "id": "7",
+      "kind": "listening",
+      "minutes": 6,
+      "exerciseIds": [
+       "lis-silver"
+      ]
+     },
+     {
+      "id": "8",
+      "kind": "reading",
+      "minutes": 4,
+      "exerciseIds": [
+       "read-06"
+      ]
+     },
+     {
+      "id": "9",
+      "kind": "retrieval",
+      "minutes": 3
+     }
+    ],
+    "applies": [
+     "blues"
+    ],
+    "essential": {
+     "minutes": 20,
+     "blocks": [
+      {
+       "id": "e1",
+       "kind": "checkin",
+       "minutes": 2
+      },
+      {
+       "id": "e2",
+       "kind": "harris",
+       "minutes": 8,
+       "exerciseIds": [
+        "h-melody"
+       ]
+      },
+      {
+       "id": "e3",
+       "kind": "bach",
+       "minutes": 5,
+       "exerciseIds": [
+        "bach-m1-rh",
+        "bach-m1-lh"
+       ]
+      },
+      {
+       "id": "e4",
+       "kind": "blues",
+       "minutes": 3,
+       "exerciseIds": [
+        "b-ht"
+       ]
+      },
+      {
+       "id": "e5",
+       "kind": "retrieval",
+       "minutes": 2
+      }
+     ]
+    }
+   },
+   "tokens": {
+    "objective": [],
+    "application": [],
+    "blocks": [
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     []
+    ]
+   }
+  },
+  "W01D07": {
+   "data": {
+    "id": "W01D07",
+    "week": 1,
+    "day": 7,
+    "date": "2026-10-30",
+    "start": "07:30",
+    "minutes": 60,
+    "focus": [
+     "f6dim-transfer"
+    ],
+    "blocks": [
+     {
+      "id": "1",
+      "kind": "checkin",
+      "minutes": 3
+     },
+     {
+      "id": "2",
+      "kind": "technique",
+      "minutes": 5,
+      "exerciseIds": [
+       "tech-drop"
+      ]
+     },
+     {
+      "id": "3",
+      "kind": "review",
+      "minutes": 12,
+      "exerciseIds": [
+       "review-w01"
+      ]
+     },
+     {
+      "id": "4",
+      "kind": "harris",
+      "minutes": 10,
+      "exerciseIds": [
+       "h-transfer-f"
+      ]
+     },
+     {
+      "id": "5",
+      "kind": "break",
+      "minutes": 2
+     },
+     {
+      "id": "6",
+      "kind": "bach",
+      "minutes": 10,
+      "exerciseIds": [
+       "bach-m1-rh",
+       "bach-m2-rh"
+      ]
+     },
+     {
+      "id": "7",
+      "kind": "blues",
+      "minutes": 8,
+      "exerciseIds": [
+       "b-ht"
+      ]
+     },
+     {
+      "id": "8",
+      "kind": "reading",
+      "minutes": 4,
+      "exerciseIds": [
+       "read-07"
+      ]
+     },
+     {
+      "id": "9",
+      "kind": "retrieval",
+      "minutes": 6
+     }
+    ],
+    "applies": [
+     "indiana",
+     "blues"
+    ],
+    "essential": {
+     "minutes": 20,
+     "blocks": [
+      {
+       "id": "e1",
+       "kind": "checkin",
+       "minutes": 2
+      },
+      {
+       "id": "e2",
+       "kind": "review",
+       "minutes": 10,
+       "exerciseIds": [
+        "review-w01"
+       ]
+      },
+      {
+       "id": "e3",
+       "kind": "harris",
+       "minutes": 4,
+       "exerciseIds": [
+        "h-transfer-f"
+       ]
+      },
+      {
+       "id": "e4",
+       "kind": "retrieval",
+       "minutes": 4
+      }
+     ]
+    }
+   },
+   "tokens": {
+    "objective": [],
+    "application": [
+     "D7",
+     "F3",
+     "F6",
+     "F6"
+    ],
+    "blocks": [
+     [],
+     [],
+     [],
+     [
+      "F3",
+      "F6"
+     ],
+     [],
+     [
+      "♩=40"
+     ],
+     [],
+     [],
+     [],
+     [],
+     [],
+     [],
+     []
+    ]
+   }
+  }
+ },
+ "phases": [
+  {
+   "id": "P1",
+   "weeks": [
+    1,
+    3
+   ],
+   "tunes": [
+    {
+     "vehicle": "blues"
+    },
+    {
+     "vehicle": "minor-blues"
+    },
+    {
+     "vehicle": "indiana"
+    },
+    {
+     "vehicle": "rhythm"
+    }
+   ],
+   "milestone": {
+    "id": "M1",
+    "week": 3
+   }
+  },
+  {
+   "id": "P2",
+   "weeks": [
+    4,
+    6
+   ],
+   "tunes": [
+    {
+     "vehicle": "blues"
+    },
+    {
+     "vehicle": "rhythm"
+    },
+    {
+     "vehicle": "indiana"
+    },
+    {
+     "vehicle": "minor-blues"
+    }
+   ],
+   "milestone": {
+    "id": "M2",
+    "week": 6
+   }
+  },
+  {
+   "id": "P3",
+   "weeks": [
+    7,
+    9
+   ],
+   "tunes": [
+    {
+     "vehicle": "indiana"
+    },
+    {
+     "vehicle": "rhythm"
+    },
+    {
+     "vehicle": "blues"
+    },
+    {
+     "vehicle": "minor-blues"
+    }
+   ],
+   "milestone": {
+    "id": "M3",
+    "week": 9
+   }
+  },
+  {
+   "id": "P4",
+   "weeks": [
+    10,
+    12
+   ],
+   "tunes": [
+    {
+     "vehicle": "indiana"
+    },
+    {
+     "vehicle": "blues"
+    },
+    {
+     "vehicle": "rhythm"
+    },
+    {
+     "vehicle": "minor-blues"
+    }
+   ],
+   "milestone": {
+    "id": "M4",
+    "week": 12
+   }
+  }
+ ],
+ "vehicles": [
+  {
+   "id": "blues",
+   "key": "F",
+   "abcKey": "F",
+   "tempo": 72,
+   "chart": [
+    {
+     "bars": [
+      "F7",
+      "Bb7",
+      "F7",
+      "F7",
+      "Bb7",
+      "Bb7",
+      "F7",
+      "F7",
+      "C7",
+      "Bb7",
+      "F7",
+      "C7"
+     ]
+    }
+   ],
+   "recordings": [
+    {
+     "artist": "Horace Silver and the Jazz Messengers",
+     "recorded": "November 13, 1954",
+     "sourceUrl": "https://en.wikipedia.org/wiki/Doodlin%27_(Horace_Silver_song)"
+    },
+    {
+     "artist": "Sonny Clark",
+     "recorded": "January 5, 1958, Hackensack, New Jersey (Blue Note)",
+     "sourceUrl": "https://www.jazzdisco.org/sonny-clark/discography/"
+    }
+   ],
+   "theme": {
+    "bg": "cyan",
+    "ink": "night",
+    "acc": "cobalt",
+    "field": "navy"
+   },
+   "source": {}
+  },
+  {
+   "id": "minor-blues",
+   "key": "C minor",
+   "abcKey": "Cm",
+   "tempo": 72,
+   "chart": [
+    {
+     "bars": [
+      "Cm6",
+      "Cm6",
+      "Cm6",
+      "Cm6",
+      "Fm6",
+      "Fm6",
+      "Cm6",
+      "Cm6",
+      "Ab7",
+      "G7",
+      "Cm6",
+      "G7"
+     ]
+    }
+   ],
+   "recordings": [
+    {
+     "artist": "Horace Silver Quintet",
+     "recorded": "November 10, 1956, Hackensack, New Jersey (Blue Note)",
+     "sourceUrl": "https://newyorkjazzworkshop.com/demystifying-the-building-blocks-of-jazz-the-blues-and-basic-song-form-with-horace-silvers-senor-blues/"
+    },
+    {
+     "artist": "John Coltrane",
+     "recorded": "May 5, 1959, Atlantic Studios, New York",
+     "sourceUrl": "https://en.wikipedia.org/wiki/Mr._P.C."
+    }
+   ],
+   "theme": {
+    "bg": "orchid",
+    "ink": "night",
+    "acc": "white",
+    "field": "navy"
+   },
+   "source": {
+    "url": "https://barryharrismethod.com/method/9.5"
+   }
+  },
+  {
+   "id": "rhythm",
+   "key": "B♭",
+   "abcKey": "Bb",
+   "tempo": 72,
+   "chart": [
+    {
+     "mark": "A",
+     "bars": [
+      "Bb6 Gm7",
+      "Cm7 F7",
+      "Dm7 Gm7",
+      "Cm7 F7",
+      "Bb7",
+      "Eb6 E°7",
+      "Bb6 Gm7",
+      "Cm7 F7"
+     ]
+    },
+    {
+     "mark": "A",
+     "bars": [
+      "Bb6 Gm7",
+      "Cm7 F7",
+      "Dm7 Gm7",
+      "Cm7 F7",
+      "Bb7",
+      "Eb6 E°7",
+      "Cm7 F7",
+      "Bb6"
+     ]
+    },
+    {
+     "mark": "B",
+     "bars": [
+      "D7",
+      "D7",
+      "G7",
+      "G7",
+      "C7",
+      "C7",
+      "F7",
+      "F7"
+     ]
+    },
+    {
+     "mark": "A",
+     "bars": [
+      "Bb6 Gm7",
+      "Cm7 F7",
+      "Dm7 Gm7",
+      "Cm7 F7",
+      "Bb7",
+      "Eb6 E°7",
+      "Cm7 F7",
+      "Bb6"
+     ]
+    }
+   ],
+   "recordings": [
+    {
+     "artist": "Count Basie's Kansas City Seven, featuring Lester Young",
+     "recorded": "September 5, 1939, New York (Vocalion 5118)",
+     "sourceUrl": "https://en.wikipedia.org/wiki/Lester_Leaps_In"
+    },
+    {
+     "artist": "Bud Powell",
+     "recorded": "August 9, 1949, WOR Studios, New York (Blue Note)",
+     "sourceUrl": "https://ethaniverson.com/rhythm-and-blues/the-stuff-that-dreams-are-made-of/"
+    },
+    {
+     "artist": "Horace Silver Quintet",
+     "recorded": "November 10, 1956, Hackensack, New Jersey (Blue Note)",
+     "sourceUrl": "https://jazz.com/music/horace-silver-cool-eyes2"
+    }
+   ],
+   "theme": {
+    "bg": "cobalt",
+    "ink": "white",
+    "acc": "cyan",
+    "field": "cyan"
+   },
+   "source": {
+    "url": "https://en.wikipedia.org/wiki/Rhythm_changes"
+   }
+  },
+  {
+   "id": "indiana",
+   "key": "F",
+   "abcKey": "F",
+   "tempo": 66,
+   "chart": [
+    {
+     "mark": "A",
+     "bars": [
+      "F6",
+      "D7",
+      "G7",
+      "G7",
+      "Gm7",
+      "C7",
+      "F6",
+      "Cm7 F7"
+     ]
+    },
+    {
+     "mark": "B",
+     "bars": [
+      "Bb6",
+      "Eb7",
+      "F6",
+      "D7",
+      "G7",
+      "G7",
+      "Gm7",
+      "C7"
+     ]
+    },
+    {
+     "mark": "A",
+     "bars": [
+      "F6",
+      "D7",
+      "G7",
+      "G7",
+      "A7",
+      "Em7b5 A7",
+      "Dm6",
+      "Em7b5 A7"
+     ]
+    },
+    {
+     "mark": "C",
+     "bars": [
+      "Dm6",
+      "Em7b5 A7",
+      "Dm6",
+      "G°7",
+      "F6 D7",
+      "Gm7 C7",
+      "F6",
+      "Gm7 C7"
+     ]
+    }
+   ],
+   "alt": {
+    "key": "A♭",
+    "abcKey": "Ab",
+    "semitones": 3
+   },
+   "recordings": [
+    {
+     "artist": "Lester Young Trio",
+     "recorded": "July 1942, Los Angeles (Philo)",
+     "sourceUrl": "https://adp.library.ucsb.edu/index.php/objects/refer/421212"
+    },
+    {
+     "artist": "Bud Powell Trio",
+     "recorded": "January 10, 1947, New York (Roost)",
+     "sourceUrl": "https://www.jazzdisco.org/bud-powell/catalog/"
+    },
+    {
+     "artist": "Charlie Parker with Miles Davis",
+     "recorded": "May 8, 1947, Harry Smith Studios, New York (Savoy)",
+     "sourceUrl": "https://www.jazzdisco.org/bud-powell/catalog/"
+    }
+   ],
+   "theme": {
+    "bg": "navy",
+    "ink": "white",
+    "acc": "cyan",
+    "field": "cyan"
+   },
+   "source": {
+    "url": "https://www.jazzstandards.com/compositions-0/indiana.htm"
+   }
+  }
+ ]
+}
