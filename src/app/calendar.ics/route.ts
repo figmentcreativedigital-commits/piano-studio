@@ -1,5 +1,6 @@
 import { LESSONS } from "@/content";
 import { buildIcs } from "@/lib/schedule";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -9,8 +10,7 @@ export const dynamic = "force-static";
  * Google Calendar when the plan changes.
  */
 export function GET() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://piano-studio.vercel.app";
-  return new Response(buildIcs(LESSONS, base), {
+  return new Response(buildIcs(LESSONS, SITE_URL), {
     headers: {
       "Content-Type": "text/calendar; charset=utf-8",
       "Content-Disposition": 'attachment; filename="woodshed-piano.ics"',

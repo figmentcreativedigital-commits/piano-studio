@@ -40,6 +40,6 @@ No accounts, no analytics, no server-side storage. Check-ins and ratings stay in
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Absolute site URL for metadata, Open Graph and calendar links. Optional; defaults to the Vercel URL. |
+| `NEXT_PUBLIC_SITE_URL` | Absolute site URL for metadata, Open Graph and calendar links. Optional; defaults to Vercel's production domain (`VERCEL_PROJECT_PRODUCTION_URL`). |
 
 No secrets are required.

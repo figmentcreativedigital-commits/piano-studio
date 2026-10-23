@@ -4,9 +4,10 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://piano-studio.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: { default: "Woodshed", template: "%s | Woodshed" },
   description: "A practice studio for bebop piano and Bach: Barry Harris's harmony, Bud Powell, Horace Silver and Sonny Clark, and Bach's inventions, taught one session at a time.",
   openGraph: {
