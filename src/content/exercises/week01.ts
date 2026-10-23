@@ -807,7 +807,7 @@ export const EXERCISES_W01: Exercise[] = [
     title: "Free play in eight notes",
     subtitle: "Right hand, sixth-diminished scale only",
     kind: "free",
-    source: { kind: "adaptation", note: "Improvising, or making it up as you go, inside the Harris scale." },
+    source: { kind: "adaptation", note: "Improvising inside the Harris scale. That means making it up as you go." },
     hands: "RH",
     key: "C",
     spelling: "Use only C D E F G A♭ A B, anywhere from C4 to C6.",

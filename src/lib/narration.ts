@@ -31,13 +31,13 @@ export const NARRATOR_SAMPLE =
 
 export const TUNES_TITLE = "Three tunes";
 export const TUNES_INTRO =
-  "Every technique in the program is put to work on the same three tunes: Rhythm changes, the blues in major and minor, and “Indiana” with “Donna Lee”. Learn them deeply and most of bebop's harmony comes with them.";
+  "Every skill in the program gets used in the same three tunes. They are Rhythm changes, the blues in major and minor, and “Indiana” with “Donna Lee”. Learn them well, and you learn most of the chords that bebop uses.";
 
 export const ROADMAP_TITLE = "Twelve weeks";
 export const ROADMAP_INTRO =
-  "A provisional plan in four phases. It promises a sound process, not a date for mastery: each milestone is a check you can play, and the plan moves when the evidence does.";
+  "This is a first-draft plan in 4 phases. It promises a good way to work, not a date when you will have it all down. Each milestone is a check you can play. The plan changes when what you can actually play changes.";
 
-export const COMPLETE_LINE = "Every authored lesson is done. The next week arrives after your check-in.";
+export const COMPLETE_LINE = "You have finished every lesson written so far. The next week comes after your check-in.";
 
 export function endTime(start: string, minutes: number): string {
   const [h, m] = start.split(":").map(Number);

@@ -13,83 +13,83 @@ export interface MethodSection {
 export const METHOD_TITLE = "Method";
 
 export const METHOD_INTRO =
-  "Woodshed is a practice studio built for one student: an experienced musician whose ears and harmony are far ahead of his hands at the piano. Here's how it teaches, where its material comes from, and what happens to the data.";
+  "Woodshed is a practice studio built for one student. He is an experienced musician. His ears and his knowledge of chords are far ahead of his hands at the piano. This page explains how Woodshed teaches. It also says where the material comes from, and what happens to your data.";
 
 export const METHOD: MethodSection[] = [
   {
     heading: "A session",
     paragraphs: [
-      "Every session is written out in full and timed to the minute, breaks and the check-in included: sixty minutes on weekdays, two hours on weekends, presented as an LP with its tracklist. Weekend sessions have a side A and a side B with a real break in between.",
-      "Each exercise follows the same cycle where it fits: hear it, sing it, play it, vary it, then play it once from memory. Each one names its fingering, starting tempo, common errors, a single corrective cue, an easier version, and a check you can actually verify, such as three clean runs in a row followed by one from memory the next day. A 15–20 minute essential version replaces the session on a busy day; nothing carries over as homework.",
+      "Every session is written out in full and timed to the minute. That includes the breaks and the check-in. Weekday sessions are 60 minutes. Weekend sessions are 2 hours. Each session looks like an LP record with its track list. Weekend sessions have a side A and a side B, with a real break in between.",
+      "Each exercise follows the same steps where it fits. Hear it, sing it, play it, change it a little, then play it once from memory. Each exercise gives its fingering and starting tempo. It lists common mistakes. It gives 1 cue, a short reminder that fixes them. It has an easier version, too. And it ends with a check you can really test. For example: 3 clean runs in a row, then 1 from memory the next day. On a busy day, a 15–20 minute essential version replaces the session. Nothing carries over as homework.",
     ],
   },
   {
     heading: "Three tunes",
     paragraphs: [
-      "Every technique is applied to the same three tunes: Rhythm changes, the blues in major and minor, and “Indiana” with “Donna Lee”, its bebop line. They hold most of bebop's harmony between them, and they connect: the chain of dominants that opens “Indiana” is the bridge of Rhythm changes, and the C minor blues uses Week 1's scale with one note changed. Each lesson names the tunes it's applied to, and an automated check fails if one doesn't. The Tunes page engraves each set of changes with left-hand guide tones and plays it back at any tempo.",
+      "Every skill you learn gets used in the same three tunes. They are Rhythm changes, the blues in major and minor, and “Indiana” with “Donna Lee”. “Donna Lee” is a bebop melody on the chords of “Indiana”. Together, these tunes hold most of the chords bebop uses. They also connect to each other. The chain of dominants that opens “Indiana” is the bridge of Rhythm changes. The C minor blues uses Week 1's scale with 1 note changed. Each lesson names the tunes it uses. An automatic test fails if a lesson doesn't. The Tunes page writes out the changes for each tune, with left-hand guide tones. It plays them back at any tempo.",
     ],
   },
   {
     heading: "Barry Harris at the center",
     paragraphs: [
-      "The jazz curriculum is built on Barry Harris's teaching: the sixth-diminished scale, chord movement, scales that land chord tones on the beat. Bud Powell, Horace Silver and Sonny Clark are the models, with Lester Young as the source of phrasing.",
-      "Every exercise carries a label: **Barry Harris** for his concepts, **Adaptation** for exercises built on them, **Original study**, **Bach score**, or **Recording**. Each label also says how well the claim is verified. Where a Harris idea has been checked against Barry's own words in class, the label says so and links to the moment in the recording; where it rests only on secondary sources, the label says that instead. The Barry Book, a free collaborative textbook of his system, is a second reference, with chapters on the blues, Rhythm and “Indiana”.",
+      "The jazz lessons are built on Barry Harris's teaching. That means the sixth-diminished scale, chord movement, and scales that put chord tones on the beat. Bud Powell, Horace Silver and Sonny Clark are the models. Lester Young is the model for phrasing. Phrasing is how you shape a musical line, like a spoken sentence.",
+      "Every exercise has a label. **Barry Harris** means it's his idea. **Adaptation** means an exercise built on his ideas. The others are **Original study**, **Bach score** and **Recording**. Each label also says how well the facts behind it are checked. Sometimes a Harris idea has been checked against Barry's own words in class. Then the label says so, and links to that moment in the recording. Sometimes it rests only on what other people wrote about him. Then the label says that instead. The Barry Book is a second source. It's a free textbook of his method, written by many people together. It has chapters on the blues, Rhythm changes and “Indiana”.",
     ],
   },
   {
     heading: "The left hand",
     paragraphs: [
-      "For now the left hand works with fingers 2 to 5 and short, light attacks, and the left thumb stays off the keys. The right hand carries the lines. That suits the style more than it limits it: Bud Powell and Horace Silver often punctuate with brief left-hand chords under long right-hand lines. Any ache switches the next two sessions to right-hand-only versions.",
+      "For now, your left hand uses fingers 2 to 5 only. It plays short, light notes. Your left thumb stays off the keys. Your right hand plays the lines. This fits the style more than it holds you back. Bud Powell and Horace Silver often play short left-hand chords under long right-hand lines. If anything aches, the next 2 sessions switch to right-hand-only versions.",
     ],
   },
   {
-    heading: "Evidence, not timers",
+    heading: "Proof, not timers",
     paragraphs: [
-      "A finished timer proves nothing. After each session a check-in takes under a minute: minutes played, how each focus skill went (steady, close, not yet), comfort, and the main difficulty. The planner reads it and decides the next step.",
+      "A timer running out doesn't prove anything. After each session, you do a check-in. It takes under a minute. You note how many minutes you played and how each focus skill went: steady, close, or not yet. You also note how your hands felt and what was hardest. The planner reads it and decides the next step.",
     ],
     list: [
-      { term: "Missed a day", text: "the sequence resumes where you left off. Nothing doubles up." },
-      { term: "Away more than four days", text: "a ten-minute re-entry check comes first." },
-      { term: "‘Not yet’", text: "that skill's exercises open with their easier version." },
-      { term: "Steady on two different days", text: "the skill is retained, and its review interval doubles." },
+      { term: "Missed a day", text: "you pick up where you left off. Nothing doubles up." },
+      { term: "Away more than 4 days", text: "a 10-minute welcome-back check comes first." },
+      { term: "‘Not yet’", text: "that skill's exercises start with their easier version." },
+      { term: "Steady on 2 different days", text: "the skill counts as learned. The wait before its next review doubles." },
     ],
-    after: ["Every change shows its reason and can be reversed. Self-ratings are labeled as self-ratings. Nothing is presented as measured unless it was."],
+    after: ["Every change shows its reason, and you can undo it. Your own ratings are labeled as your own ratings. Nothing is shown as measured unless it really was."],
   },
   {
     heading: "MIDI",
     paragraphs: [
-      "With the piano connected by USB to Chrome, Edge or Firefox on a computer, the keyboard diagrams light up as you play. Follow mode waits for the right notes before moving on, which helps slow reading. It checks pitches only. It can't assess fingering, posture, tension, touch or swing, and the app doesn't claim to. Safari and iPad browsers don't offer Web MIDI, and everything else works without it.",
+      "Connect the piano by USB to a computer running Chrome, Edge or Firefox. Then the keyboard pictures light up as you play. Follow mode waits for the right notes before it moves on. That helps when you read slowly. It checks only which notes you play. It can't judge your fingering, posture, tight muscles, touch or swing. The app doesn't claim to. Safari and iPad browsers don't offer Web MIDI. Everything else works without it.",
     ],
   },
   {
     heading: "Accessibility",
     paragraphs: [
-      "Every page can be read aloud, a section at a time, with the part being read highlighted. The narrator is a studio voice: each passage of lesson text is voiced once by Google's text-to-speech and kept, and your practice data is never sent. Where the narrator isn't available, your device's own voice reads instead. Musical shorthand is spoken the way a teacher would say it: “A♭4” is read as “A flat 4” and “♩ = 60” as “quarter note equals 60”. In a session, each part can be read aloud as it begins. With the piano connected, a double tap on the sustain pedal moves to the next part, so your hands never leave the keys.",
-      "Every text color meets WCAG AA contrast, and an automated test checks it against the palette. Everything works from the keyboard with a visible focus ring, motion stops when your system asks for reduced motion, and the guided tour can be read aloud too.",
+      "Every page can be read aloud, 1 section at a time. The part being read is highlighted. The narrator is a studio voice. Google's text-to-speech reads each passage of lesson text once, and the sound is saved. Your practice data is never sent. When the narrator isn't available, your device's own voice reads instead. Music shorthand is spoken the way a teacher would say it. “A♭4” is read as “A flat 4”. “♩ = 60” is read as “quarter note equals 60”. In a session, each part can be read aloud as it begins. With the piano connected, tap the sustain pedal twice to move to the next part. That way your hands never leave the keys.",
+      "Every text color meets the WCAG AA rule for contrast. That rule makes sure text stands out clearly from the color behind it. An automatic test checks this for every color the site uses. Everything works from the computer keyboard. A ring shows which item you are on. Motion stops when your system asks for less motion. The guided tour can be read aloud too.",
     ],
   },
   {
     heading: "Your data",
     paragraphs: [
-      "There are no accounts and no analytics. Check-ins, ratings and rep counts stay in the browser on the device you practice on. The Progress page exports a backup file and imports it on another device. Lessons are public; progress is private by design.",
+      "There are no accounts, and no analytics that track what you do. Your check-ins, ratings and rep counts stay in the browser on the device you practice on. The Progress page can export a backup file. You can import it on another device. Lessons are public. Your progress is private, on purpose.",
     ],
   },
   {
     heading: "Calendar",
     paragraphs: [
-      "Sessions go onto Google Calendar as events whose descriptions work on their own. The app doesn't change your calendar by itself. When the plan changes, the next week's events are rewritten from the conversation where the lessons are authored. A static .ics file is also available; importing it adds events once, without ongoing sync.",
+      "Sessions go onto Google Calendar as events. Each event's notes make sense on their own. The app doesn't change your calendar by itself. When the plan changes, next week's events are rewritten. That happens in the conversation where the lessons are written. You can also get a plain .ics calendar file. Importing it adds the events once. It doesn't keep them in sync after that.",
     ],
   },
   {
     heading: "Design",
     paragraphs: [
-      "The palette comes from one record cover, Jackie McLean's *Bluesnik* (1961): cobalt, cyan, orchid and white, with the neutrals drawn from the duotone of its photograph. No other color appears anywhere, and a test enforces it. Each session is a record sleeve in those inks: the session number, its title in heavy italic serif, and a strip of keys marking the notes it's built around. The agenda is the sleeve's tracklist. On the Today page the record slides out of its sleeve once, and it turns only while a session timer is running. Notation always sits on white paper, sized to read from the bench, and every example is engraved with standard beaming, rests that show beat three, and chord symbols in jazz convention.",
+      "The colors come from one record cover, Jackie McLean's *Bluesnik* (1961). They are cobalt, cyan, orchid and white. The darker and softer shades come from the cover photo, which is printed in 2 colors. No other color appears anywhere, and a test makes sure of it. Each session is a record sleeve in those inks. It shows the session number and its title in heavy italic serif type. A strip of keys marks the notes the session is built around. The agenda is the sleeve's track list. On the Today page, the record slides out of its sleeve once. It turns only while a session timer is running. Written music always sits on white paper, big enough to read from the piano bench. Eighth notes are joined by beams in the standard way. Rests are written so you can always see where beat 3 starts. Chord symbols are written the jazz way.",
     ],
   },
   {
     heading: "Under the hood",
     paragraphs: [
-      "Next.js and TypeScript on Vercel. Notation by abcjs, rendered from the same source that drives playback, so what you see is what you hear. Sound is a small Web Audio synthesizer scheduled on the audio clock, with swing applied in playback while the notation stays straight. Automated checks confirm that every session adds up to its exact length, that every bar of every example has the right number of beats, and that every generated chord sounds the pitches its spelling names. The calendar times are checked across the November 1 daylight-saving change.",
+      "The site is built with Next.js and TypeScript, and it runs on Vercel. The written music is drawn by abcjs. The same source drives the sound, so what you see is what you hear. Sound comes from a small Web Audio synthesizer, timed by the audio clock. Playback adds the swing, but the written music stays straight. Automatic tests check 3 things. Every session adds up to its exact length. Every bar of every example has the right number of beats. And every chord the app builds plays the notes its name says. The calendar times are checked across the November 1 daylight-saving change.",
     ],
   },
 ];
