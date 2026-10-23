@@ -106,12 +106,12 @@ export function calendarDescription(l: Lesson, url?: string): string {
     .sort((a, b) => Number(b.skills.some((x) => l.focus.includes(x))) - Number(a.skills.some((x) => l.focus.includes(x))))
     .slice(0, 4);
   if (key.length) {
-    lines.push("Key material:");
+    lines.push("Notes to know:");
     for (const e of key) lines.push(`• ${e.title}: ${e.spelling}${e.fingering ? ` Fingering: ${e.fingering}` : ""}`);
     lines.push("");
   }
-  lines.push("Left hand: fingers 2–5 only, thumb off the keys. Any ache at the thumb base: right hand only.");
-  lines.push(`Short on time? The ${l.essential.minutes}-minute essential version replaces this session.`);
+  lines.push("Left hand: use fingers 2 to 5 only, and keep your thumb off the keys. If the base of your thumb aches, play with your right hand only.");
+  lines.push(`Short on time? Do the ${l.essential.minutes}-minute version instead. It replaces the full session.`);
   return lines.join("\n");
 }
 

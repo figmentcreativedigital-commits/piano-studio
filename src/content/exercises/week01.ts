@@ -492,7 +492,7 @@ export const EXERCISES_W01: Exercise[] = [
   },
   {
     id: "bach-m1-rh",
-    title: "Invention No. 1, m. 1, right hand",
+    title: "Invention No. 1, bar 1, right hand",
     subtitle: "Measure 1: the subject, then the eighth notes that answer it",
     kind: "bach",
     source: BACH_772,
@@ -513,7 +513,7 @@ export const EXERCISES_W01: Exercise[] = [
   },
   {
     id: "bach-m1-lh",
-    title: "Invention No. 1, m. 1, left hand",
+    title: "Invention No. 1, bar 1, left hand",
     subtitle: "The subject an octave lower, with no thumb",
     kind: "bach",
     source: BACH_772,
@@ -536,7 +536,7 @@ export const EXERCISES_W01: Exercise[] = [
   },
   {
     id: "bach-m1-ht",
-    title: "Invention No. 1, m. 1, hands together",
+    title: "Invention No. 1, bar 1, hands together",
     subtitle: "Two voices: a melody in each hand",
     kind: "bach",
     source: BACH_772,
@@ -558,7 +558,7 @@ export const EXERCISES_W01: Exercise[] = [
   },
   {
     id: "bach-m2-rh",
-    title: "Invention No. 1, m. 2, right hand",
+    title: "Invention No. 1, bar 2, right hand",
     subtitle: "The subject again, starting on G",
     kind: "bach",
     source: BACH_772,
