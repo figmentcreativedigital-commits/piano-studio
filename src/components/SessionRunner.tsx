@@ -42,7 +42,7 @@ export function SessionRunner({ id }: { id: string }) {
       kind: "review",
       title: "Re-entry check",
       minutes: 10,
-      text: ["From memory, no warm-up: play each item from your last session once and note what held.", ...(last ? [`Last session: ${lessonLabel(last)}.`] : [])],
+      text: ["No warm-up. Play each item from your last session once, from memory. Notice what stuck.", ...(last ? [`Last session: ${lessonLabel(last)}.`] : [])],
       exerciseIds: last ? [...new Set(last.blocks.flatMap((b) => b.exerciseIds ?? []))].filter((x) => getExercise(x)?.kind !== "listening").slice(0, 3) : [],
     };
     const idx = base.findIndex((b) => !["checkin", "setup", "break", "retrieval"].includes(b.kind) && b.minutes > 10);
@@ -147,7 +147,7 @@ export function SessionRunner({ id }: { id: string }) {
 
       <div className="now-block">
         <span className="now-kind">
-          {BLOCK_LABEL[block.kind]}, block {idx + 1} of {blocks.length}
+          {BLOCK_LABEL[block.kind]}, part {idx + 1} of {blocks.length}
           {block.side ? `, side ${block.side}` : ""}
         </span>
         <h1 className="now-title" {...readable(block.title)}>
@@ -186,7 +186,7 @@ export function SessionRunner({ id }: { id: string }) {
             )}
           </div>
         </div>
-        {remaining <= 0 && <p className="hint" style={{ margin: 0 }}>Time&apos;s up for this block. Finish the rep you&apos;re on, then move on.</p>}
+        {remaining <= 0 && <p className="hint" style={{ margin: 0 }}>Time&apos;s up for this part. Finish the run you&apos;re on, then go to the next part.</p>}
         <div className="hands-free" data-tour="session-hands-free">
           {canSpeak && (
             <>
@@ -211,7 +211,7 @@ export function SessionRunner({ id }: { id: string }) {
             <span className="hint">Double-tap the sustain pedal to go to the next part.</span>
           ) : midi.state !== "unsupported" ? (
             <button type="button" className="btn small ghost" onClick={() => void connectMidi()}>
-              {midi.state === "connecting" ? "Connecting…" : "Connect piano for pedal control"}
+              {midi.state === "connecting" ? "Connecting…" : "Connect your piano to use the pedal"}
             </button>
           ) : null}
         </div>
@@ -226,7 +226,7 @@ export function SessionRunner({ id }: { id: string }) {
         {exercises.map((e) => (
           <ExerciseCard key={e.id} ex={e} lhRest={p.lhRest} simplify={e.skills.some((s) => p.simplify.includes(s))} />
         ))}
-        {block.kind === "break" && <p className="prose muted">Off the bench. Shake out both hands; look at something far away.</p>}
+        {block.kind === "break" && <p className="prose muted">Get up from the bench. Shake out both hands, and look at something far away.</p>}
         <p className="hint" style={{ marginTop: 20 }}>
           Session for {lessonCode(lesson)}. Your place is saved on this device.
         </p>

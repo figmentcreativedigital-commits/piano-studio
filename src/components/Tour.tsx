@@ -287,7 +287,7 @@ export function Tour() {
       <>
         {invite && !inSession && (
           <div className="tour-invite band" role="dialog" aria-labelledby="tour-invite-h" data-tour-ui>
-            <p id="tour-invite-h">New here? A two-minute tour shows how Woodshed works.</p>
+            <p id="tour-invite-h">New here? A 2-minute tour shows you how Woodshed works.</p>
             <div className="btn-row">
               <button type="button" className="btn small primary" onClick={() => start(true)}>
                 Take the tour

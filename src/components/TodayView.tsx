@@ -52,32 +52,32 @@ export function TodayView() {
           <div className="notices" data-tour="today-notices">
             {record.marks.some((m) => m.kind === "missed" && m.date === today) && p.status !== "done-today" && (
               <div className="notice">
-                <h3>Marked as missed</h3>
-                <p>Nothing doubles up. Your next session picks up with {lessonCode(lesson)}.</p>
+                <h3>You marked today as missed</h3>
+                <p>Nothing piles up. Your next session starts with {lessonCode(lesson)}.</p>
               </div>
             )}
             {p.status === "done-today" && (
               <div className="notice">
-                <h3>Today&apos;s session is logged</h3>
-                <p>Nothing else is due today. If you want more time at the keys, use free play or tomorrow&apos;s listening task; the plan doesn&apos;t count extra work as homework.</p>
+                <h3>You checked in for today</h3>
+                <p>Nothing else is due today. Want more time at the piano? Try free play or tomorrow&apos;s listening task. The plan doesn&apos;t count extra practice as homework.</p>
               </div>
             )}
             {p.status === "ahead" && (
               <div className="notice">
                 <h3>You&apos;re ahead of the calendar</h3>
-                <p>{lessonCode(lesson)} is next in the sequence. Play it today, or use today for review and let the calendar catch up.</p>
+                <p>{lessonCode(lesson)} is next in order. Play it today, or review today and let the calendar catch up.</p>
               </div>
             )}
             {p.status === "away" && (
               <div className="notice">
-                <h3>You&apos;re marked away</h3>
-                <p>Nothing is due. When you&apos;re back, the plan starts with a short re-entry check.</p>
+                <h3>You&apos;re marked as away</h3>
+                <p>Nothing is due. When you come back, you start with a short re-entry check.</p>
               </div>
             )}
             {p.reentry && (
               <div className="notice live">
                 <h3>Start with a re-entry check</h3>
-                <p>Before {lessonCode(lesson)}, spend ten minutes on the last lesson&apos;s material from memory. It shows what held, so nothing new lands on a shaky base.</p>
+                <p>Before {lessonCode(lesson)}, play the last lesson from memory for 10 minutes. This shows what stuck, so new work doesn&apos;t sit on a shaky base.</p>
               </div>
             )}
             {p.adjustments.map((a) => (
@@ -93,13 +93,13 @@ export function TodayView() {
             ))}
             {record.undone.length > 0 && (
               <details>
-                <summary className="hint">Reversed plan changes ({record.undone.length})</summary>
+                <summary className="hint">Plan changes you undid ({record.undone.length})</summary>
                 <ul>
                   {record.undone.map((id) => (
                     <li key={id}>
                       {id.split(":")[0]} {id.split(":").slice(1).join(" ")}{" "}
                       <button type="button" className="btn small ghost" onClick={() => redoAdjustment(id)}>
-                        Restore
+                        Put it back
                       </button>
                     </li>
                   ))}
@@ -110,7 +110,7 @@ export function TodayView() {
 
           <div className="btn-row" style={{ marginBottom: 14 }} data-tour="today-actions">
             <Link className="btn primary" href={`/session/${lesson.id}${version === "essential" ? "?v=essential" : ""}`}>
-              {running ? "Resume session" : version === "essential" ? `Start the ${lesson.essential.minutes}-minute version` : "Start session"}
+              {running ? "Continue session" : version === "essential" ? `Start the ${lesson.essential.minutes}-minute version` : "Start session"}
             </Link>
             {version === "full" && (
               <Link className="btn" href={`/session/${lesson.id}?v=essential`}>
@@ -133,17 +133,17 @@ export function TodayView() {
                   Only 20 minutes today
                 </button>
                 <button type="button" className="btn small" onClick={() => addMark({ kind: "missed", date: today })}>
-                  Missed today
+                  I missed today
                 </button>
                 <label className="hint" htmlFor="away-until">
                   Away until
                 </label>
                 <input id="away-until" className="input" style={{ width: "auto" }} type="date" value={awayUntil} min={today} onChange={(e) => setAwayUntil(e.target.value)} />
                 <button type="button" className="btn small" disabled={!awayUntil} onClick={() => addMark({ kind: "away", date: today, until: awayUntil })}>
-                  Mark away
+                  Mark me away
                 </button>
               </div>
-              <p style={{ margin: "10px 0 0" }}>Missed days don&apos;t pile up. The sequence resumes where you left off, and the weekly review absorbs the slack.</p>
+              <p style={{ margin: "10px 0 0" }}>Missed days don&apos;t pile up. You pick up where you left off, and the weekly review catches up.</p>
             </details>
           )}
 
@@ -196,7 +196,7 @@ export function TodayView() {
 
       <section className="section grid-3" aria-label="Review, milestone and recent check-ins">
         <div className="panel">
-          <h3>Due for review</h3>
+          <h3>Time to review</h3>
           {p.due.length ? (
             <ul>
               {p.due.slice(0, 6).map((s) => (
@@ -208,7 +208,7 @@ export function TodayView() {
               ))}
             </ul>
           ) : (
-            <p className="empty">Nothing yet. Skills you mark steady in a check-in come back here on a spaced schedule.</p>
+            <p className="empty">Nothing yet. When you mark a skill steady in a check-in, it comes back here a few days later.</p>
           )}
         </div>
         <div className="panel">
@@ -236,7 +236,7 @@ export function TodayView() {
               ))}
             </ul>
           ) : (
-            <p className="empty">Check in after each session. It takes under a minute and drives what comes next.</p>
+            <p className="empty">Check in after each session. It takes less than a minute and shapes what comes next.</p>
           )}
           <p style={{ margin: "12px 0 0" }}>
             <Link href="/progress">Progress and backups</Link>

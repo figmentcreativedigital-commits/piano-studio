@@ -179,7 +179,7 @@ export function ReaderBar() {
   return (
     <div className="reader-bar band" role="region" aria-label="Read aloud">
       <span className="reader-now" aria-live="polite">
-        Reading {s.index + 1} of {s.total}
+        Reading part {s.index + 1} of {s.total}
       </span>
       <button type="button" className="icon-btn" aria-label="Previous part" onClick={() => reader.jump(-1)}>
         ‹

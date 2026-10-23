@@ -61,11 +61,11 @@ export function EarCheck() {
       </div>
       <p aria-live="polite" style={{ margin: 0, fontFamily: "var(--serif)" }}>
         {answer && q && (answer === q.kind ? `Yes, ${q.kind}: ${q.notes.join(" ").replace(/b(\d)/g, "♭$1")}. ` : `That was ${q.kind}: ${q.notes.join(" ").replace(/b(\d)/g, "♭$1")}. Play it and sing the top note. `)}
-        {score.done > 0 && `${score.right} of ${score.done} correct.`}
+        {score.done > 0 && `${score.right} of ${score.done} right.`}
         {finished && (
           <>
             {" "}
-            {score.right >= 9 ? "Done: that meets the check." : "Not yet at nine of ten; try another round tomorrow."}{" "}
+            {score.right >= 9 ? "Done. You passed the check." : "Not 9 out of 10 yet. Try another round tomorrow."}{" "}
             <button type="button" className="btn small" onClick={() => { setScore({ right: 0, done: 0 }); setQ(null); setAnswer(null); }}>
               New round
             </button>

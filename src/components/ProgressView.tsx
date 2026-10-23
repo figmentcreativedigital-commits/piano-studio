@@ -8,7 +8,7 @@ import { downloadFile, exportData, importData, recordStore, removeCheckIn, useSt
 import { useToday } from "@/lib/useToday";
 import { checkInText } from "./CheckInForm";
 
-const STATUS_LABEL: Record<string, string> = { new: "New", practicing: "Practicing", simplify: "Simplify", steady: "Steady", retained: "Retained" };
+const STATUS_LABEL: Record<string, string> = { new: "New", practicing: "Practicing", simplify: "Easier first", steady: "Steady", retained: "Remembered" };
 const AREA_LABEL: Record<string, string> = { technique: "Technique", jazz: "Jazz", bach: "Bach", ear: "Ear", reading: "Reading", time: "Time" };
 
 export function ProgressView() {
@@ -24,7 +24,7 @@ export function ProgressView() {
   const onImport = async (f: File) => {
     try {
       const r = importData(JSON.parse(await f.text()));
-      setMsg(`Imported ${r.checkIns} check-ins and ${r.marks} day marks. Entries already here were kept as they were.`);
+      setMsg(`Added ${r.checkIns} check-ins and ${r.marks} day marks. Nothing you already had was changed.`);
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "That file couldn't be read.");
     }
@@ -36,7 +36,7 @@ export function ProgressView() {
       await navigator.clipboard.writeText(text || "No check-ins yet.");
       setMsg("All check-ins copied as text.");
     } catch {
-      setMsg("Couldn't copy automatically on this browser.");
+      setMsg("This browser couldn't copy it.");
     }
   };
 
@@ -45,24 +45,24 @@ export function ProgressView() {
       <section className="section grid-3" aria-label="Totals">
         <div className="panel">
           <h3>{totalMin} minutes</h3>
-          <p className="empty">logged at the piano across {record.checkIns.length} check-ins</p>
+          <p className="empty">at the piano, over {record.checkIns.length} check-ins</p>
         </div>
         <div className="panel">
           <h3>
             {lessonsDone} of {LESSONS.length} sessions
           </h3>
-          <p className="empty">in the authored plan so far</p>
+          <p className="empty">in the plan so far</p>
         </div>
         <div className="panel">
-          <h3>Baseline: {BASELINE.status}</h3>
-          <p className="empty">{BASELINE.status === "provisional" ? "Set from the intake answers; confirmed by the baseline session." : `Confirmed ${BASELINE.updated}.`}</p>
+          <h3>Baseline: {BASELINE.status === "provisional" ? "first draft" : "confirmed"}</h3>
+          <p className="empty">{BASELINE.status === "provisional" ? "Based on your first answers. The baseline session will confirm it." : `Confirmed ${BASELINE.updated}.`}</p>
         </div>
       </section>
 
       <section className="section" aria-labelledby="ledger-h" data-tour="progress-ledger">
         <div className="section-head">
           <h2 id="ledger-h">Skills</h2>
-          <span className="muted">Your ratings from check-ins. Nothing here is measured by the app unless it says so.</span>
+          <span className="muted">These are your own ratings from check-ins. The app doesn&apos;t measure anything here unless it says so.</span>
         </div>
         <div className="table-wrap">
           <table className="ledger">
@@ -73,7 +73,7 @@ export function ProgressView() {
                 <th scope="col">Status</th>
                 <th scope="col">Last rated</th>
                 <th scope="col">Next step</th>
-                <th scope="col">Review due</th>
+                <th scope="col">Next review</th>
               </tr>
             </thead>
             <tbody>
@@ -89,7 +89,7 @@ export function ProgressView() {
                     <td>
                       <span className={`pill ${st?.status ?? "new"}`}>{STATUS_LABEL[st?.status ?? "new"]}</span>
                     </td>
-                    <td>{st?.lastDate ? `${prettyDate(st.lastDate)} (self-rated)` : "—"}</td>
+                    <td>{st?.lastDate ? `${prettyDate(st.lastDate)} (your rating)` : "—"}</td>
                     <td>
                       <strong>{ns.label}.</strong> <span className="hint">{ns.detail}</span>
                     </td>
@@ -117,8 +117,8 @@ export function ProgressView() {
                   <th scope="col">Date</th>
                   <th scope="col">Session</th>
                   <th scope="col">Minutes</th>
-                  <th scope="col">Comfort</th>
-                  <th scope="col">Difficulty and notes</th>
+                  <th scope="col">Hands felt</th>
+                  <th scope="col">Hardest part and notes</th>
                   <th scope="col">
                     <span className="sr-only">Remove</span>
                   </th>
@@ -136,7 +136,7 @@ export function ProgressView() {
                         <span className="hint">{c.version}</span>
                       </td>
                       <td>{c.minutes}</td>
-                      <td>{c.comfort === "fine" ? "Fine" : c.comfort === "tense" ? "Some tension" : c.comfort === "lh-ache" ? "Left hand ached" : "Pain"}</td>
+                      <td>{c.comfort === "fine" ? "Fine" : c.comfort === "tense" ? "Felt tight" : c.comfort === "lh-ache" ? "Left hand ached" : "Pain"}</td>
                       <td style={{ fontFamily: "var(--serif)" }}>{[c.difficulty, c.note].filter(Boolean).join(". ") || "—"}</td>
                       <td>
                         <button type="button" className="btn small ghost" onClick={() => removeCheckIn(c.id)} aria-label={`Remove check-in from ${c.date}`}>
@@ -150,7 +150,7 @@ export function ProgressView() {
             </table>
           </div>
         ) : (
-          <p className="prose muted">No check-ins yet. After each session, the check-in takes under a minute and decides whether the next step is repetition, a simpler version, consolidation or something new.</p>
+          <p className="prose muted">No check-ins yet. After each session, a check-in takes less than a minute. It decides your next step: repeat it, go easier, make it solid, or learn something new.</p>
         )}
       </section>
 
@@ -159,7 +159,7 @@ export function ProgressView() {
           <h2 id="data-h">Your data</h2>
         </div>
         <div className="prose" style={{ marginBottom: 14 }}>
-          <p>Check-ins, ratings and rep counts live in this browser on this device. They are never sent to a server. Export a backup now and then, and import it on another device to carry on there.</p>
+          <p>Your check-ins, ratings and run counts stay in this browser, on this device. They are never sent anywhere. Export a backup now and then. To keep going on another device, import the backup there.</p>
         </div>
         <div className="btn-row">
           <button type="button" className="btn primary" onClick={() => downloadFile(`woodshed-backup-${today}.json`, JSON.stringify(exportData(), null, 2), "application/json")}>

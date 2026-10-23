@@ -31,7 +31,7 @@ describe("planner", () => {
     expect(p.status).toBe("behind");
     expect(p.behindBy).toBe(1);
     const slide = p.adjustments.find((a) => a.kind === "slide");
-    expect(slide?.reason).toMatch(/slides rather than stacking/);
+    expect(slide?.reason).toMatch(/instead of stacking two sessions/);
   });
 
   it("undoing a slide marks the skipped lesson done and moves on", () => {

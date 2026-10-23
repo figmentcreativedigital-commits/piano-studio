@@ -8,7 +8,7 @@ export default function ProgressPage() {
     <>
       <div className="wrap page-head">
         <h1>Progress</h1>
-        <p>What&apos;s steady, what needs another pass, and what comes back for review when. Self-ratings and anything measured are kept apart.</p>
+        <p>See what&apos;s steady, what needs another try, and when each skill comes back for review. Your own ratings are kept apart from anything the app measures.</p>
       </div>
       <ProgressView />
     </>

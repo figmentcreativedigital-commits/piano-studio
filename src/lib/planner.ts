@@ -166,9 +166,9 @@ export function plan(lessons: Lesson[], record: PracticeRecord, today: string): 
         id,
         kind: "slide",
         lessonId: next.id,
-        title: `Today runs ${code(next.id)} instead of the calendar's ${code(scheduled.id)}`,
-        reason: `${code(next.id)} isn't logged yet, and its material comes before ${code(scheduled.id)}. The plan slides rather than stacking two sessions into one; the weekly review absorbs the difference.`,
-        undoLabel: `I did ${code(next.id)}; mark it done`,
+        title: `Today you play ${code(next.id)}, not ${code(scheduled.id)}`,
+        reason: `You haven't checked in for ${code(next.id)} yet, and it comes before ${code(scheduled.id)}. The plan waits for you instead of stacking two sessions, and the weekly review catches up.`,
+        undoLabel: `I did ${code(next.id)}, so mark it done`,
       });
     }
   } else if (scheduled && next.date > scheduled.date) {
@@ -180,7 +180,7 @@ export function plan(lessons: Lesson[], record: PracticeRecord, today: string): 
       id: `away:${away.id}`,
       kind: "away",
       title: `Away until ${away.until ?? away.date}`,
-      reason: "Nothing is scheduled while you're away. The plan resumes with a short re-entry check.",
+      reason: "Nothing is due while you're away. When you come back, you start with a short re-entry check.",
       undoLabel: "I'm back early",
     });
   }
@@ -195,8 +195,8 @@ export function plan(lessons: Lesson[], record: PracticeRecord, today: string): 
       adjustments.push({
         id,
         kind: "reentry",
-        title: "A short re-entry check comes first",
-        reason: `It's been ${gap} days since your last session. Ten minutes of retrieval on the last lesson's material shows what held before anything new arrives.`,
+        title: "First, a short re-entry check",
+        reason: `It's been ${gap} days since your last session. Before anything new, play the last lesson from memory for 10 minutes to see what stuck.`,
         undoLabel: "Skip the re-entry check",
       });
     }
@@ -214,8 +214,8 @@ export function plan(lessons: Lesson[], record: PracticeRecord, today: string): 
         id,
         kind: "lh-rest",
         title: "Left hand rests today",
-        reason: `Your check-in on ${ache.date} noted ${ache.comfort === "lh-ache" ? "an ache in the left hand" : "pain"}. Left-hand parts switch to their right-hand-only versions for the next two sessions.`,
-        undoLabel: "My hand is fine; restore the left hand",
+        reason: `Your check-in on ${ache.date} said ${ache.comfort === "lh-ache" ? "your left hand ached" : "you had pain"}. For the next 2 sessions, left-hand parts switch to right-hand-only versions.`,
+        undoLabel: "My hand is fine, bring back the left hand",
       });
     }
   }
@@ -233,7 +233,7 @@ export function plan(lessons: Lesson[], record: PracticeRecord, today: string): 
           kind: "simplify",
           skill: s.skill,
           title: "Easier version first",
-          reason: `On ${s.lastDate} this was marked 'not yet'. Exercises for it open with their easier version; move on to the full version when the easier one is clean three times.`,
+          reason: `You marked this skill “not yet” on ${s.lastDate}. Play the easier version first, and switch to the full one after 3 clean runs.`,
           undoLabel: "Use the full version",
         });
       }
@@ -248,7 +248,7 @@ export function plan(lessons: Lesson[], record: PracticeRecord, today: string): 
       id: `short:${short.id}`,
       kind: "short-day",
       title: `${short.minutes ?? 20} minutes today`,
-      reason: "Today uses the essential version. Nothing carries over as homework; the full lesson's main skill comes back in the next review.",
+      reason: "Today you play the essential version. Nothing carries over as homework, and the main skill comes back in your next review.",
       undoLabel: "I have the full time after all",
     });
   }
@@ -265,13 +265,13 @@ export function nextStep(s: SkillState | undefined): { label: string; detail: st
   if (!s) return { label: "New", detail: "Not practiced yet." };
   switch (s.status) {
     case "simplify":
-      return { label: "Simplify", detail: "Start from the easier version until it's clean three times." };
+      return { label: "Easier first", detail: "Start with the easier version until it's clean 3 times." };
     case "practicing":
-      return { label: "Repeat", detail: "Same version again; aim for three clean in a row." };
+      return { label: "Repeat", detail: "Play the same version again. Aim for 3 clean in a row." };
     case "steady":
-      return { label: "Consolidate", detail: "Clean once. Check it from memory on a later day." };
+      return { label: "Make it solid", detail: "It was clean once. Play it from memory on another day." };
     case "retained":
-      return { label: "Progress", detail: "Held across days. Raise the tempo or move it to a new key." };
+      return { label: "Step up", detail: "It stayed steady on different days. Raise the tempo or move it to a new key." };
     default:
       return { label: "New", detail: "Not practiced yet." };
   }

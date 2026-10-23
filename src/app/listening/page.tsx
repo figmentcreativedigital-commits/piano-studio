@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { EXERCISES, LESSONS, lessonCode } from "@/content";
 import { readable } from "@/lib/speech-text";
 
-export const metadata: Metadata = { title: "Listening", description: "Recordings with one specific question each." };
+export const metadata: Metadata = { title: "Listening", description: "Recordings, each with one question to answer." };
 
 export default function ListeningPage() {
   const tasks = EXERCISES.filter((e) => e.recording);
@@ -11,7 +11,7 @@ export default function ListeningPage() {
     <>
       <div className="wrap page-head">
         <h1>Listening</h1>
-        <p>Each recording comes with one question to answer at the keys or out loud. Session details are checked against discographies; no copies of recordings are hosted here.</p>
+        <p>Each recording comes with one question. Answer it at the piano or out loud. The recording details are checked against lists of each artist&apos;s records. This site doesn&apos;t store any copies of the music.</p>
       </div>
       <div className="wrap" style={{ paddingBottom: 40 }}>
         {tasks.map((e) => {

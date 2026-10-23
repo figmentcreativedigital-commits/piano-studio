@@ -16,7 +16,7 @@ const OUTCOMES: { v: Outcome; label: string }[] = [
 ];
 const COMFORT: { v: Comfort; label: string }[] = [
   { v: "fine", label: "Fine" },
-  { v: "tense", label: "Some tension" },
+  { v: "tense", label: "Felt tight" },
   { v: "lh-ache", label: "Left hand ached" },
   { v: "pain", label: "Pain, I stopped" },
 ];
@@ -26,13 +26,13 @@ export function checkInText(c: CheckIn): string {
   const l = getLesson(c.lessonId);
   const outcomes = Object.entries(c.outcomes)
     .map(([k, v]) => `${SKILLS[k]?.name ?? k}: ${OUTCOMES.find((o) => o.v === v)?.label}`)
-    .join("; ");
+    .join(". ");
   return [
     `Check-in ${c.date}: ${l ? lessonLabel(l) : c.lessonId} (${c.version}), ${c.minutes} min.`,
-    outcomes && `Outcomes: ${outcomes}.`,
+    outcomes && `${outcomes}.`,
     c.tempo ? `Comfortable tempo: ♩ = ${c.tempo}.` : "",
-    c.difficulty ? `Main difficulty: ${c.difficulty}.` : "",
-    `Comfort: ${COMFORT.find((x) => x.v === c.comfort)?.label}.`,
+    c.difficulty ? `Hardest part: ${c.difficulty}.` : "",
+    `How my hands felt: ${COMFORT.find((x) => x.v === c.comfort)?.label}.`,
     c.recorded ? "Recorded a clip." : "",
     c.note ? `Note: ${c.note}` : "",
   ]
@@ -93,7 +93,7 @@ export function CheckInForm() {
       await navigator.clipboard.writeText(text);
       setCopied("Copied. Paste it into our conversation.");
     } catch {
-      setCopied("Couldn't copy automatically; select the text above and copy it.");
+      setCopied("Couldn't copy it. Select the text above and copy it yourself.");
     }
   };
 
@@ -103,13 +103,13 @@ export function CheckInForm() {
     return (
       <div className="form" data-tour="checkin-copy">
         <div className="notice live">
-          <h3>Logged</h3>
+          <h3>Saved</h3>
           <p>
-            {next.lesson ? `Next up: ${lessonLabel(next.lesson)}.` : "That's every authored lesson."} {next.adjustments.length ? `The plan made ${next.adjustments.length} change${next.adjustments.length > 1 ? "s" : ""}; see Today for why.` : "No plan changes needed."}
+            {next.lesson ? `Next up: ${lessonLabel(next.lesson)}.` : "You've done every lesson written so far."} {next.adjustments.length ? `The plan made ${next.adjustments.length} change${next.adjustments.length > 1 ? "s" : ""}. Today shows why.` : "The plan stays the same."}
           </p>
         </div>
         <div className="field">
-          <label htmlFor="ci-text">For our conversation</label>
+          <label htmlFor="ci-text">For your teacher</label>
           <textarea id="ci-text" className="input" readOnly value={text} rows={4} />
           <div className="btn-row">
             <button type="button" className="btn primary" onClick={() => copy(text)}>
@@ -131,8 +131,8 @@ export function CheckInForm() {
     <form className="form" onSubmit={submit} data-tour="checkin-form">
       {params.get("done") && (
         <div className="notice live">
-          <h3>Session finished</h3>
-          <p>Under a minute: how did it go?</p>
+          <h3>Session done</h3>
+          <p>This takes less than a minute. How did it go?</p>
         </div>
       )}
       <div className="field">
@@ -168,8 +168,8 @@ export function CheckInForm() {
         </div>
       </fieldset>
       <fieldset className="field">
-        <legend>How each focus went</legend>
-        <span className="hint">Steady: met the check. Close: nearly. Not yet: the easier version comes first next time.</span>
+        <legend>How each skill went</legend>
+        <span className="hint">Steady: you passed the check. Close: almost. Not yet: you start with the easier version next time.</span>
         {lesson.focus.map((s) => (
           <div className="outcome-row" key={s}>
             <span style={{ fontWeight: 600 }}>{SKILLS[s]?.name ?? s}</span>
@@ -185,7 +185,7 @@ export function CheckInForm() {
         ))}
       </fieldset>
       <fieldset className="field">
-        <legend>Comfort</legend>
+        <legend>How your hands and arms felt</legend>
         <div className="chips">
           {COMFORT.map((c) => (
             <label className="chip" key={c.v}>
@@ -194,7 +194,7 @@ export function CheckInForm() {
             </label>
           ))}
         </div>
-        {(comfort === "lh-ache" || comfort === "pain") && <p className="care">Noted. The next two sessions switch left-hand parts to right-hand-only versions. If pain persists, check with your hand specialist before playing the left hand again.</p>}
+        {(comfort === "lh-ache" || comfort === "pain") && <p className="care">Got it. For the next 2 sessions, left-hand parts switch to right-hand-only versions. If the pain doesn&apos;t go away, talk to your hand specialist before you play with the left hand again.</p>}
       </fieldset>
       <div className="field">
         <label htmlFor="ci-tempo">
@@ -203,8 +203,8 @@ export function CheckInForm() {
         <input id="ci-tempo" className="input" style={{ maxWidth: 140 }} type="number" inputMode="numeric" min={20} max={240} value={tempo} onChange={(e) => setTempo(e.target.value)} placeholder="♩ =" />
       </div>
       <div className="field">
-        <label htmlFor="ci-diff">Main difficulty</label>
-        <input id="ci-diff" className="input" type="text" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} placeholder="e.g. A♭ to A in the scale; left hand late at bar 9" />
+        <label htmlFor="ci-diff">Hardest part</label>
+        <input id="ci-diff" className="input" type="text" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} placeholder="For example: A♭ to A in the scale, or left hand late at bar 9" />
       </div>
       <label className="check">
         <input type="checkbox" checked={recorded} onChange={(e) => setRecorded(e.target.checked)} /> I recorded a clip
@@ -217,7 +217,7 @@ export function CheckInForm() {
       </div>
       <div className="btn-row" data-tour="checkin-save">
         <button type="submit" className="btn primary">
-          Log check-in
+          Save check-in
         </button>
         <Link className="btn ghost" href="/">
           Cancel

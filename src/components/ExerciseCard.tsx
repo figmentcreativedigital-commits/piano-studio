@@ -9,10 +9,10 @@ import { ReadButton } from "./ReadAloud";
 import { readable } from "@/lib/speech-text";
 
 const STATUS: Record<string, string> = {
-  verified: "verified",
+  verified: "checked",
   "checked-in-class": "checked against Barry in class",
-  "secondary-sources": "from secondary sources",
-  "pending-primary-check": "primary source check pending",
+  "secondary-sources": "from secondhand sources",
+  "pending-primary-check": "not yet checked against the original",
 };
 
 function searchLinks(q: string) {
@@ -57,12 +57,12 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
 
       {lhRest && (ex.hands === "LH" || ex.hands === "both") && (
         <div className="care" style={{ margin: "0 20px 14px" }}>
-          Left hand rests today. {lhOnly ? "Sing this part, or tap the rhythm on your knee, instead of playing it." : "Play the right-hand part only; playback is set to RH."}
+          Left hand rests today. {lhOnly ? "Sing this part, or tap the rhythm on your knee, instead of playing it." : "Play the right-hand part only. Playback is set to the right hand."}
         </div>
       )}
       {simplify && (
         <div className="care" style={{ margin: "0 20px 14px" }}>
-          Start with the easier version: {ex.easier} Move to the full version after three clean runs.
+          Start with the easier version: {ex.easier} Move to the full version after 3 clean runs.
         </div>
       )}
 
@@ -127,7 +127,7 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
               )}
             </>
           )}
-          <h4>Common errors</h4>
+          <h4>Common mistakes</h4>
           <ul>
             {ex.errors.map((e, i) => (
               <li key={i}>{e}</li>
@@ -145,7 +145,7 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
               {ex.check}
             </p>
             <p className="hint" style={{ margin: 0 }}>
-              Start at ♩ = {ex.tempo.start || "record tempo"}
+              Start at ♩ = {ex.tempo.start || "the recording's tempo"}
               {ex.tempo.target ? `, aim for ♩ = ${ex.tempo.target}` : ""}. {ex.reps}.{ex.tempo.note ? ` ${ex.tempo.note}.` : ""}
             </p>
           </div>
@@ -159,7 +159,7 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
           )}
           {ex.lhCare && <div className="care">{ex.lhCare}</div>}
           {ex.skills.length > 0 && (
-            <p className="hint">Builds: {ex.skills.map((s) => SKILLS[s]?.name ?? s).join(", ")}</p>
+            <p className="hint">Skills it builds: {ex.skills.map((s) => SKILLS[s]?.name ?? s).join(", ")}</p>
           )}
         </div>
       </div>

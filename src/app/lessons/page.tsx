@@ -4,7 +4,7 @@ import { LESSONS, PHASES } from "@/content";
 import { Sleeve } from "@/components/Sleeve";
 import { prettyDate, prettyTime } from "@/lib/schedule";
 
-export const metadata: Metadata = { title: "Lessons", description: "Every authored session, in order." };
+export const metadata: Metadata = { title: "Lessons", description: "Every lesson so far, in order." };
 
 export default function LessonsPage() {
   const weeks = [...new Set(LESSONS.map((l) => l.week))];
@@ -12,7 +12,7 @@ export default function LessonsPage() {
     <>
       <div className="wrap page-head">
         <h1>Lessons</h1>
-        <p>Every session is written out in full: what to play, which fingers, how fast, what to listen for, and how you&apos;ll know it&apos;s done. New weeks are added after each weekly check.</p>
+        <p>Every lesson is written out in full. It shows what to play, which fingers to use, and how fast. It also says what to listen for and how you&apos;ll know you&apos;re done. New weeks are added after each weekly check.</p>
       </div>
       <div className="wrap">
         {weeks.map((w) => {

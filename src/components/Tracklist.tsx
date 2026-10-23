@@ -14,7 +14,7 @@ export function Tracklist({ blocks, current = -1, linkBase }: { blocks: Block[];
   return (
     <div>
       {groups.map((g, gi) => (
-        <section key={gi} aria-label={g.side ? `Side ${g.side}` : "Session agenda"}>
+        <section key={gi} aria-label={g.side ? `Side ${g.side}` : "Session plan"}>
           {g.side && <div className="tracklist-side">Side {g.side}</div>}
           <ol className="tracklist" style={g.side && gi > 0 ? { borderTopWidth: 1 } : undefined}>
             {g.items.map(({ b, i }) => {

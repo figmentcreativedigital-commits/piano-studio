@@ -76,7 +76,7 @@ export function narrationTexts(): string[] {
   const out: string[] = [NARRATOR_SAMPLE, TUNES_TITLE, TUNES_INTRO, ROADMAP_TITLE, ROADMAP_INTRO, COMPLETE_LINE, agendaHeading()];
   const starts = new Set(Object.values(PROGRAM.schedule).map((s) => s.start));
   for (const l of LESSONS) {
-    out.push(l.title, l.objective, `Time balance: ${l.balance}`, `Application: ${l.application}`, lessonIdLine(l), agendaHeading(l.essential.minutes));
+    out.push(l.title, l.objective, `How the time is split: ${l.balance}`, `Try it in music: ${l.application}`, lessonIdLine(l), agendaHeading(l.essential.minutes));
     out.push(whenLine(l, "not-started"), whenLine(l, "today", { id: l.id, start: l.start }), whenLine(l, "today"));
     for (const s of starts) out.push(whenLine(l, "today", { id: "other", start: s }));
     for (const b of [...l.blocks, ...l.essential.blocks]) out.push(b.title, ...b.text, blockReading(b));

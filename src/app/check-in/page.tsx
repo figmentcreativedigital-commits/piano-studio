@@ -9,7 +9,7 @@ export default function CheckInPage() {
     <>
       <div className="wrap page-head">
         <h1>Check in</h1>
-        <p>Under a minute. A finished timer isn&apos;t proof of anything; these answers decide whether the next step is repetition, a simpler version, consolidation or something new.</p>
+        <p>This takes less than a minute. Finishing the timer doesn&apos;t prove you learned something. Your answers decide what&apos;s next: repeat it, go easier, make it solid, or learn something new.</p>
       </div>
       <div className="wrap" style={{ paddingBottom: 48 }}>
         <Suspense>

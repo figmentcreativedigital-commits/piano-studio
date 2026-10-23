@@ -59,16 +59,16 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             <ReadButton label="Read the overview" what={`lesson-${lesson.id}`} />
           </div>
           <dl className="facts">
-            <dt>Length</dt>
+            <dt>How long</dt>
             <dd>{lesson.minutes} minutes, breaks included</dd>
-            <dt>Builds on</dt>
-            <dd>{lesson.prerequisites.join("; ")}</dd>
-            <dt>Time balance</dt>
-            <dd {...readable(`Time balance: ${lesson.balance}`)}>
+            <dt>What you need first</dt>
+            <dd>{lesson.prerequisites.join(" · ")}</dd>
+            <dt>How the time is split</dt>
+            <dd {...readable(`How the time is split: ${lesson.balance}`)}>
               {lesson.balance}
             </dd>
-            <dt>Application</dt>
-            <dd {...readable(`Application: ${lesson.application}`)}>
+            <dt>Try it in music</dt>
+            <dd {...readable(`Try it in music: ${lesson.application}`)}>
               {lesson.application}
             </dd>
             <dt>Tunes</dt>
@@ -81,10 +81,10 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
                   </span>
                 ))
               ) : (
-                <span>Baseline day: the tunes start tomorrow.</span>
+                <span>Baseline day. The tunes start tomorrow.</span>
               )}
             </dd>
-            <dt>Last task</dt>
+            <dt>Last thing</dt>
             <dd>{lesson.retrieval}</dd>
           </dl>
         </div>
@@ -92,7 +92,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
 
       <div className="wrap">
       <div className="lesson-body">
-        <aside className="lesson-aside" aria-label="Agenda">
+        <aside className="lesson-aside" aria-label="Session plan">
           <Tracklist blocks={lesson.blocks} linkBase={`/lessons/${lesson.id}`} />
           <nav className="btn-row" aria-label="Other sessions" style={{ marginTop: 14 }}>
             {prev && (
@@ -145,7 +145,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
           <section className="block-section" id="essential" aria-labelledby="h-essential">
             <header>
               <h2 id="h-essential">The {lesson.essential.minutes}-minute version</h2>
-              <span className="kind">For a busy day. It replaces the session; nothing carries over as homework.</span>
+              <span className="kind">For a busy day. It replaces the full session, and nothing carries over as homework.</span>
             </header>
             <Tracklist blocks={lesson.essential.blocks} />
             <ul>

@@ -51,27 +51,27 @@ export function lessonCode(l: Pick<Lesson, "week" | "day">): string {
 
 export const BLOCK_LABEL: Record<string, string> = {
   checkin: "Check-in",
-  setup: "Setup",
+  setup: "Get ready",
   technique: "Technique",
   jazz: "Jazz",
-  harris: "Harris",
+  harris: "Barry Harris",
   blues: "Blues",
   bach: "Bach",
-  ear: "Ear",
+  ear: "Ear training",
   listening: "Listening",
-  reading: "Reading",
+  reading: "Reading music",
   baseline: "Baseline",
   review: "Review",
   free: "Free play",
   break: "Break",
-  retrieval: "Retrieval",
+  retrieval: "From memory",
 };
 
 export const SOURCE_LABEL: Record<string, string> = {
   harris: "Barry Harris",
   adaptation: "Adaptation",
-  original: "Original study",
-  bach: "Bach score",
+  original: "Original exercise",
+  bach: "Bach's score",
   recording: "Recording",
   baseline: "Baseline",
 };

@@ -169,10 +169,10 @@ export function ExercisePlayer({ ex, lhRest = false }: { ex: Exercise; lhRest?: 
     <>
       {n && (
         <div className="paper">
-          <Score spec={n} view={view} onReady={onReady} label={`${ex.title}: ${ex.spelling ?? "notation"}`} />
+          <Score spec={n} view={view} onReady={onReady} label={`${ex.title}: ${ex.spelling ?? "the notes"}`} />
           {view === "hidden" && (
             <div className="veil">
-              <span>{ex.hideNotation ? "Notes hidden until you've found it by ear" : "Notation hidden: play from memory"}</span>
+              <span>{ex.hideNotation ? "Notes hidden until you've found it by ear" : "Notes hidden. Play from memory."}</span>
               <button type="button" className="btn small" onClick={() => setView("full")}>
                 Show notes
               </button>
@@ -199,7 +199,7 @@ export function ExercisePlayer({ ex, lhRest = false }: { ex: Exercise; lhRest?: 
       {n && (
         <div className="controls" data-tour="player">
           <button type="button" className="btn primary" onClick={play} aria-pressed={playing} disabled={!canAudio}>
-            {playing ? "Stop" : ex.kind === "reading" ? "Hear it (after your try)" : ex.hideNotation ? "Play phrase" : "Hear it"}
+            {playing ? "Stop" : ex.kind === "reading" ? "Hear it (after you try)" : ex.hideNotation ? "Play phrase" : "Hear it"}
           </button>
           <span className="tempo-ctl">
             <button type="button" className="icon-btn" aria-label="Slower" onClick={() => setTempo((t) => Math.max(30, t - 4))}>
@@ -215,7 +215,7 @@ export function ExercisePlayer({ ex, lhRest = false }: { ex: Exercise; lhRest?: 
             <span className="seg" role="group" aria-label="Hands">
               {(["both", "RH", "LH"] as Hands[]).map((h) => (
                 <button key={h} type="button" aria-pressed={hands === h} onClick={() => setHands(h)}>
-                  {h === "both" ? "Both" : h}
+                  {h === "both" ? "Both" : h === "RH" ? "Right" : "Left"}
                 </button>
               ))}
             </span>
@@ -234,12 +234,12 @@ export function ExercisePlayer({ ex, lhRest = false }: { ex: Exercise; lhRest?: 
             <input type="checkbox" checked={clickOn} onChange={(e) => setClickOn(e.target.checked)} /> Click
           </label>
           {midi.state === "ready" ? (
-            <label className="check" title="Waits for the right keys, then moves on. Checks pitch only." data-tour="midi">
+            <label className="check" title="Waits for the right keys, then moves on. It checks the notes only, not the rhythm." data-tour="midi">
               <input type="checkbox" checked={follow} onChange={(e) => setFollow(e.target.checked)} /> Follow my playing
             </label>
           ) : midi.state !== "unsupported" ? (
             <button type="button" className="btn small ghost" onClick={() => void connectMidi()} data-tour="midi">
-              {midi.state === "connecting" ? "Connecting…" : midi.state === "denied" ? "MIDI blocked" : midi.state === "no-device" ? "No MIDI device found" : "Connect piano (MIDI)"}
+              {midi.state === "connecting" ? "Connecting…" : midi.state === "denied" ? "MIDI is blocked" : midi.state === "no-device" ? "No MIDI device found" : "Connect piano (MIDI)"}
             </button>
           ) : null}
         </div>
@@ -267,12 +267,12 @@ export function ExercisePlayer({ ex, lhRest = false }: { ex: Exercise; lhRest?: 
         </div>
         {streak >= target && (
           <p className="hint" style={{ margin: "8px 0 0" }}>
-            Three clean in a row. Mark it steady in today&apos;s check-in, then check it from memory tomorrow.
+            3 clean in a row. Mark it steady in today&apos;s check-in. Tomorrow, play it once from memory.
             {n && (
               <>
                 {" "}
                 <button type="button" className="btn small" onClick={() => setTempo((t) => t + 4)}>
-                  Raise to ♩ = {tempo + 4}
+                  Speed up to ♩ = {tempo + 4}
                 </button>
               </>
             )}
