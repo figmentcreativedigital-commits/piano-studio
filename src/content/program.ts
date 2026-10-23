@@ -25,31 +25,35 @@ export const PROGRAM = {
 } as const;
 
 /**
- * Provisional baseline, from the intake answers. Confirmed or revised by the
- * D0 baseline session on day one.
+ * Baseline: the intake answers, confirmed and revised by the D0 baseline
+ * session (done October 23, a day before the start).
  */
 export const BASELINE = {
-  status: "provisional" as "provisional" | "confirmed",
+  status: "confirmed" as "provisional" | "confirmed",
   updated: "2026-10-23",
   summary:
-    "You are an experienced musician. You studied jazz composition at Berklee, and guitar was your first instrument. You know a lot about how chords work, and you have listened deeply for years. But your piano playing and your music reading are far behind your ear.",
+    "You are an experienced musician. You studied jazz composition at Berklee, and guitar was your first instrument. Your baseline on October 23 showed a strong beat and a strong ear. Both hands played evenly. Reading is the slow part. You read both clefs, but you stop a few times at ♩ = 60.",
   findings: [
     { area: "Harmony and theory", level: "Advanced", source: "intake" },
-    { area: "Ear and line vocabulary", level: "Strong. You built it on guitar.", source: "intake" },
-    { area: "Reading", level: "Very slow in both clefs. You need slow tempos.", source: "intake" },
-    { area: "Right hand", level: "Probably comfortable. How far it can stretch is still to be measured.", source: "intake" },
+    { area: "Ear", level: "Strong. You found both phrases in 1 or 2 tries and sang them back exactly. A tune you know came out easily.", source: "D0" },
+    { area: "Time feel", level: "Strong. When the click came back, you were back with it in 1 beat. Clicks on 2 and 4 felt natural. Your swung eighths were relaxed and even.", source: "D0" },
+    { area: "Reading", level: "Slow, in both clefs. At ♩ = 60 you stopped a few times in each example. The Bach at ♩ = 50 was the same.", source: "D0" },
+    { area: "Right hand", level: "An octave is an easy reach. It played evenly and stayed relaxed, alone and with the left hand.", source: "D0" },
     {
       area: "Left hand",
-      level: "Keep the thumb off the keys for now. Shapes stay within a 4th, like C up to F. Play in short bits.",
-      source: "intake",
+      level: "Even and relaxed with fingers 2 to 5, and comfortable at rest. Keep the thumb off the keys for now. Shapes stay within a 4th, like C up to F. Play in short bits.",
+      source: "D0",
     },
-    { area: "Time feel", level: "Likely strong from playing gigs. Still to be measured at the keys.", source: "intake" },
+    { area: "Balance", level: "You can make the melody louder than the left hand. Making the left hand the louder one is still new.", source: "D0" },
+    { area: "Body", level: "No discomfort during the baseline.", source: "D0" },
   ],
   teaching: [
     "From the start, your right hand plays the lines and Barry Harris chord movement.",
     "Your left hand plays light guide tones and single notes. Use fingers 2–5 only. Keep each note short and on the beat. Bud Powell and Horace Silver often play short left-hand notes like this.",
-    "New reading comes in short pieces, 4 bars long, at ♩ = 40–60. You learn most jazz by ear and by hand shape first. The written music is there to check against.",
+    "Your beat and your ear are strong. So you play with the click on 2 and 4 from day 1, and you learn Lester's and Bird's phrases by ear early.",
+    "New reading comes in short pieces, 4 bars long. Start at ♩ = 40. Move to 50 once you can play it without stopping. You learn most jazz by ear and by hand shape first. The written music is there to check against.",
     "Bach: Invention No. 1 in C major, BWV 772. You learn it in small sections. Each hand plays alone for a long time before you put hands together.",
+    "Your left hand learns to be the louder hand, starting in the F blues on day 6.",
   ],
 };
 

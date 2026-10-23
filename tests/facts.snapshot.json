@@ -2263,19 +2263,24 @@
      "status": "verified",
      "refs": [
       {
-       "url": "https://en.wikipedia.org/wiki/Sonny_Clark_Trio"
+       "url": "https://en.wikipedia.org/wiki/Dial_%22S%22_for_Sonny"
+      },
+      {
+       "url": "https://jazzleadsheets.com/bootin-it.html"
       }
      ]
     },
-    "hands": "RH",
+    "hands": "both",
+    "vehicle": "blues",
     "tempo": {
      "start": 0
     },
     "recording": {
      "artist": "Sonny Clark",
-     "album": "Sonny Clark Trio (Blue Note BLP 1579)",
-     "recorded": "October 13, 1957",
-     "sourceUrl": "https://en.wikipedia.org/wiki/Sonny_Clark_Trio"
+     "album": "Dial “S” for Sonny (Blue Note BLP 1570)",
+     "recorded": "July 21, 1957",
+     "personnel": "Art Farmer (tp), Curtis Fuller (tb), Hank Mobley (ts), Sonny Clark (p), Wilbur Ware (b), Louis Hayes (d)",
+     "sourceUrl": "https://en.wikipedia.org/wiki/Dial_%22S%22_for_Sonny"
     },
     "skills": [
      "ear-sing"
@@ -2721,30 +2726,6 @@
      {
       "id": "a2",
       "side": "A",
-      "kind": "baseline",
-      "minutes": 15,
-      "exerciseIds": [
-       "baseline"
-      ]
-     },
-     {
-      "id": "a3",
-      "side": "A",
-      "kind": "break",
-      "minutes": 3
-     },
-     {
-      "id": "a4",
-      "side": "A",
-      "kind": "baseline",
-      "minutes": 12,
-      "exerciseIds": [
-       "baseline"
-      ]
-     },
-     {
-      "id": "a5",
-      "side": "A",
       "kind": "technique",
       "minutes": 8,
       "exerciseIds": [
@@ -2752,12 +2733,30 @@
       ]
      },
      {
-      "id": "a6",
+      "id": "a3",
+      "side": "A",
+      "kind": "harris",
+      "minutes": 16,
+      "exerciseIds": [
+       "h-scale"
+      ]
+     },
+     {
+      "id": "a4",
       "side": "A",
       "kind": "harris",
       "minutes": 12,
       "exerciseIds": [
-       "h-scale"
+       "h-scale-8"
+      ]
+     },
+     {
+      "id": "a5",
+      "side": "A",
+      "kind": "technique",
+      "minutes": 6,
+      "exerciseIds": [
+       "tech-lh52"
       ]
      },
      {
@@ -2769,20 +2768,17 @@
      {
       "id": "b1",
       "side": "B",
-      "kind": "harris",
-      "minutes": 10,
+      "kind": "bach",
+      "minutes": 18,
       "exerciseIds": [
-       "h-scale-8"
+       "bach-subj"
       ]
      },
      {
       "id": "b2",
       "side": "B",
-      "kind": "bach",
-      "minutes": 13,
-      "exerciseIds": [
-       "bach-subj"
-      ]
+      "kind": "break",
+      "minutes": 3
      },
      {
       "id": "b3",
@@ -2796,6 +2792,15 @@
      {
       "id": "b4",
       "side": "B",
+      "kind": "listening",
+      "minutes": 10,
+      "exerciseIds": [
+       "lis-clark"
+      ]
+     },
+     {
+      "id": "b5",
+      "side": "B",
       "kind": "reading",
       "minutes": 5,
       "exerciseIds": [
@@ -2803,7 +2808,7 @@
       ]
      },
      {
-      "id": "b5",
+      "id": "b6",
       "side": "B",
       "kind": "free",
       "minutes": 10,
@@ -2812,13 +2817,15 @@
       ]
      },
      {
-      "id": "b6",
+      "id": "b7",
       "side": "B",
       "kind": "retrieval",
       "minutes": 10
      }
     ],
-    "applies": [],
+    "applies": [
+     "blues"
+    ],
     "essential": {
      "minutes": 20,
      "blocks": [
@@ -2829,18 +2836,18 @@
       },
       {
        "id": "e2",
-       "kind": "baseline",
-       "minutes": 12,
+       "kind": "harris",
+       "minutes": 10,
        "exerciseIds": [
-        "baseline"
+        "h-scale"
        ]
       },
       {
        "id": "e3",
-       "kind": "harris",
-       "minutes": 4,
+       "kind": "bach",
+       "minutes": 6,
        "exerciseIds": [
-        "h-scale"
+        "bach-subj"
        ]
       },
       {
@@ -2860,17 +2867,18 @@
       "E4"
      ],
      [],
-     [],
-     [],
-     [],
      [
-      "♩=50"
+      "♩=60",
+      "♩=72"
      ],
-     [],
      [
       "C6",
       "♩=50"
      ],
+     [],
+     [],
+     [],
+     [],
      [],
      [],
      [
@@ -2882,7 +2890,9 @@
      ],
      [],
      [],
-     [],
+     [
+      "♩=60"
+     ],
      [],
      []
     ]
@@ -3310,7 +3320,8 @@
      }
     ],
     "applies": [
-     "indiana"
+     "indiana",
+     "blues"
     ],
     "essential": {
      "minutes": 20,

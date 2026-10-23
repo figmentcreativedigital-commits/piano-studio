@@ -52,8 +52,6 @@ describe("calendar export", () => {
     expect(d).toContain("Full lesson: https://example.com/lessons/W01D02");
     expect(d).toContain("Start the session: https://example.com/session/W01D02");
     expect(d).not.toContain("Baseline page");
-    expect(calendarDescription(getLesson("W01D01")!, "https://example.com/lessons/W01D01")).toContain(
-      "Baseline page: https://example.com/baseline.html",
-    );
+    expect(calendarDescription(getLesson("W01D01")!, "https://example.com/lessons/W01D01")).not.toContain("Baseline page");
   });
 });

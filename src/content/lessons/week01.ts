@@ -11,11 +11,11 @@ export const LESSONS_W01: Lesson[] = [
     date: "2026-10-24",
     start: "10:00",
     minutes: 120,
-    title: "Baseline and a New Scale",
-    objective: "Start with your baseline. Then learn Barry Harris's C sixth-diminished scale. Hear it, sing it, then play it with your right hand.",
-    prerequisites: ["Nothing yet. This is where you start"],
+    title: "Barry's Scale and Sonny's Blues",
+    objective: "Learn Barry Harris's C sixth-diminished scale. Hear it, sing it, then play it with your right hand. Then count the blues with Sonny Clark's “Bootin' It”, the track you picked.",
+    prerequisites: ["Your baseline. You did it on October 23"],
     balance:
-      "A quarter of today goes to the baseline. That way, later lessons start from what you can actually play, not guesses. The rest starts three things gently: Harris (22 min), Bach (13) and Lester (10). You also work on touch and do your first reading minute.",
+      "Harris leads today, with 28 minutes on the scale and its chord tones. Bach gets 18 minutes. Listening gets 20: Lester, and Sonny Clark's “Bootin' It”. You also work on touch, light left-hand shapes and your first reading minute.",
     focus: ["c6dim-line", "bach-inv1-m1-rh", "lester-1", "touch"],
     blocks: [
       { id: "a1", side: "A", kind: "setup", title: "Check-in and setup", minutes: 5, text: [
@@ -24,49 +24,48 @@ export const LESSONS_W01: Lesson[] = [
         "Now set the touch response. That's how loud a key sounds for how hard you press. Pick the setting that gives more sound for less force. Then your left hand can stay light. You'll find it under FUNCTION. The parameter list in the PX-130 manual shows which keys to press.",
         CHECKIN,
       ] },
-      { id: "a2", side: "A", kind: "baseline", title: "Baseline: tasks 0–3", minutes: 15, exerciseIds: ["baseline"], text: [
-        "Do Setup, Pulse, Hands and Balance. Rate each task as you go.",
-        "Keep your left thumb off the keys in every task.",
-      ] },
-      { id: "a3", side: "A", kind: "break", title: "Break", minutes: 3, text: ["Stand up and shake out both arms. Walk away from the keys."] },
-      { id: "a4", side: "A", kind: "baseline", title: "Baseline: tasks 4–6", minutes: 12, exerciseIds: ["baseline"], text: [
-        "Do Reading, Ears, then the wrap-up. In Reading, stop at the first example you have to work out note by note.",
-        "Copy the summary. Send it in our chat at the end of the session.",
-      ] },
-      { id: "a5", side: "A", kind: "technique", title: "Drop and release", minutes: 8, exerciseIds: ["tech-drop"], text: [
+      { id: "a2", side: "A", kind: "technique", title: "Drop and release", minutes: 8, exerciseIds: ["tech-drop"], text: [
         "Let your arm weight sink into the key, then let go. Your hands take turns.",
       ] },
-      { id: "a6", side: "A", kind: "harris", title: "The sixth-diminished scale", minutes: 12, exerciseIds: ["h-scale"], text: [
+      { id: "a3", side: "A", kind: "harris", title: "The sixth-diminished scale", minutes: 16, exerciseIds: ["h-scale"], text: [
         "Hear it, sing it and play it. Then vary it. Last, play it once from memory.",
-        "Use only quarter notes today, at ♩ = 50–60.",
+        "Use only quarter notes today. Start at ♩ = 60. Your hands were even at ♩ = 72 in the baseline, so go up to 72 once it feels easy.",
+      ] },
+      { id: "a4", side: "A", kind: "harris", title: "Chord tones on the beat", minutes: 12, exerciseIds: ["h-scale-8"], text: [
+        "Play the scale going down only today. Use even eighth notes at ♩ = 50, then 60. Say 'on' each time a C6 note lands on the click.",
+      ] },
+      { id: "a5", side: "A", kind: "technique", title: "Light left-hand shapes", minutes: 6, exerciseIds: ["tech-lh52"], text: [
+        "Use fingers 5 and 2. Bounce into the keys and lift. Keep your thumb in the air.",
+        "Your left hand was even and relaxed in the baseline, so it starts today, one day early.",
       ] },
       { id: "b0", side: "B", kind: "break", title: "Break, then side B", minutes: 7, text: ["Drink some water and stretch. Look at something far away to rest your eyes."] },
-      { id: "b1", side: "B", kind: "harris", title: "Chord tones on the beat", minutes: 10, exerciseIds: ["h-scale-8"], text: [
-        "Play the scale going down only today. Use even eighth notes at ♩ = 50. Say 'on' each time a C6 note lands on the click.",
-      ] },
-      { id: "b2", side: "B", kind: "bach", title: "Invention No. 1: the subject", minutes: 13, exerciseIds: ["bach-subj"], text: [
+      { id: "b1", side: "B", kind: "bach", title: "Invention No. 1: the subject", minutes: 18, exerciseIds: ["bach-subj"], text: [
         "Hear the subject and sing it 3 times. Then play it. Last, play it from memory.",
+        "Spend the extra minutes playing it from memory, not from the page. Reading was the slow part of your baseline.",
       ] },
+      { id: "b2", side: "B", kind: "break", title: "Break", minutes: 3, text: ["Stand up and shake out both arms. Walk away from the keys."] },
       { id: "b3", side: "B", kind: "listening", title: "Lester: sing the first phrase", minutes: 10, exerciseIds: ["lis-lester-1"], text: [
         "Sing along with the record 3 times. Then sing it alone. Match when each note happens, not just which note.",
       ] },
-      { id: "b4", side: "B", kind: "reading", title: "Reading minute", minutes: 5, exerciseIds: ["read-01"], text: ["Play it once through at ♩ = 40 without stopping."] },
-      { id: "b5", side: "B", kind: "free", title: "Free play on the scale", minutes: 10, exerciseIds: ["free-c6"], text: [
+      { id: "b4", side: "B", kind: "listening", title: "Sonny Clark: “Bootin' It”", minutes: 10, exerciseIds: ["lis-clark"], text: [
+        "It's a fast blues in B♭. Count the 12 bars of the first 2 choruses. Then, in Sonny's solo, listen to his left hand. Are its notes short or long?",
+      ] },
+      { id: "b5", side: "B", kind: "reading", title: "Reading minute", minutes: 5, exerciseIds: ["read-01"], text: ["Play it once through at ♩ = 40 without stopping."] },
+      { id: "b6", side: "B", kind: "free", title: "Free play on the scale", minutes: 10, exerciseIds: ["free-c6"], text: [
         "Right hand only, with the click on 2 and 4 at ♩ = 72. Play a short phrase, land on a C6 note, then breathe.",
       ] },
-      { id: "b6", side: "B", kind: "retrieval", title: "From memory, then log", minutes: 10, text: [
+      { id: "b7", side: "B", kind: "retrieval", title: "From memory, then log", minutes: 10, text: [
         "From memory, play the scale once. Then do the Bach subject once. Sing it first, then play it.",
         LOG,
-        "Send your baseline summary in our chat.",
       ] },
     ],
     application: "Free play with your right hand. Make up 8-bar phrases using only the sixth-diminished scale. End each one on C, E, G or A.",
-    applies: [],
+    applies: ["blues"],
     retrieval: "From memory: the scale once and the Bach subject once. If you like, record 30 seconds of free play.",
     essential: { minutes: 20, blocks: [
       { id: "e1", kind: "checkin", title: "Check-in", minutes: 2, text: [CHECKIN] },
-      { id: "e2", kind: "baseline", title: "Baseline: tasks 1, 2 and 4", minutes: 12, exerciseIds: ["baseline"], text: ["Do Pulse, Hands and Reading. Then send the summary."] },
-      { id: "e3", kind: "harris", title: "The sixth-diminished scale", minutes: 4, exerciseIds: ["h-scale"], text: ["Hear it and sing it. Then play it once up and down."] },
+      { id: "e2", kind: "harris", title: "The sixth-diminished scale", minutes: 10, exerciseIds: ["h-scale"], text: ["Hear it and sing it. Then play it up and down in quarter notes at ♩ = 60."] },
+      { id: "e3", kind: "bach", title: "Invention No. 1: the subject", minutes: 6, exerciseIds: ["bach-subj"], text: ["Sing it, then play it from memory."] },
       { id: "e4", kind: "retrieval", title: "Log", minutes: 2, text: [LOG] },
     ] },
   },
@@ -84,14 +83,14 @@ export const LESSONS_W01: Lesson[] = [
       "Most of today goes to two things. First, Harris chord movement gets 32 min, with the warm-up for it. Second, your first blues in the left hand gets 26 min. You play it in short bits with a break in between. Bach and listening still get their time.",
     focus: ["c6dim-chords", "blues-guide", "bach-inv1-m1-rh", "ear-quality"],
     blocks: [
-      { id: "a1", side: "A", kind: "checkin", title: "Check-in", minutes: 4, text: [CHECKIN, "Did a banner say today's plan changed after your baseline? If so, read why first."] },
+      { id: "a1", side: "A", kind: "checkin", title: "Check-in", minutes: 4, text: [CHECKIN] },
       { id: "a2", side: "A", kind: "retrieval", title: "Yesterday, from memory", minutes: 4, exerciseIds: ["h-scale", "bach-subj"], text: ["Play the scale once and the subject once, without looking."] },
       { id: "a3", side: "A", kind: "technique", title: "Shape first, then sink", minutes: 8, exerciseIds: ["tech-shape"], text: ["Hold the chord shape just above the keys. Sink in and let go. Then move to the next shape in the air."] },
       { id: "a4", side: "A", kind: "harris", title: "Movement: C6 and B°", minutes: 24, exerciseIds: ["h-move-5"], text: [
         "Start with the top voice, the highest note of each chord. Then the outer voices, the top and bottom notes. Then all four notes.",
         "Use half notes at ♩ = 50. After 3 clean runs, move up to 60.",
       ] },
-      { id: "a5", side: "A", kind: "ear", title: "Sixth or diminished?", minutes: 8, exerciseIds: ["ear-quality"], text: ["Listen to 10 chords. Name each one before you look."] },
+      { id: "a5", side: "A", kind: "ear", title: "Sixth or diminished?", minutes: 8, exerciseIds: ["ear-quality"], text: ["Listen to 10 chords. Name each one before you look.", "Your ear was strong in the baseline. So for each chord, also sing its top note before you look."] },
       { id: "a6", side: "A", kind: "break", title: "Break, then side B", minutes: 6, text: ["Step away from the keys. Let both hands hang loose."] },
       { id: "b1", side: "B", kind: "technique", title: "Light left-hand shapes", minutes: 6, exerciseIds: ["tech-lh52"], text: ["Use fingers 5 and 2. Bounce into the keys and lift. Keep your thumb in the air."] },
       { id: "b2", side: "B", kind: "blues", title: "F blues: left-hand guide tones", minutes: 20, exerciseIds: ["b-lh-gt"], text: [
@@ -169,11 +168,11 @@ export const LESSONS_W01: Lesson[] = [
       { id: "5", kind: "harris", title: "Movement, down from the top", minutes: 10, exerciseIds: ["h-move-oct"], text: ["Start from the top C6 chord, C5 to A5. Then come down."] },
       { id: "6", kind: "bach", title: "Bach: bar 1, then half of bar 2", minutes: 10, exerciseIds: ["bach-m1-rh", "bach-m1-lh", "bach-m2-rh"], text: ["Play bar 1 with your right hand, then your left. Then play the first half of bar 2."] },
       { id: "7", kind: "reading", title: "Reading minute", minutes: 4, exerciseIds: ["read-04"], text: ["Bass clef, G major, fingers 5 to 2."] },
-      { id: "8", kind: "listening", title: "Sonny Clark: phrase endings", minutes: 7, exerciseIds: ["lis-clark"], text: ["Hum the endings of 2 of his phrases."] },
+      { id: "8", kind: "listening", title: "Sonny Clark: phrase endings", minutes: 7, exerciseIds: ["lis-clark"], text: ["Back to “Bootin' It”. Hum the endings of 2 of Sonny's phrases."] },
       { id: "9", kind: "retrieval", title: "From memory, then log", minutes: 4, text: ["From memory, play Lester's phrase once, swung.", LOG] },
     ],
     application: "Move Lester's phrase down a whole step so it starts on C5. Now it's in F, the key of “Indiana”. Play it over a left-hand F3 on beat 1, with finger 3. If the base of your thumb is sore, use your right hand alone.",
-    applies: ["indiana"],
+    applies: ["indiana", "blues"],
     retrieval: "Play Lester's phrase once, swung, from memory. If you like, record it.",
     essential: { minutes: 20, blocks: [
       { id: "e1", kind: "checkin", title: "Check-in", minutes: 2, text: [CHECKIN] },
@@ -235,7 +234,7 @@ export const LESSONS_W01: Lesson[] = [
       { id: "3", kind: "harris", title: "Chords under a melody", minutes: 15, exerciseIds: ["h-melody"], text: ["Play the melody alone. Then add the chords. Lean toward your little finger so the melody stays on top."] },
       { id: "4", kind: "break", title: "Break", minutes: 2, text: ["Shake out your hands."] },
       { id: "5", kind: "bach", title: "Bach: bar 1, hands together", minutes: 12, exerciseIds: ["bach-m1-ht"], text: ["Do this only if each hand was clean on Tuesday. If not, play each hand alone, 3 times."] },
-      { id: "6", kind: "blues", title: "F blues, 2 choruses", minutes: 10, exerciseIds: ["b-ht"], text: ["Play 2 choruses without stopping."] },
+      { id: "6", kind: "blues", title: "F blues, 2 choruses", minutes: 10, exerciseIds: ["b-ht"], text: ["Play 2 choruses without stopping.", "Then play 1 more chorus with your left hand a little louder and your right hand soft. Your baseline showed this switch is new."] },
       { id: "7", kind: "listening", title: "Horace Silver: “Doodlin’”", minutes: 6, exerciseIds: ["lis-silver"], text: ["Clap the rhythm of his comping for one chorus."] },
       { id: "8", kind: "reading", title: "Reading minute", minutes: 4, exerciseIds: ["read-06"], text: ["Bass clef, F major, fingers 5 to 2."] },
       { id: "9", kind: "retrieval", title: "From memory, then log", minutes: 3, text: ["Play the melody with its chords once from memory.", LOG] },
