@@ -736,6 +736,10 @@ select {
   display: grid;
   gap: 6px;
   text-decoration: none;
+  min-width: 0;
+}
+.week-strip {
+  overflow-x: clip;
 }
 .day-cell .sleeve-stage {
   aspect-ratio: 1;
