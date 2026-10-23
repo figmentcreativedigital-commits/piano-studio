@@ -5,13 +5,15 @@ import { RoadmapNow } from "@/components/RoadmapNow";
 import { ROADMAP_INTRO, ROADMAP_TITLE } from "@/lib/narration";
 import { readable } from "@/lib/speech-text";
 import { Gloss } from "@/components/Gloss";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
-export const metadata: Metadata = { title: "Roadmap", description: "Twelve weeks in four phases, with milestones you can hear and check." };
+export const metadata: Metadata = { title: "Your 12-week plan", description: "Twelve weeks in four phases, with milestones you can hear and check." };
 
 export default function RoadmapPage() {
   return (
     <>
       <div className="wrap page-head">
+        <Breadcrumbs items={[{ label: "Progress", href: "/progress" }, { label: "Your 12-week plan" }]} />
         <h1 {...readable(ROADMAP_TITLE)}>{ROADMAP_TITLE}</h1>
         <p {...readable(ROADMAP_INTRO)}>{ROADMAP_INTRO}</p>
       </div>

@@ -3,8 +3,8 @@ import "@fontsource-variable/source-serif-4/opsz.css";
 import "@fontsource-variable/source-serif-4/opsz-italic.css";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { ReaderBar } from "@/components/ReadAloud";
 import { Tour } from "@/components/Tour";
 import { SITE_URL } from "@/lib/site";
@@ -46,18 +46,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main">{children}</main>
-        <footer className="footer">
-          <div className="wrap">
-            <span>Woodshed, a piano studio for Walter Gross. Practice data stays on this device.</span>
-            <nav aria-label="Footer">
-              <Link href="/tunes">The three tunes</Link>
-              <Link href="/method">How it works</Link>
-              <a href="/calendar.ics">Calendar file (.ics)</a>
-              <a href="/baseline.html">Baseline session</a>
-            </nav>
-          </div>
-        </footer>
+        <main id="main" tabIndex={-1}>
+          {children}
+        </main>
+        <SiteFooter />
         <ReaderBar />
         <Tour />
       </body>

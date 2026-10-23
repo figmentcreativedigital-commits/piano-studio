@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { SOURCE_LABEL, SKILLS } from "@/content";
+import { SOURCE_LABEL } from "@/content";
 import type { Exercise } from "@/content/types";
 import { EarCheck } from "./EarCheck";
 import { ExercisePlayer } from "./ExercisePlayer";
 import { ReadButton } from "./ReadAloud";
 import { readable } from "@/lib/speech-text";
+import { COMMON_MISTAKES, moreHelpReadings } from "@/lib/narration";
 import { glosser } from "./glosser";
 
 const STATUS: Record<string, string> = {
@@ -24,10 +25,16 @@ function searchLinks(q: string) {
   ];
 }
 
+/** What's inside "More help", so it's clear what opening it gives you. */
+function helpHint(ex: Exercise): string {
+  return [ex.listenFor && "Listen for", ex.feelFor && "Feel for", "Mistakes", "Easier", ex.harder && "Harder"].filter(Boolean).join(" · ");
+}
+
 export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exercise; lhRest?: boolean; simplify?: boolean }) {
   const lhOnly = ex.hands === "LH";
   const r = ex.recording;
   const g = glosser();
+  const more = moreHelpReadings(ex);
   return (
     <article className="ex" id={`ex-${ex.id}`} aria-labelledby={`ex-${ex.id}-t`} data-tour="exercise" data-read-region>
       <header className="ex-head">
@@ -35,7 +42,7 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
           <h3 className="ex-title" id={`ex-${ex.id}-t`} {...readable(ex.title)}>
             {ex.title}
           </h3>
-          <ReadButton label="Read the steps" what={`ex-${ex.id}`} />
+          <ReadButton label="Read aloud" what={`ex-${ex.id}`} collapsed />
         </div>
         {ex.subtitle && <p className="ex-sub">{ex.subtitle}</p>}
         <span className={`source ${ex.source.kind}`} data-tour="exercise-source">
@@ -113,28 +120,6 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
               </li>
             ))}
           </ol>
-          {(ex.listenFor || ex.feelFor) && (
-            <>
-              {ex.listenFor && (
-                <>
-                  <h4>Listen for</h4>
-                  <p>{g(ex.listenFor)}</p>
-                </>
-              )}
-              {ex.feelFor && (
-                <>
-                  <h4>Feel for</h4>
-                  <p>{g(ex.feelFor)}</p>
-                </>
-              )}
-            </>
-          )}
-          <h4>Common mistakes</h4>
-          <ul>
-            {ex.errors.map((e, i) => (
-              <li key={i}>{g(e)}</li>
-            ))}
-          </ul>
         </div>
         <div>
           <h4>Cue</h4>
@@ -151,20 +136,60 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
               {ex.tempo.target ? `, aim for ♩ = ${ex.tempo.target}` : ""}. {ex.reps}.{ex.tempo.note ? ` ${ex.tempo.note}.` : ""}
             </p>
           </div>
-          <h4>Easier</h4>
-          <p>{g(ex.easier)}</p>
-          {ex.harder && (
-            <>
-              <h4>Harder</h4>
-              <p>{g(ex.harder)}</p>
-            </>
-          )}
           {ex.lhCare && <div className="care">{ex.lhCare}</div>}
-          {ex.skills.length > 0 && (
-            <p className="hint">Skills it builds: {ex.skills.map((s) => SKILLS[s]?.name ?? s).join(", ")}</p>
-          )}
         </div>
       </div>
+
+      {/* Tips stay one tap away, so the card shows only what you need while playing. */}
+      <details className="more-help" data-tour="more-help">
+        <summary>
+          <span className="more-help-label">More help</span>
+          <span className="more-help-hint">{helpHint(ex)}</span>
+          <span className="more-help-chev" aria-hidden="true" />
+        </summary>
+        <div className="more-help-body">
+          {more.listenFor && (
+            <section>
+              <h4>Listen for</h4>
+              <p {...readable(more.listenFor)}>{g(ex.listenFor!)}</p>
+            </section>
+          )}
+          {more.feelFor && (
+            <section>
+              <h4>Feel for</h4>
+              <p {...readable(more.feelFor)}>{g(ex.feelFor!)}</p>
+            </section>
+          )}
+          <section>
+            <h4 {...readable(COMMON_MISTAKES)}>{COMMON_MISTAKES}</h4>
+            <ul>
+              {ex.errors.map((e, i) => (
+                <li key={i} {...readable(e)}>
+                  {g(e)}
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section>
+            <h4>Easier</h4>
+            <p {...readable(more.easier)}>{g(ex.easier)}</p>
+          </section>
+          {more.harder && (
+            <section>
+              <h4>Harder</h4>
+              <p {...readable(more.harder)}>{g(ex.harder!)}</p>
+            </section>
+          )}
+          {more.skills && (
+            <section>
+              <h4>Skills it builds</h4>
+              <p className="hint" {...readable(more.skills)}>
+                {more.skills.replace(/^Skills it builds: /, "")}
+              </p>
+            </section>
+          )}
+        </div>
+      </details>
     </article>
   );
 }

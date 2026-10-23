@@ -36,7 +36,7 @@ export function ListenButton() {
       onClick={() => {
         if (active) return reader.stop();
         const main = document.getElementById("main");
-        const items = collectReadable(main ?? document);
+        const items = collectReadable(main ?? document, { all: !!main?.querySelector("[data-read-all]") });
         if (!items.length && main) {
           const fallback = Array.from(main.querySelectorAll<HTMLElement>("h1, h2, h3, p, li")).filter((e) => e.getClientRects().length);
           reader.speak(fallback.map((el) => ({ text: el.innerText, el })), "This page");
@@ -48,8 +48,12 @@ export function ListenButton() {
   );
 }
 
-/** Reads the `[data-read]` elements in this button's nearest `[data-read-region]`. */
-export function ReadButton({ label = "Read aloud", what }: { label?: string; what: string }) {
+/**
+ * Reads the `[data-read]` elements in this button's nearest `[data-read-region]`.
+ * With `collapsed`, passages folded under a closed "More help" are read too,
+ * and open as they're reached.
+ */
+export function ReadButton({ label = "Read aloud", what, collapsed = false }: { label?: string; what: string; collapsed?: boolean }) {
   const ok = useSupported();
   const ref = useRef<HTMLButtonElement>(null);
   const s = useReader();
@@ -64,7 +68,7 @@ export function ReadButton({ label = "Read aloud", what }: { label?: string; wha
       onClick={() => {
         if (mine) return reader.stop();
         const region = ref.current?.closest<HTMLElement>("[data-read-region]");
-        reader.speak(collectReadable(region ?? document), what);
+        reader.speak(collectReadable(region ?? document, { collapsed }), what);
       }}
     >
       <SpeakerIcon />

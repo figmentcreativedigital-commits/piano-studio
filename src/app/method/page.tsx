@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { METHOD, METHOD_INTRO, METHOD_TITLE, plain } from "@/content/method";
+import { METHOD, METHOD_INTRO, plain } from "@/content/method";
 import { NarratorAudition } from "@/components/ReadAloud";
-import { NARRATOR_SAMPLE } from "@/lib/narration";
+import { HOW_TITLE, NARRATOR_SAMPLE } from "@/lib/narration";
 import { readable } from "@/lib/speech-text";
 import { Gloss } from "@/components/Gloss";
 
-export const metadata: Metadata = { title: "Method", description: "How Woodshed teaches, where its material comes from, and what happens to your data." };
+export const metadata: Metadata = { title: HOW_TITLE, description: "How Woodshed teaches, where its material comes from, and what happens to your data." };
 
 const SOURCES = [
   { label: "Google Cloud Text-to-Speech, Chirp 3 HD voices (the studio narrator)", href: "https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd" },
@@ -43,7 +43,7 @@ export default function MethodPage() {
   return (
     <>
       <div className="wrap page-head">
-        <h1 {...readable(METHOD_TITLE)}>{METHOD_TITLE}</h1>
+        <h1 {...readable(HOW_TITLE)}>{HOW_TITLE}</h1>
         <p {...readable(METHOD_INTRO)}>{METHOD_INTRO}</p>
       </div>
       <div className="wrap prose" style={{ paddingBottom: 56 }}>

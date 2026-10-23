@@ -35,9 +35,22 @@ export const TOUR: TourChapter[] = [
     steps: [
       {
         title: "Welcome to Woodshed",
-        body: "Woodshed is a practice studio for bebop piano and Bach. It's built around your hands, your ears and your schedule. This tour takes about 2 minutes. Use Next and Back, or the arrow keys. Jump between chapters from the heading above. Press Escape to end the tour.",
+        body: "Woodshed is a practice studio for bebop piano and Bach. It's built around your hands, your ears and your schedule. This tour takes a few minutes. Use Next and Back, or the arrow keys. Jump between chapters from the heading above. Press Escape to end the tour.",
         why: "Turn on Read aloud below to hear each card as you go.",
         place: "center",
+      },
+    ],
+  },
+  {
+    id: "find",
+    label: "Finding your way",
+    route: "/",
+    steps: [
+      {
+        target: t("main-nav"),
+        title: "Five places",
+        body: "Everything lives in 5 places: Today, Lessons, Tunes, Library and Progress. On a phone, they sit in a bar at the bottom of the screen. On a bigger screen, they sit at the top. The place you're in is highlighted.",
+        why: "Five places are easy to keep in your head. Less time looking for things means more time at the piano.",
       },
     ],
   },
@@ -85,7 +98,7 @@ export const TOUR: TourChapter[] = [
       {
         target: t("metronome"),
         title: "A metronome on every page",
-        body: "It can click on every beat, or just on 2 and 4, the jazz click. It can also click for 4 bars, then go quiet for 4, to test your own time.",
+        body: "The metronome sits at the top of every page. On a phone, tap it to open its controls. It can click on every beat, or just on 2 and 4, the jazz click. It can also click for 4 bars, then go quiet for 4.",
         why: "Clicking 4 bars on and 4 bars off shows if the steady beat comes from you or from the click.",
         top: true,
       },
@@ -95,6 +108,11 @@ export const TOUR: TourChapter[] = [
         body: "Press the speaker and the page is read to you, 1 section at a time. The part being read is highlighted. Music shorthand is spoken the right way: “A♭4” is read as “A flat 4”.",
         why: "At the piano, your eyes and hands are busy. Listening keeps both on the piano. It also helps anyone who gets tired reading lots of text.",
         top: true,
+      },
+      {
+        target: t("help"),
+        title: "Help is always here",
+        body: "The question mark button opens help. From there you can take this tour again, or read How it works. That page explains how Woodshed teaches and where the music comes from.",
       },
     ],
   },
@@ -108,6 +126,17 @@ export const TOUR: TourChapter[] = [
         title: "The full lesson",
         body: "Everything for 1 session is on 1 page. You see the goal and what it builds on. You see how the time is split up. You also get a short piece of music to try it in, and the tunes it's used on.",
         top: true,
+      },
+      {
+        target: t("breadcrumbs"),
+        title: "Where you are",
+        body: "The line at the top shows where you are: Lessons, then the week, then this lesson. Tap any part of it to go back up.",
+        top: true,
+      },
+      {
+        target: t("lesson-toc"),
+        title: "On this page",
+        body: "A long lesson has 4 big parts: the overview, side A, side B and the short version. Tap one to jump to it. On a phone, this row stays at the top of the screen as you scroll.",
       },
       {
         target: [t("exercise-source"), t("exercise")],
@@ -134,8 +163,19 @@ export const TOUR: TourChapter[] = [
       {
         target: t("done-when"),
         title: "Done when",
-        body: "Every exercise ends with a check you can hear or count. There's also an easier version for when it isn't there yet.",
+        body: "Every exercise ends with a check you can hear or count. When you pass it, you're done with that exercise for today.",
         why: "A clear finish line tells you when to stop. Knowing when to stop is half of good practice.",
+      },
+      {
+        target: t("more-help"),
+        title: "More help, when you want it",
+        body: "Tips are tucked under More help, so the card stays short. Open it to see what to listen for, common mistakes, and an easier version. Read aloud on the card reads these tips too.",
+        why: "While you play, you only need the steps, the cue and the finish line. The rest is there when something goes wrong.",
+      },
+      {
+        target: t("lesson-pager"),
+        title: "The next lesson",
+        body: "Every lesson ends with 2 links. One goes to the lesson before. The other goes to the lesson after.",
       },
     ],
   },
@@ -155,6 +195,12 @@ export const TOUR: TourChapter[] = [
         title: "Hands-free",
         body: "Turn on Read each part aloud to hear the steps as each part begins. With the piano connected, tap the sustain pedal twice to go to the next part.",
         why: "Each time you reach for the screen, you lose your hand position and your focus.",
+      },
+      {
+        target: t("session-leave"),
+        title: "Leaving a session",
+        body: "A session hides the bar of 5 places, so nothing pulls you away. Leave session takes you back to the full lesson. Come back the same day and you pick up where you stopped.",
+        top: true,
       },
     ],
   },
@@ -178,6 +224,20 @@ export const TOUR: TourChapter[] = [
     ],
   },
   {
+    id: "library",
+    label: "The Library",
+    route: "/library",
+    steps: [
+      {
+        target: t("library-cards"),
+        title: "The people behind your lessons",
+        body: "Charlie Parker shows you how to play the blues and Rhythm changes. You play Bach next to the jazz. Lester Young shows you how to shape a phrase. Barry Harris's method is the base of it all. Recordings lists every record you listen to.",
+        why: "Knowing whose idea you're practicing helps you hear it in their records.",
+        top: true,
+      },
+    ],
+  },
+  {
     id: "checkin",
     label: "Checking in",
     route: "/check-in",
@@ -197,8 +257,32 @@ export const TOUR: TourChapter[] = [
     ],
   },
   {
+    id: "progress",
+    label: "Progress",
+    route: "/progress",
+    steps: [
+      {
+        target: t("progress-plan"),
+        title: "Your 12-week plan",
+        body: "The plan for all 12 weeks lives inside Progress. It shows the 4 phases and the week you're in. Open it to see what each phase works on.",
+        top: true,
+      },
+      {
+        target: t("progress-ledger"),
+        title: "What's steady",
+        body: "Every skill, with proof of how it's going. It also shows when each skill comes back for review.",
+        why: "Each time a skill holds up, the wait before its next review doubles. The longest wait is 2 weeks. So steady skills come back just before you would forget them.",
+      },
+      {
+        target: t("progress-backup"),
+        title: "Your data stays with you",
+        body: "Your practice data lives in this browser. There's no account. Export a backup, import it on another device, or add the lessons to a calendar.",
+      },
+    ],
+  },
+  {
     id: "plan",
-    label: "The long view",
+    label: "The 12-week plan",
     route: "/roadmap",
     steps: [
       {
@@ -210,32 +294,13 @@ export const TOUR: TourChapter[] = [
     ],
   },
   {
-    id: "progress",
-    label: "Progress",
-    route: "/progress",
-    steps: [
-      {
-        target: t("progress-ledger"),
-        title: "What's steady",
-        body: "Every skill, with proof of how it's going. It also shows when each skill comes back for review.",
-        why: "Each time a skill holds up, the wait before its next review doubles. The longest wait is 2 weeks. So steady skills come back just before you would forget them.",
-        top: true,
-      },
-      {
-        target: t("progress-backup"),
-        title: "Your data stays with you",
-        body: "Your practice data lives in this browser. There's no account. Export a backup, import it on another device, or add the lessons to a calendar.",
-      },
-    ],
-  },
-  {
     id: "end",
     label: "Finish",
     route: "/",
     steps: [
       {
         title: "That's the tour",
-        body: "Start from Today, and check in when you finish. The Guided tour button brings this tour back any time you want it.",
+        body: "Start from Today, and check in when you finish. The question mark button brings this tour back any time. It also opens How it works.",
         place: "center",
       },
     ],

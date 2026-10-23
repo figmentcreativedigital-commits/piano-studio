@@ -107,7 +107,7 @@ describe("guided tour", () => {
         }
   });
   it("visits real routes", () => {
-    const routes = new Set(["/", "/tunes", "/check-in", "/roadmap", "/progress", ...LESSONS.flatMap((l) => [`/lessons/${l.id}`, `/session/${l.id}`])]);
+    const routes = new Set(["/", "/tunes", "/library", "/check-in", "/roadmap", "/progress", ...LESSONS.flatMap((l) => [`/lessons/${l.id}`, `/session/${l.id}`])]);
     for (const c of TOUR) expect(routes.has(c.route), c.route).toBe(true);
   });
 });

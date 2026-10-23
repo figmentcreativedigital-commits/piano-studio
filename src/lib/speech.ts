@@ -174,6 +174,8 @@ class Reader {
     this.lit?.classList.remove("is-reading");
     this.lit = el ?? null;
     if (!el) return;
+    // A passage folded away under "More help" opens as the reader reaches it.
+    for (let d = el.closest("details"); d; d = d.parentElement?.closest("details") ?? null) if (!d.open) d.open = true;
     el.classList.add("is-reading");
     const r = el.getBoundingClientRect();
     if (r.top < 80 || r.bottom > window.innerHeight - 90) {
@@ -308,15 +310,52 @@ class Reader {
 
 export const reader = new Reader();
 
+export interface CollectOptions {
+  /**
+   * Also read passages folded inside a closed <details> ("More help"). They
+   * open as the reader reaches them. Used when a card is read on request.
+   */
+  collapsed?: boolean;
+  /**
+   * Read every heading, paragraph and list item, not only marked passages.
+   * Marked passages keep their exact narrated text. Pages opt in with
+   * `data-read-all` (the Library pages do), so new writing there is read
+   * without being registered first.
+   */
+  all?: boolean;
+}
+
+const ALL_SELECTOR = "[data-read], h1, h2, h3, h4, p, li, dt, dd, figcaption";
+
+/** True if the element sits inside a closed <details> (and isn't its summary). */
+function folded(el: HTMLElement): HTMLDetailsElement | null {
+  const d = el.closest<HTMLDetailsElement>("details:not([open])");
+  if (!d) return null;
+  const summary = el.closest("summary");
+  return summary && summary.parentElement === d ? null : d;
+}
+
 /** The readable elements inside a region, in order, skipping anything hidden. */
-export function collectReadable(root: ParentNode = document): ReadItem[] {
-  const els = Array.from(root.querySelectorAll<HTMLElement>("[data-read]"));
+export function collectReadable(root: ParentNode = document, opts: CollectOptions = {}): ReadItem[] {
+  const els = Array.from(root.querySelectorAll<HTMLElement>(opts.all ? ALL_SELECTOR : "[data-read]"));
   const out: ReadItem[] = [];
+  const taken: HTMLElement[] = [];
   for (const el of els) {
-    if (!el.getClientRects().length) continue;
-    if (el.closest("[aria-hidden='true']")) continue;
+    if (el.closest("[aria-hidden='true'], [data-read-skip]")) continue;
+    if (opts.all) {
+      // Each passage once: skip anything inside a passage already taken, and navigation.
+      if (taken.some((t) => t.contains(el))) continue;
+      if (!el.hasAttribute("data-read") && el.closest("nav, button, summary")) continue;
+    }
+    const d = folded(el);
+    if (d) {
+      if (!opts.collapsed || !d.getClientRects().length) continue;
+    } else if (!el.getClientRects().length) continue;
     const text = el.getAttribute("data-read-text") || el.innerText;
-    if (text && text.trim()) out.push({ text: text.trim(), el });
+    if (text && text.trim()) {
+      out.push({ text: text.trim(), el });
+      taken.push(el);
+    }
   }
   return out;
 }

@@ -1,4 +1,6 @@
-import { EXERCISES, LESSONS, PHASES, PROGRAM, VEHICLES, getVehicle } from "@/content";
+import { EXERCISES, LESSONS, PHASES, PROGRAM, SKILLS, VEHICLES, getVehicle } from "@/content";
+import type { Exercise } from "@/content/types";
+import { LIBRARY, LIBRARY_INTRO, LIBRARY_TITLE, RECORDINGS_CARD } from "@/content/library";
 import { METHOD, METHOD_INTRO, METHOD_TITLE, plain } from "@/content/method";
 import { TOUR, type TourStep } from "@/content/tour";
 import type { Block, Lesson } from "@/content/types";
@@ -37,6 +39,23 @@ export const ROADMAP_TITLE = "Twelve weeks";
 export const ROADMAP_INTRO =
   "This is a first-draft plan in 4 phases. It promises a good way to work, not a date when you will have it all down. Each milestone is a check you can play. The plan changes when what you can actually play changes.";
 
+/** The Method page's name in the navigation and on the page. */
+export const HOW_TITLE = "How it works";
+
+export const COMMON_MISTAKES = "Common mistakes";
+
+/** What an exercise card's "More help" reads aloud, in order. */
+export function moreHelpReadings(e: Exercise): { listenFor?: string; feelFor?: string; easier: string; harder?: string; skills?: string } {
+  const skills = e.skills.map((s) => SKILLS[s]?.name ?? s).join(", ");
+  return {
+    listenFor: e.listenFor ? `Listen for: ${e.listenFor}` : undefined,
+    feelFor: e.feelFor ? `Feel for: ${e.feelFor}` : undefined,
+    easier: `Easier: ${e.easier}`,
+    harder: e.harder ? `Harder: ${e.harder}` : undefined,
+    skills: skills ? `Skills it builds: ${skills}` : undefined,
+  };
+}
+
 export const COMPLETE_LINE = "You have finished every lesson written so far. The next week comes after your check-in.";
 
 export function endTime(start: string, minutes: number): string {
@@ -73,7 +92,9 @@ export const agendaHeading = (minutes?: number) => (minutes ? `The ${minutes}-mi
 // ───────────────────────── The whitelist ─────────────────────────
 
 export function narrationTexts(): string[] {
-  const out: string[] = [NARRATOR_SAMPLE, TUNES_TITLE, TUNES_INTRO, ROADMAP_TITLE, ROADMAP_INTRO, COMPLETE_LINE, agendaHeading()];
+  const out: string[] = [NARRATOR_SAMPLE, TUNES_TITLE, TUNES_INTRO, ROADMAP_TITLE, ROADMAP_INTRO, COMPLETE_LINE, agendaHeading(), HOW_TITLE, COMMON_MISTAKES];
+  out.push(LIBRARY_TITLE, LIBRARY_INTRO, RECORDINGS_CARD.name, RECORDINGS_CARD.blurb);
+  for (const e of LIBRARY) out.push(e.name, e.blurb, e.intro);
   const starts = new Set(Object.values(PROGRAM.schedule).map((s) => s.start));
   for (const l of LESSONS) {
     out.push(l.title, l.objective, `How the time is split: ${l.balance}`, `Try it in music: ${l.application}`, lessonIdLine(l), agendaHeading(l.essential.minutes));
@@ -86,6 +107,8 @@ export function narrationTexts(): string[] {
     if (e.spelling) out.push(e.spelling);
     if (e.fingering) out.push(`Fingering: ${e.fingering}`);
     if (e.recording) out.push(e.recording.title, e.recording.question);
+    const more = moreHelpReadings(e);
+    out.push(...e.errors, ...[more.listenFor, more.feelFor, more.easier, more.harder, more.skills].filter((x): x is string => !!x));
   }
   for (const v of VEHICLES) out.push(v.tune, v.name, v.summary);
   for (const p of PHASES) {

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { BASELINE, EXERCISES, LESSONS, PHASES, VEHICLES } from "@/content";
+import { LIBRARY, LIBRARY_INTRO, RECORDINGS_CARD } from "@/content/library";
 import { METHOD, METHOD_INTRO, plain } from "@/content/method";
 import { TOUR } from "@/content/tour";
 import { ROADMAP_INTRO, TUNES_INTRO } from "@/lib/narration";
@@ -67,6 +68,12 @@ export function prose(): Field[] {
     }
   add("method intro", METHOD_INTRO);
   for (const m of METHOD) [...m.paragraphs, ...(m.after ?? [])].forEach((p, i) => add(`method ${m.heading} ${i}`, plain(p)));
+  add("library intro", LIBRARY_INTRO);
+  add("recordings card", RECORDINGS_CARD.blurb);
+  for (const e of LIBRARY) {
+    add(`library ${e.id} intro`, e.intro);
+    add(`library ${e.id} card`, e.blurb);
+  }
   add("tunes intro", TUNES_INTRO);
   add("roadmap intro", ROADMAP_INTRO);
   return f;

@@ -147,7 +147,7 @@ describe("chord spelling", () => {
 
 describe("internal links", () => {
   it("every exercise link points at a page that exists", () => {
-    const routes = new Set(["/", "/lessons", "/tunes", "/roadmap", "/listening", "/progress", "/method", "/check-in"]);
+    const routes = new Set(["/", "/lessons", "/tunes", "/roadmap", "/listening", "/progress", "/method", "/check-in", "/library", "/library/parker", "/library/bach", "/library/lester", "/library/barry"]);
     for (const e of EXERCISES) {
       if (!e.link) continue;
       const href = e.link.href.split("#")[0].split("?")[0];

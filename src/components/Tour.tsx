@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { TOUR, type TourStep } from "@/content/tour";
 import { reader, speechSupported } from "@/lib/speech";
@@ -17,6 +18,8 @@ import { tourReading } from "@/lib/narration";
 const RUN_KEY = "woodshed.tour.run.v1";
 const SEEN_KEY = "woodshed.tour.seen.v1";
 const CARD_W = 372;
+/** Below this width the card is a sheet at the top or bottom of the screen. */
+const PHONE = 768;
 const GAP = 14;
 const PAD = 8;
 
@@ -61,6 +64,9 @@ export function Tour() {
   const [invite, setInvite] = useState(false);
   const [canSpeak, setCanSpeak] = useState(false);
   const [cardH, setCardH] = useState(260);
+  const [help, setHelp] = useState(false);
+  const helpRef = useRef<HTMLDivElement>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const run = useRef(0);
   const wanted = useRef<string | null>(null);
@@ -108,6 +114,7 @@ export function Tour() {
   const start = useCallback(
     (fromTop = false) => {
       markSeen();
+      setHelp(false);
       if (fromTop) setI(0);
       else {
         const saved = FLAT[i];
@@ -261,12 +268,40 @@ export function Tour() {
     return () => window.removeEventListener("keydown", onKey);
   }, [on, i, go, stop]);
 
+  // The help menu: Escape or a click elsewhere closes it, and focus goes back to the button.
+  useEffect(() => setHelp(false), [pathname]);
+  useEffect(() => {
+    if (!help) return;
+    const onDown = (e: PointerEvent) => {
+      if (!helpRef.current?.contains(e.target as Node)) setHelp(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      const inside = !!helpRef.current?.contains(document.activeElement);
+      setHelp(false);
+      if (inside) fabRef.current?.focus();
+    };
+    const onFocus = (e: FocusEvent) => {
+      if (e.target instanceof Node && !helpRef.current?.contains(e.target)) setHelp(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("focusin", onFocus);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("focusin", onFocus);
+    };
+  }, [help]);
+
   const card = useMemo(() => {
     if (typeof window === "undefined") return {};
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     if (!box || step?.place === "center") return { left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: Math.min(CARD_W + 60, vw - 32) } as const;
-    if (vw < 760) return { left: 12, right: 12, bottom: 12, width: "auto" } as const;
+    // Phones: a sheet at the bottom, or at the top when the target is low on
+    // the screen (the tab bar, the help button), so it never covers the target.
+    if (vw < PHONE) return box.top > vh * 0.45 ? ({ left: 12, right: 12, top: 12, width: "auto" } as const) : ({ left: 12, right: 12, bottom: 12, width: "auto" } as const);
     let left = box.left + box.width / 2 - CARD_W / 2;
     left = Math.max(16, Math.min(left, vw - CARD_W - 16));
     const below = vh - (box.top + box.height) - GAP;
@@ -282,38 +317,75 @@ export function Tour() {
   if (!ready) return null;
   const inSession = pathname.startsWith("/session");
 
-  if (!on) {
-    return (
-      <>
-        {invite && !inSession && (
-          <div className="tour-invite band" role="dialog" aria-labelledby="tour-invite-h" data-tour-ui>
-            <p id="tour-invite-h">New here? A 2-minute tour shows you how Woodshed works.</p>
-            <div className="btn-row">
-              <button type="button" className="btn small primary" onClick={() => start(true)}>
-                Take the tour
-              </button>
-              <button type="button" className="btn small ghost" onClick={markSeen}>
-                Not now
-              </button>
-            </div>
+  const fab = !inSession && (
+    <div className="help" ref={helpRef} data-tour-ui>
+      {invite && !on && !help && (
+        <div className="tour-invite band" role="dialog" aria-labelledby="tour-invite-h">
+          <p id="tour-invite-h">New here? A short tour shows you how Woodshed works.</p>
+          <div className="btn-row">
+            <button type="button" className="btn small primary" onClick={() => start(true)}>
+              Take the tour
+            </button>
+            <button type="button" className="btn small ghost" onClick={markSeen}>
+              Not now
+            </button>
           </div>
-        )}
-        {!inSession && (
-          <button type="button" className="tour-fab band" data-tour-ui onClick={() => start(false)} aria-label={i > 0 ? "Resume the guided tour" : "Start the guided tour"}>
-            <span aria-hidden="true" className="tour-fab-mark">
-              ?
-            </span>
-            <span className="tour-fab-label">{i > 0 ? "Resume tour" : "Guided tour"}</span>
-          </button>
-        )}
-      </>
-    );
-  }
+        </div>
+      )}
+      {help && !on && (
+        <div className="help-menu band" id="help-menu" role="group" aria-labelledby="help-menu-h">
+          <p className="help-menu-h" id="help-menu-h">
+            Help
+          </p>
+          <ul>
+            <li>
+              <button type="button" className="help-item" onClick={() => start(false)}>
+                <b>{i > 0 ? "Go on with the tour" : "Take the guided tour"}</b>
+                <small>{i > 0 ? "Pick up where you left off." : "A short walk through every part of Woodshed."}</small>
+              </button>
+            </li>
+            {i > 0 && (
+              <li>
+                <button type="button" className="help-item" onClick={() => start(true)}>
+                  <b>Start the tour again</b>
+                  <small>From the first step.</small>
+                </button>
+              </li>
+            )}
+            <li>
+              <Link className="help-item" href="/method" onClick={() => setHelp(false)}>
+                <b>How it works</b>
+                <small>How Woodshed teaches, and where the music comes from.</small>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
+      <button
+        ref={fabRef}
+        type="button"
+        className="tour-fab band"
+        data-tour="help"
+        aria-expanded={help}
+        aria-controls="help-menu"
+        onClick={() => (on ? undefined : setHelp((v) => !v))}
+      >
+        <span aria-hidden="true" className="tour-fab-mark">
+          ?
+        </span>
+        <span className="tour-fab-label">Help</span>
+      </button>
+    </div>
+  );
+
+  if (!on) return fab || null;
 
   const chapterSteps = FLAT.filter((s) => s.chapter === step.chapter);
   const within = chapterSteps.indexOf(step) + 1;
 
   return (
+    <>
+    {fab}
     <div className="tour-layer" data-tour-ui>
       {box ? <div className="tour-ring" style={{ top: box.top, left: box.left, width: box.width, height: box.height }} /> : <div className="tour-dim" />}
       <div className="tour-card" ref={cardRef} tabIndex={-1} style={card as React.CSSProperties} role="dialog" aria-modal="false" aria-labelledby="tour-title" aria-describedby="tour-body">
@@ -398,5 +470,6 @@ export function Tour() {
         </div>
       </div>
     </div>
+    </>
   );
 }

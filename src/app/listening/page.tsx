@@ -2,15 +2,17 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { EXERCISES, LESSONS, lessonCode } from "@/content";
 import { readable } from "@/lib/speech-text";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
-export const metadata: Metadata = { title: "Listening", description: "Recordings, each with one question to answer." };
+export const metadata: Metadata = { title: "Recordings", description: "Recordings, each with one question to answer." };
 
 export default function ListeningPage() {
   const tasks = EXERCISES.filter((e) => e.recording);
   return (
     <>
       <div className="wrap page-head">
-        <h1>Listening</h1>
+        <Breadcrumbs items={[{ label: "Library", href: "/library" }, { label: "Recordings" }]} />
+        <h1>Recordings</h1>
         <p>Each recording comes with one question. Answer it at the piano or out loud. The recording details are checked against lists of each artist&apos;s records. This site doesn&apos;t store any copies of the music.</p>
       </div>
       <div className="wrap" style={{ paddingBottom: 40 }}>
