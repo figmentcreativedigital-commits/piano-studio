@@ -157,7 +157,7 @@ export const LESSONS_W01: Lesson[] = [
     start: "07:30",
     minutes: 60,
     title: "Lester Young by Ear",
-    objective: "Find Lester Young's first phrase from 'Oh, Lady Be Good!' by ear. Then move it to F, the key of “Indiana”. Also get bar 1 of Invention No. 1 clean with each hand.",
+    objective: "Find Lester Young's first phrase from “Oh, Lady Be Good!” by ear. Then move it to F, the key of “Indiana”. Also get bar 1 of Invention No. 1 clean with each hand.",
     prerequisites: ["Singing Lester's first phrase (W01D01)"],
     balance: "Ear work leads today, with 21 minutes counting listening. Your ear is your strongest tool. It's also the fastest way into this style. Harris and Bach get 10 minutes each.",
     focus: ["lester-1", "c6dim-chords", "bach-inv1-m1-lh", "bach-inv1-m2-rh"],

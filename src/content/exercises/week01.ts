@@ -11,7 +11,7 @@ const HARRIS_6DIM: Source = {
   note: "This is Barry Harris's major sixth-diminished scale. It's a major scale with one note added, the flat 6th (♭6). In C, the notes take turns between 2 chords. One is C6 (C E G A). The other is the B diminished chord (B D F A♭).",
   status: "checked-in-class",
   refs: [
-    { label: "Barry Harris teaching a class in The Hague, 'Introducing the sixth diminished scale', 1:08–3:32. He builds the scale from C6 and says 'after G comes A flat'.", url: "https://www.youtube.com/watch?v=-jO-sIrjTqg&t=68s" },
+    { label: "Barry Harris teaching a class in The Hague, “Introducing the sixth diminished scale”, 1:08–3:32. He builds the scale from C6 and says “after G comes A flat”.", url: "https://www.youtube.com/watch?v=-jO-sIrjTqg&t=68s" },
     { label: "barryharrismethod.com, step 9.3: the scale, its diminished partner, and Barry's quotes with timestamps. An independent archive.", url: "https://barryharrismethod.com/method/9.3" },
     { label: "Robbie Barnby's video 'Barry Harris 6th Diminished Scale FULLY EXPLAINED' (2021), 1:20–3:27", url: "https://www.youtube.com/watch?v=7reOAaveCi0&t=80s" },
   ],
@@ -663,7 +663,7 @@ export const EXERCISES_W01: Exercise[] = [
   // ───────────────────────── Listening ─────────────────────────
   {
     id: "lis-lester-1",
-    title: "Lester Young: 'Oh, Lady Be Good!'",
+    title: "Lester Young: “Oh, Lady Be Good!”",
     subtitle: "Sing the first phrase of the solo",
     kind: "listening",
     source: { kind: "recording", note: "Played by Jones-Smith Incorporated. Recorded November 9, 1936, in Chicago. The time the solo starts comes from 2 places: gwallter.com and Kevin Sun's transcription.", status: "verified", refs: [{ label: "gwallter.com: Lester Young and 'Oh! Lady be Good'", url: "https://gwallter.com/music/lester-young-and-oh-lady-be-good.html" }] },
@@ -748,7 +748,7 @@ export const EXERCISES_W01: Exercise[] = [
   },
   {
     id: "lis-clark",
-    title: "Sonny Clark: 'I Didn't Know What Time It Was'",
+    title: "Sonny Clark: “I Didn’t Know What Time It Was”",
     subtitle: "Where phrases end",
     kind: "listening",
     source: { kind: "recording", note: "Sonny Clark Trio, Blue Note BLP 1579. Recorded October 13, 1957, at Van Gelder Studio.", status: "verified", refs: [{ label: "Wikipedia: Sonny Clark Trio", url: "https://en.wikipedia.org/wiki/Sonny_Clark_Trio" }] },
@@ -804,7 +804,7 @@ export const EXERCISES_W01: Exercise[] = [
   // ───────────────────────── Free play, baseline, review ─────────────────────────
   {
     id: "free-c6",
-    title: "Free play in eight notes",
+    title: "Free play in eighth notes",
     subtitle: "Right hand, sixth-diminished scale only",
     kind: "free",
     source: { kind: "adaptation", note: "Improvising inside the Harris scale. That means making it up as you go." },
