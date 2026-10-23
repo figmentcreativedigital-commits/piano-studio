@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { collectReadable, reader, speechSupported, type ReaderState } from "@/lib/speech";
+import { collectReadable, englishVoices, onVoices, reader, speechSupported, type ReaderState } from "@/lib/speech";
 
 function useReader(): ReaderState {
   const [s, setS] = useState<ReaderState>(reader.state);
@@ -70,6 +70,41 @@ export function ReadButton({ label = "Read aloud", what }: { label?: string; wha
 }
 
 /** The bar that appears while something is being read. */
+/** Picks among the voices this device offers; the best-sounding come first. */
+export function VoicePicker() {
+  const [voices, setVoices] = useState<{ uri: string; label: string }[]>([]);
+  const [voice, setVoice] = useState("");
+  useEffect(() => {
+    const load = () => {
+      const list = englishVoices().map((v) => ({ uri: v.voiceURI, label: `${v.name.replace(/^Microsoft /, "").replace(/ - English \(.*\)$/, "")}${v.localService ? "" : " (online)"}` }));
+      setVoices(list);
+      setVoice(reader.getPrefs().voice ?? list[0]?.uri ?? "");
+    };
+    load();
+    return onVoices(load);
+  }, []);
+  if (voices.length < 2) return null;
+  return (
+    <label className="reader-rate reader-voice">
+      <span className="sr-only">Voice</span>
+      <select
+        value={voice}
+        onChange={(e) => {
+          setVoice(e.target.value);
+          reader.setPrefs({ voice: e.target.value });
+          reader.jump(0);
+        }}
+      >
+        {voices.map((v) => (
+          <option key={v.uri} value={v.uri}>
+            {v.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 export function ReaderBar() {
   const s = useReader();
   const [rate, setRate] = useState(1);
@@ -110,6 +145,7 @@ export function ReaderBar() {
           <option value={1.2}>Faster</option>
         </select>
       </label>
+      <VoicePicker />
       <button type="button" className="icon-btn" aria-label="Stop reading" onClick={() => reader.stop()}>
         ✕
       </button>

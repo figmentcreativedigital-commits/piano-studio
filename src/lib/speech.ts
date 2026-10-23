@@ -88,16 +88,42 @@ function loadPrefs(): { rate: number; voice?: string; autoRead: boolean } {
 }
 
 /** Picks a clear English voice: the one the listener chose, else a natural-sounding local voice. */
+/**
+ * English voices, best first. Edge's "Online (Natural)" voices and macOS
+ * Premium or Enhanced voices are neural and far more natural than the
+ * defaults, so they rank first when the device has them.
+ */
+export function voiceRank(v: { name: string; lang: string; localService: boolean }): number {
+  return (
+    (/natural|neural|premium|enhanced/i.test(v.name) ? 0 : 6) +
+    (/en-US/i.test(v.lang) ? 0 : 1) +
+    (/google us english|samantha|ava|zoe|aria|jenny|guy|andrew|emma|brian/i.test(v.name) ? -2 : 0) +
+    (/compact|eloquence|novelty|bells|bad news|whisper|zarvox|trinoids|albert|bubbles|cellos|organ|jester|superstar|wobble/i.test(v.name) ? 20 : 0)
+  );
+}
+
+export function englishVoices(): SpeechSynthesisVoice[] {
+  if (!speechSupported()) return [];
+  return window.speechSynthesis
+    .getVoices()
+    .filter((v) => /^en(-|_|$)/i.test(v.lang))
+    .sort((a, b) => voiceRank(a) - voiceRank(b));
+}
+
+/** Calls back when the device's voice list arrives or changes (Chrome loads it late). */
+export function onVoices(cb: () => void): () => void {
+  if (!speechSupported()) return () => {};
+  window.speechSynthesis.addEventListener("voiceschanged", cb);
+  return () => window.speechSynthesis.removeEventListener("voiceschanged", cb);
+}
+
 function pickVoice(want?: string): SpeechSynthesisVoice | undefined {
   const voices = window.speechSynthesis.getVoices();
   if (want) {
     const v = voices.find((x) => x.voiceURI === want);
     if (v) return v;
   }
-  const en = voices.filter((v) => /^en(-|_|$)/i.test(v.lang));
-  const rank = (v: SpeechSynthesisVoice) =>
-    (/natural|neural|premium|enhanced/i.test(v.name) ? 0 : 4) + (/en-US/i.test(v.lang) ? 0 : 1) + (v.localService ? 0 : 1) + (/google us english|samantha|aria|jenny/i.test(v.name) ? -2 : 0);
-  return en.sort((a, b) => rank(a) - rank(b))[0] ?? voices[0];
+  return englishVoices()[0] ?? voices[0];
 }
 
 class Reader {

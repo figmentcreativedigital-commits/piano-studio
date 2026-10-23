@@ -1749,6 +1749,14 @@ textarea.input {
   font-weight: 600;
   font-size: var(--step-0);
 }
+.reader-voice select {
+  max-width: 11em;
+}
+@media (max-width: 760px) {
+  .reader-voice {
+    display: none;
+  }
+}
 .reader-rate select option {
   color: var(--night);
   background: var(--white);

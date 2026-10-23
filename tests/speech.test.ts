@@ -29,3 +29,15 @@ describe("read-aloud text", () => {
     expect(toSpeech("Bad habits are a cue to slow down. Ab-normal? No.")).toBe("Bad habits are a cue to slow down. Ab-normal? No.");
   });
 });
+
+import { voiceRank } from "@/lib/speech";
+
+describe("voice choice", () => {
+  const v = (name: string, lang = "en-US", localService = true) => ({ name, lang, localService });
+  it("prefers neural voices over defaults, and never picks novelty voices", () => {
+    const list = [v("Fred"), v("Microsoft Aria Online (Natural) - English (United States)", "en-US", false), v("Samantha"), v("Bubbles"), v("Ava (Premium)"), v("Daniel", "en-GB")];
+    const sorted = [...list].sort((a, b) => voiceRank(a) - voiceRank(b)).map((x) => x.name);
+    expect(sorted.slice(0, 2).sort()).toEqual(["Ava (Premium)", "Microsoft Aria Online (Natural) - English (United States)"].sort());
+    expect(sorted.at(-1)).toBe("Bubbles");
+  });
+});
