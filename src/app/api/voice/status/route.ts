@@ -1,4 +1,3 @@
-import { getContext } from "@vercel/functions";
 import { NARRATOR_DEFAULT, NARRATOR_VOICES } from "@/lib/narration";
 
 export const dynamic = "force-dynamic";
@@ -10,7 +9,8 @@ export const dynamic = "force-dynamic";
  */
 export function GET() {
   const enabled = Boolean(process.env.GOOGLE_TTS_API_KEY);
-  const store = getContext().cache || (process.env.RUNTIME_CACHE_ENDPOINT && process.env.RUNTIME_CACHE_HEADERS) ? "vercel" : "memory";
+  const ctx = (globalThis as Record<symbol, { get?: () => { cache?: unknown } } | undefined>)[Symbol.for("@vercel/request-context")]?.get?.();
+  const store = ctx?.cache || (process.env.RUNTIME_CACHE_ENDPOINT && process.env.RUNTIME_CACHE_HEADERS) ? "vercel" : "memory";
   return Response.json(
     { enabled, voices: enabled ? NARRATOR_VOICES : [], default: NARRATOR_DEFAULT, store },
     { headers: { "Cache-Control": "no-store" } },
