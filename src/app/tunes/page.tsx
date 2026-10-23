@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { PHASES, VEHICLES, themeVars } from "@/content";
 import { TuneChart } from "@/components/TuneChart";
 import { ReadButton } from "@/components/ReadAloud";
+import { TUNES_INTRO, TUNES_TITLE } from "@/lib/narration";
+import { readable } from "@/lib/speech-text";
 
 export const metadata: Metadata = {
   title: "The three tunes",
@@ -20,10 +22,8 @@ export default function TunesPage() {
   return (
     <>
       <div className="wrap page-head flush" data-tour="tunes-intro" data-read-region>
-        <h1 data-read>Three tunes</h1>
-        <p data-read>
-          Every technique in the program is put to work on the same three tunes: Rhythm changes, the blues in major and minor, and &ldquo;Indiana&rdquo; with &ldquo;Donna Lee&rdquo;. Learn them deeply and most of bebop&apos;s harmony comes with them.
-        </p>
+        <h1 {...readable(TUNES_TITLE)}>{TUNES_TITLE}</h1>
+        <p {...readable(TUNES_INTRO)}>{TUNES_INTRO}</p>
         <nav className="tune-jump" aria-label="Tunes on this page">
           {VEHICLES.map((v) => (
             <a key={v.id} href={`#${v.id}`}>
@@ -38,10 +38,10 @@ export default function TunesPage() {
           <header className="tune-head" data-read-region>
             <div className="wrap tune-head-in">
               <div>
-                <p className="tune-kicker" data-read>
+                <p className="tune-kicker" {...readable(v.tune)}>
                   {v.tune}
                 </p>
-                <h2 className="tune-name" id={`${v.id}-h`} data-read>
+                <h2 className="tune-name" id={`${v.id}-h`} {...readable(v.name)}>
                   {v.name}
                 </h2>
               </div>
@@ -55,7 +55,7 @@ export default function TunesPage() {
                   <dt>Form</dt>
                   <dd>{v.form}</dd>
                 </dl>
-                <p className="tune-summary" data-read>
+                <p className="tune-summary" {...readable(v.summary)}>
                   {v.summary}
                 </p>
                 <ReadButton label="Read about this tune" what={`tune-${v.id}`} />

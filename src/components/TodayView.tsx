@@ -4,18 +4,15 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { LESSONS, PHASES, SKILLS, lessonCode, themeVars } from "@/content";
 import { nextStep, plan as makePlan } from "@/lib/planner";
-import { daysBetween, prettyDate, prettyTime, weekdayName } from "@/lib/schedule";
+import { daysBetween, prettyDate } from "@/lib/schedule";
 import { addMark, recordStore, redoAdjustment, sessionStore, undoAdjustment, useStore } from "@/lib/store";
 import { useToday } from "@/lib/useToday";
+import { agendaHeading, whenLine } from "@/lib/narration";
+import { readable } from "@/lib/speech-text";
 import { Sleeve } from "./Sleeve";
 import { SleeveStage } from "./SleeveStage";
 import { Tracklist } from "./Tracklist";
 
-function endTime(start: string, minutes: number) {
-  const [h, m] = start.split(":").map(Number);
-  const t = h * 60 + m + minutes;
-  return `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`;
-}
 
 export function TodayView() {
   const today = useToday();
@@ -29,11 +26,7 @@ export function TodayView() {
   const running = !!session?.running && session.lessonId === lesson.id;
   const sched = p.scheduled;
 
-  let when: string;
-  if (p.status === "not-started") when = `First session: ${weekdayName(lesson.date)}, ${prettyDate(lesson.date, { month: "long", day: "numeric" })}, ${prettyTime(lesson.start)} to ${prettyTime(endTime(lesson.start, lesson.minutes))}`;
-  else if (p.status === "complete") when = "Every authored lesson is done. The next week arrives after your check-in.";
-  else if (sched && sched.id === lesson.id) when = `Today, ${prettyTime(lesson.start)} to ${prettyTime(endTime(lesson.start, lesson.minutes))}`;
-  else when = `Today, in your usual slot${sched ? ` (${prettyTime(sched.start)})` : ""}`;
+  const when = whenLine(lesson, p.status, sched ?? undefined);
 
   const week = LESSONS.filter((l) => l.week === lesson.week);
   const phase = PHASES.find((ph) => lesson.week >= ph.weeks[0] && lesson.week <= ph.weeks[1]) ?? PHASES[0];
@@ -46,11 +39,13 @@ export function TodayView() {
           <SleeveStage lesson={lesson} spinning={running} />
         </div>
         <div className="hero-main" data-read-region data-tour="today-main">
-          <p className="today-when" data-read>{when}</p>
-          <h1 className="today-title" id="today-title" data-read>
+          <p className="today-when" {...readable(when)}>
+            {when}
+          </p>
+          <h1 className="today-title" id="today-title" {...readable(lesson.title)}>
             {lesson.title}
           </h1>
-          <p className="today-objective" data-read>
+          <p className="today-objective" {...readable(lesson.objective)}>
             {lesson.objective}
           </p>
 
@@ -158,8 +153,8 @@ export function TodayView() {
       <div className="wrap">
       <section className="section" aria-labelledby="agenda-h" data-tour="today-agenda" data-read-region>
         <div className="section-head">
-          <h2 id="agenda-h" data-read>
-            {version === "essential" ? `The ${lesson.essential.minutes}-minute version` : "The session"}
+          <h2 id="agenda-h" {...readable(agendaHeading(version === "essential" ? lesson.essential.minutes : undefined))}>
+            {agendaHeading(version === "essential" ? lesson.essential.minutes : undefined)}
           </h2>
           <span className="muted">
             {blocks.reduce((t, b) => t + b.minutes, 0)} minutes, breaks included

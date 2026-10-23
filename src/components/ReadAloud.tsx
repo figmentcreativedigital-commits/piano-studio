@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { collectReadable, englishVoices, onVoices, reader, speechSupported, type ReaderState } from "@/lib/speech";
+import { collectReadable, englishVoices, onNarrator, onVoices, reader, speechKey, speechSupported, type NarratorInfo, type ReaderState } from "@/lib/speech";
 
 function useReader(): ReaderState {
   const [s, setS] = useState<ReaderState>(reader.state);
@@ -11,7 +11,11 @@ function useReader(): ReaderState {
 
 function useSupported() {
   const [ok, setOk] = useState(false);
-  useEffect(() => setOk(speechSupported()), []);
+  useEffect(() => {
+    setOk(speechSupported());
+    // Exposed for the automated coverage check of narrated passages.
+    (window as unknown as { __woodshedSpeechKey?: typeof speechKey }).__woodshedSpeechKey = speechKey;
+  }, []);
   return ok;
 }
 
@@ -70,20 +74,27 @@ export function ReadButton({ label = "Read aloud", what }: { label?: string; wha
 }
 
 /** The bar that appears while something is being read. */
-/** Picks among the voices this device offers; the best-sounding come first. */
+/** Picks the reading voice: the studio narrator's voices first, then this device's. */
 export function VoicePicker() {
-  const [voices, setVoices] = useState<{ uri: string; label: string }[]>([]);
+  const [device, setDevice] = useState<{ uri: string; label: string }[]>([]);
+  const [narr, setNarr] = useState<NarratorInfo>({ enabled: false, voices: [], default: "" });
   const [voice, setVoice] = useState("");
   useEffect(() => {
-    const load = () => {
-      const list = englishVoices().map((v) => ({ uri: v.voiceURI, label: `${v.name.replace(/^Microsoft /, "").replace(/ - English \(.*\)$/, "")}${v.localService ? "" : " (online)"}` }));
-      setVoices(list);
-      setVoice(reader.getPrefs().voice ?? list[0]?.uri ?? "");
-    };
+    const load = () =>
+      setDevice(englishVoices().map((v) => ({ uri: v.voiceURI, label: `${v.name.replace(/^Microsoft /, "").replace(/ - English \(.*\)$/, "")}${v.localService ? "" : " (online)"}` })));
     load();
-    return onVoices(load);
+    const a = onVoices(load);
+    const b = onNarrator(setNarr);
+    return () => {
+      a();
+      b();
+    };
   }, []);
-  if (voices.length < 2) return null;
+  useEffect(() => {
+    const p = reader.getPrefs().voice;
+    setVoice(p ?? (narr.enabled ? `narrator:${narr.default}` : (device[0]?.uri ?? "")));
+  }, [narr, device]);
+  if (device.length + narr.voices.length < 2) return null;
   return (
     <label className="reader-rate reader-voice">
       <span className="sr-only">Voice</span>
@@ -95,13 +106,68 @@ export function VoicePicker() {
           reader.jump(0);
         }}
       >
-        {voices.map((v) => (
-          <option key={v.uri} value={v.uri}>
-            {v.label}
-          </option>
-        ))}
+        {narr.enabled && (
+          <optgroup label="Studio narrator">
+            {narr.voices.map((v) => (
+              <option key={v.name} value={`narrator:${v.name}`}>
+                {v.name}, {v.trait.toLowerCase()}
+              </option>
+            ))}
+          </optgroup>
+        )}
+        {device.length > 0 && (
+          <optgroup label="This device">
+            {device.map((v) => (
+              <option key={v.uri} value={v.uri}>
+                {v.label}
+              </option>
+            ))}
+          </optgroup>
+        )}
       </select>
     </label>
+  );
+}
+
+/** Auditions the narrator's voices on one sample, and sets the one to use. */
+export function NarratorAudition({ sample }: { sample: string }) {
+  const [narr, setNarr] = useState<NarratorInfo>({ enabled: false, voices: [], default: "" });
+  const [chosen, setChosen] = useState("");
+  const s = useReader();
+  useEffect(() => onNarrator(setNarr), []);
+  useEffect(() => {
+    const p = reader.getPrefs().voice;
+    setChosen(p?.startsWith("narrator:") ? p.slice(9) : narr.default);
+  }, [narr]);
+  if (!narr.enabled) return null;
+  return (
+    <div className="audition" role="group" aria-label="Choose the narrator">
+      {narr.voices.map((v) => {
+        const playing = s.status !== "idle" && s.label === `audition-${v.name}`;
+        return (
+          <div key={v.name} className={`audition-voice${chosen === v.name ? " is-chosen" : ""}`}>
+            <span className="audition-name">{v.name}</span>
+            <span className="audition-trait">{v.trait}</span>
+            <span className="btn-row">
+              <button type="button" className="btn small" aria-pressed={playing} onClick={() => (playing ? reader.stop() : reader.speak([{ text: sample }], `audition-${v.name}`, v.name))}>
+                {playing ? "Stop" : "Hear it"}
+              </button>
+              <button
+                type="button"
+                className={`btn small${chosen === v.name ? " primary" : " ghost"}`}
+                aria-pressed={chosen === v.name}
+                onClick={() => {
+                  setChosen(v.name);
+                  reader.setPrefs({ voice: `narrator:${v.name}` });
+                }}
+              >
+                {chosen === v.name ? "Your narrator" : "Use this voice"}
+              </button>
+            </span>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 

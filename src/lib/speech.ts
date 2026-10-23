@@ -1,64 +1,19 @@
 "use client";
 
 /**
- * Read-aloud. Uses the browser's own speech synthesis (Web Speech API), so
- * nothing leaves the device and nothing needs an account. Text is normalized
- * first so musical shorthand is spoken the way a teacher would say it.
+ * Read-aloud. The studio narrator (Google Chirp 3 HD, voiced on the server and
+ * cached) reads when it's on; otherwise, and for anything it doesn't know,
+ * the browser's own speech synthesis reads. Text is normalized first so
+ * musical shorthand is spoken the way a teacher would say it.
  *
  * What gets read is marked in the markup: elements with `data-read`, in
  * document order, inside the nearest `[data-read-region]` (or the whole page).
  * The element being read gets `.is-reading`, so sighted listeners can follow.
  */
 
-// ───────────────────────── Text ─────────────────────────
+import { speechKey, toSpeech } from "./speech-text";
 
-const ROOT = "([A-G])(♭|♯|b|#)?";
-const ACC: Record<string, string> = { "♭": " flat", b: " flat", "♯": " sharp", "#": " sharp" };
-
-/** Musical shorthand → words for a speech engine. Pure, so it's tested. */
-export function toSpeech(input: string): string {
-  let s = ` ${input} `;
-  s = s.replace(/\bW0?(\d+)\s*D0?(\d+)\b/g, "Week $1, Day $2");
-  s = s.replace(/♩\s*=\s*/g, "quarter note equals ");
-  s = s.replace(/♩/g, "quarter note");
-  s = s.replace(/\bmm\.\s*(\d+)\s*[–-]\s*(\d+)/g, "measures $1 to $2");
-  s = s.replace(/\bmm\.\s*/g, "measures ");
-  s = s.replace(/\bm\.\s*(\d+)/g, "measure $1");
-  s = s.replace(/\bpp\.\s*(\d+)\s*[–-]\s*(\d+)/g, "pages $1 to $2");
-  s = s.replace(/\bp\.\s*(\d+)/g, "page $1");
-  s = s.replace(/\bBWV\b/g, "B W V");
-  s = s.replace(/\bRH\b/g, "right hand");
-  s = s.replace(/\bLH\b/g, "left hand");
-  s = s.replace(/\bii[–-]V[–-]I\b/g, "two five one");
-  s = s.replace(/\bii[–-]V\b/g, "two five");
-  s = s.replace(/\bii7\b/g, "two seven");
-  // Chord qualities, before plain accidentals.
-  s = s.replace(new RegExp(`\\b${ROOT}m7(♭|b)5`, "g"), (_, l, a) => `${l}${a ? ACC[a] : ""} minor seven flat five`);
-  s = s.replace(new RegExp(`\\b${ROOT}maj7`, "g"), (_, l, a) => `${l}${a ? ACC[a] : ""} major seven`);
-  s = s.replace(new RegExp(`\\b${ROOT}m(\\d)`, "g"), (_, l, a, n) => `${l}${a ? ACC[a] : ""} minor ${n}`);
-  s = s.replace(new RegExp(`\\b${ROOT}°7?`, "g"), (_, l, a) => `${l}${a ? ACC[a] : ""} diminished`);
-  s = s.replace(new RegExp(`\\b${ROOT}ø7?`, "g"), (_, l, a) => `${l}${a ? ACC[a] : ""} half-diminished`);
-  s = s.replace(/°/g, " diminished");
-  // Pitches and chords: a letter, an accidental, a number ("A♭4", "B♭7", "C6").
-  s = s.replace(new RegExp(`\\b${ROOT}(\\d)\\b`, "g"), (_, l, a, n) => `${l}${a ? ACC[a] : ""} ${n}`);
-  s = s.replace(/([A-G])𝄫/g, "$1 double flat");
-  s = s.replace(/([A-G])♭/g, "$1 flat");
-  s = s.replace(/([A-G])♯/g, "$1 sharp");
-  s = s.replace(/♭(\d)/g, "flat $1");
-  s = s.replace(/♯(\d)/g, "sharp $1");
-  // Fingerings: 1-2-3-4 → 1, 2, 3, 4
-  s = s.replace(/\b\d(?:-\d)+\b/g, (m) => m.split("-").join(", "));
-  // Ranges and dashes
-  s = s.replace(/(\d)\s*–\s*(\d)/g, "$1 to $2");
-  s = s.replace(/([A-Za-z0-9])–([A-Za-z])/g, "$1 to $2");
-  s = s.replace(/\s+[–—]\s+/g, ", ");
-  s = s.replace(/\s*→\s*/g, ", then ");
-  s = s.replace(/\s*·\s*/g, ", ");
-  s = s.replace(/×/g, " times ");
-  s = s.replace(/\s*\|\s*/g, ", ");
-  s = s.replace(/\s+/g, " ").trim();
-  return s;
-}
+export { toSpeech, speechKey };
 
 // ───────────────────────── Engine ─────────────────────────
 
@@ -87,7 +42,6 @@ function loadPrefs(): { rate: number; voice?: string; autoRead: boolean } {
   return { rate: 1, autoRead: false };
 }
 
-/** Picks a clear English voice: the one the listener chose, else a natural-sounding local voice. */
 /**
  * English voices, best first. Edge's "Online (Natural)" voices and macOS
  * Premium or Enhanced voices are neural and far more natural than the
@@ -126,11 +80,55 @@ function pickVoice(want?: string): SpeechSynthesisVoice | undefined {
   return englishVoices()[0] ?? voices[0];
 }
 
+// ───────────────────────── Studio narrator ─────────────────────────
+
+export interface NarratorInfo {
+  enabled: boolean;
+  voices: { name: string; trait: string }[];
+  default: string;
+}
+
+let narrator: NarratorInfo = { enabled: false, voices: [], default: "" };
+let narratorLoad: Promise<NarratorInfo> | null = null;
+const narratorListeners = new Set<(n: NarratorInfo) => void>();
+
+/** Asks the server once whether the studio narrator is on. */
+export function loadNarrator(): Promise<NarratorInfo> {
+  if (typeof window === "undefined") return Promise.resolve(narrator);
+  if (!narratorLoad) {
+    narratorLoad = fetch("/api/voice/status")
+      .then((r) => (r.ok ? r.json() : narrator))
+      .catch(() => narrator)
+      .then((n: NarratorInfo) => {
+        narrator = n;
+        narratorListeners.forEach((l) => l(n));
+        return n;
+      });
+  }
+  return narratorLoad;
+}
+
+export function onNarrator(l: (n: NarratorInfo) => void): () => void {
+  narratorListeners.add(l);
+  l(narrator);
+  void loadNarrator();
+  return () => {
+    narratorListeners.delete(l);
+  };
+}
+
+export function narratorUrl(text: string, voice: string): string {
+  return `/api/voice/${speechKey(text)}?v=${encodeURIComponent(voice)}`;
+}
+
 class Reader {
   private items: ReadItem[] = [];
   private i = 0;
   private lit: HTMLElement | null = null;
   private run = 0;
+  private audio: HTMLAudioElement | null = null;
+  private warm: HTMLAudioElement | null = null;
+  private override: string | null = null;
   private listeners = new Set<Listener>();
   state: ReaderState = { status: "idle", index: 0, total: 0 };
   prefs = { rate: 1, voice: undefined as string | undefined, autoRead: false };
@@ -140,6 +138,7 @@ class Reader {
     if (this.loaded || typeof window === "undefined") return;
     this.prefs = { ...this.prefs, ...loadPrefs() };
     this.loaded = true;
+    void loadNarrator();
   }
 
   getPrefs() {
@@ -155,6 +154,7 @@ class Reader {
     } catch {
       /* ignore */
     }
+    if (this.audio && p.rate) this.audio.playbackRate = p.rate;
     this.emit(this.state);
   }
 
@@ -182,10 +182,24 @@ class Reader {
     }
   }
 
-  speak(items: ReadItem[], label?: string) {
-    if (!speechSupported()) return;
+  /** The narrator voice to use, or null for the device's own voice. */
+  private narratorVoice(): string | null {
+    if (this.override) return this.override;
+    if (!narrator.enabled) return null;
+    const v = this.prefs.voice;
+    if (!v) return narrator.default;
+    if (v.startsWith("narrator:")) {
+      const name = v.slice(9);
+      return narrator.voices.some((x) => x.name === name) ? name : narrator.default;
+    }
+    return null;
+  }
+
+  speak(items: ReadItem[], label?: string, voiceOverride?: string) {
     this.ensurePrefs();
+    if (!speechSupported() && !narrator.enabled && !voiceOverride) return;
     this.stop(false);
+    this.override = voiceOverride ?? null;
     this.items = items.filter((x) => x.text.trim());
     if (!this.items.length) return;
     this.i = 0;
@@ -193,52 +207,99 @@ class Reader {
     this.say();
   }
 
+  private next(run: number) {
+    if (run !== this.run || this.state.status === "idle") return;
+    this.i++;
+    if (this.i >= this.items.length) return this.stop();
+    this.emit({ ...this.state, status: "speaking", index: this.i });
+    this.say();
+  }
+
   private say() {
     const run = ++this.run;
     const item = this.items[this.i];
     if (!item) return this.stop();
+    this.light(item.el);
+    const voice = this.narratorVoice();
+    if (voice) {
+      if (speechSupported()) window.speechSynthesis.cancel();
+      const a = new Audio(narratorUrl(item.text, voice));
+      a.playbackRate = this.prefs.rate;
+      this.audio = a;
+      let fellBack = false;
+      const fallback = () => {
+        if (fellBack || run !== this.run) return;
+        fellBack = true;
+        this.audio = null;
+        this.sayOnDevice(run, item);
+      };
+      a.onended = () => this.next(run);
+      a.onerror = fallback;
+      a.play().catch(fallback);
+      const upcoming = this.items[this.i + 1];
+      if (upcoming) {
+        const w = new Audio();
+        w.preload = "auto";
+        w.src = narratorUrl(upcoming.text, voice);
+        this.warm = w;
+      }
+      return;
+    }
+    this.sayOnDevice(run, item);
+  }
+
+  private sayOnDevice(run: number, item: ReadItem) {
+    if (!speechSupported()) return this.next(run);
     const u = new SpeechSynthesisUtterance(toSpeech(item.text));
     u.rate = this.prefs.rate;
     u.lang = "en-US";
-    const v = pickVoice(this.prefs.voice);
+    const v = pickVoice(this.prefs.voice?.startsWith("narrator:") ? undefined : this.prefs.voice);
     if (v) u.voice = v;
-    u.onend = () => {
-      if (run !== this.run || this.state.status !== "speaking") return;
-      this.i++;
-      if (this.i >= this.items.length) return this.stop();
-      this.emit({ ...this.state, index: this.i });
-      this.say();
-    };
+    u.onend = () => this.next(run);
     u.onerror = () => {
       if (run === this.run) this.stop();
     };
-    this.light(item.el);
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(u);
   }
 
   pause() {
     if (this.state.status !== "speaking") return;
-    window.speechSynthesis.pause();
+    if (this.audio) this.audio.pause();
+    else if (speechSupported()) window.speechSynthesis.pause();
     this.emit({ ...this.state, status: "paused" });
   }
 
   resume() {
     if (this.state.status !== "paused") return;
-    window.speechSynthesis.resume();
+    if (this.audio) void this.audio.play();
+    else if (speechSupported()) window.speechSynthesis.resume();
     this.emit({ ...this.state, status: "speaking" });
   }
 
   jump(delta: number) {
     if (this.state.status === "idle") return;
     this.i = Math.max(0, Math.min(this.items.length - 1, this.i + delta));
+    this.halt();
     this.emit({ ...this.state, status: "speaking", index: this.i });
     this.say();
   }
 
+  private halt() {
+    if (this.audio) {
+      this.audio.onended = null;
+      this.audio.onerror = null;
+      this.audio.pause();
+      this.audio = null;
+    }
+    this.warm = null;
+    if (speechSupported()) window.speechSynthesis.cancel();
+  }
+
   stop(announce = true) {
     this.run++;
-    if (speechSupported()) window.speechSynthesis.cancel();
+    this.halt();
+    this.override = null;
     this.light(null);
     this.items = [];
     if (announce || this.state.status !== "idle") this.emit({ status: "idle", index: 0, total: 0 });

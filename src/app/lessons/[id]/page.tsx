@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { BLOCK_LABEL, LESSONS, getExercise, getLesson, getVehicle, lessonCode, lessonLabel, themeVars } from "@/content";
+import { BLOCK_LABEL, LESSONS, getExercise, getLesson, getVehicle, lessonLabel, themeVars } from "@/content";
 import { ExerciseCard } from "@/components/ExerciseCard";
 import { Sleeve } from "@/components/Sleeve";
 import { Tracklist } from "@/components/Tracklist";
 import { ReadButton } from "@/components/ReadAloud";
-import { prettyDate, prettyTime } from "@/lib/schedule";
+import { lessonIdLine } from "@/lib/narration";
+import { readable } from "@/lib/speech-text";
 
 export function generateStaticParams() {
   return LESSONS.map((l) => ({ id: l.id }));
@@ -36,13 +37,13 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
           </div>
         </div>
         <div className="hero-main" data-tour="lesson-main" data-read-region>
-          <p className="lesson-id" data-read>
-            {lessonCode(lesson)}, {prettyDate(lesson.date, { weekday: "long", month: "long", day: "numeric" })}, {prettyTime(lesson.start)}
+          <p className="lesson-id" {...readable(lessonIdLine(lesson))}>
+            {lessonIdLine(lesson)}
           </p>
-          <h1 className="lesson-h1" id="lesson-h1" data-read>
+          <h1 className="lesson-h1" id="lesson-h1" {...readable(lesson.title)}>
             {lesson.title}
           </h1>
-          <p className="today-objective" data-read>
+          <p className="today-objective" {...readable(lesson.objective)}>
             {lesson.objective}
           </p>
           <div className="btn-row">
@@ -63,11 +64,11 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             <dt>Builds on</dt>
             <dd>{lesson.prerequisites.join("; ")}</dd>
             <dt>Time balance</dt>
-            <dd data-read data-read-text={`Time balance: ${lesson.balance}`}>
+            <dd {...readable(`Time balance: ${lesson.balance}`)}>
               {lesson.balance}
             </dd>
             <dt>Application</dt>
-            <dd data-read data-read-text={`Application: ${lesson.application}`}>
+            <dd {...readable(`Application: ${lesson.application}`)}>
               {lesson.application}
             </dd>
             <dt>Tunes</dt>
@@ -114,7 +115,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             return (
               <section key={b.id} id={`b-${b.id}`} className="block-section" aria-labelledby={`h-${b.id}`}>
                 <header>
-                  <h2 id={`h-${b.id}`} data-read>
+                  <h2 id={`h-${b.id}`} {...readable(b.title)}>
                     {b.title}
                   </h2>
                   <span className="kind">
@@ -123,7 +124,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
                 </header>
                 <ul>
                   {b.text.map((t, i) => (
-                    <li key={i} data-read>
+                    <li key={i} {...readable(t)}>
                       {t}
                     </li>
                   ))}

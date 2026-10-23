@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BASELINE, PHASES, getVehicle } from "@/content";
 import { RoadmapNow } from "@/components/RoadmapNow";
+import { ROADMAP_INTRO, ROADMAP_TITLE } from "@/lib/narration";
+import { readable } from "@/lib/speech-text";
 
 export const metadata: Metadata = { title: "Roadmap", description: "Twelve weeks in four phases, with milestones you can hear and check." };
 
@@ -9,8 +11,8 @@ export default function RoadmapPage() {
   return (
     <>
       <div className="wrap page-head">
-        <h1>Twelve weeks</h1>
-        <p>A provisional plan in four phases. It promises a sound process, not a date for mastery: each milestone is a check you can play, and the plan moves when the evidence does.</p>
+        <h1 {...readable(ROADMAP_TITLE)}>{ROADMAP_TITLE}</h1>
+        <p {...readable(ROADMAP_INTRO)}>{ROADMAP_INTRO}</p>
       </div>
       <div className="wrap">
         <div className="timeline" aria-hidden="true" data-tour="roadmap-timeline">
@@ -56,8 +58,10 @@ export default function RoadmapPage() {
                 <span className="weeks">
                   Weeks {p.weeks[0]}–{p.weeks[1]}
                 </span>
-                <h2 id={`ph-${p.id}`}>{p.name}</h2>
-                <p className="prose" style={{ marginTop: 10 }}>
+                <h2 id={`ph-${p.id}`} {...readable(p.name)}>
+                  {p.name}
+                </h2>
+                <p className="prose" style={{ marginTop: 10 }} {...readable(p.summary)}>
                   {p.summary}
                 </p>
               </div>
@@ -66,7 +70,7 @@ export default function RoadmapPage() {
                   <h3>The three tunes</h3>
                   <ul>
                     {p.tunes.map((t) => (
-                      <li key={t.vehicle}>
+                      <li key={t.vehicle} {...readable(`${getVehicle(t.vehicle).name}: ${t.text}`)}>
                         <Link href={`/tunes#${t.vehicle}`}>{getVehicle(t.vehicle).name.replace(/"/g, "")}</Link>: {t.text}
                       </li>
                     ))}
@@ -90,8 +94,14 @@ export default function RoadmapPage() {
                 </div>
               </div>
               <div className="milestone">
-                <h3>Milestone: {p.milestone.title}</h3>
-                <ol>{p.milestone.checks.map((c) => <li key={c}>{c}</li>)}</ol>
+                <h3 {...readable(`Milestone: ${p.milestone.title}`)}>Milestone: {p.milestone.title}</h3>
+                <ol>
+                  {p.milestone.checks.map((c) => (
+                    <li key={c} {...readable(c)}>
+                      {c}
+                    </li>
+                  ))}
+                </ol>
               </div>
             </section>
           ))}

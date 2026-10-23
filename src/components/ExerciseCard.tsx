@@ -6,6 +6,7 @@ import type { Exercise } from "@/content/types";
 import { EarCheck } from "./EarCheck";
 import { ExercisePlayer } from "./ExercisePlayer";
 import { ReadButton } from "./ReadAloud";
+import { readable } from "@/lib/speech-text";
 
 const STATUS: Record<string, string> = {
   verified: "verified",
@@ -29,7 +30,7 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
     <article className="ex" id={`ex-${ex.id}`} aria-labelledby={`ex-${ex.id}-t`} data-tour="exercise" data-read-region>
       <header className="ex-head">
         <div className="ex-title-row">
-          <h3 className="ex-title" id={`ex-${ex.id}-t`} data-read>
+          <h3 className="ex-title" id={`ex-${ex.id}-t`} {...readable(ex.title)}>
             {ex.title}
           </h3>
           <ReadButton label="Read the steps" what={`ex-${ex.id}`} />
@@ -43,12 +44,12 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
           </span>
         </span>
         {ex.spelling && !ex.hideNotation && (
-          <p className="ex-spell" data-read>
+          <p className="ex-spell" {...readable(ex.spelling)}>
             {ex.spelling}
           </p>
         )}
         {ex.fingering && (
-          <p className="ex-spell" data-read>
+          <p className="ex-spell" {...readable(`Fingering: ${ex.fingering}`)}>
             Fingering: {ex.fingering}
           </p>
         )}
@@ -105,7 +106,7 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
           <h4>How to practice</h4>
           <ol>
             {ex.steps.map((s, i) => (
-              <li key={i} data-read>
+              <li key={i} {...readable(s)}>
                 {s}
               </li>
             ))}
@@ -135,12 +136,12 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
         </div>
         <div>
           <h4>Cue</h4>
-          <p className="cue" data-read data-read-text={`Cue: ${ex.cue}`}>
+          <p className="cue" {...readable(`Cue: ${ex.cue}`)}>
             {ex.cue}
           </p>
           <div className="done-when" data-tour="done-when">
             <h4>Done when</h4>
-            <p data-read data-read-text={`Done when: ${ex.check}`}>
+            <p {...readable(`Done when: ${ex.check}`)}>
               {ex.check}
             </p>
             <p className="hint" style={{ margin: 0 }}>

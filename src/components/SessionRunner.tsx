@@ -8,6 +8,8 @@ import type { Block } from "@/content/types";
 import { chime, keepAwake } from "@/lib/audio";
 import { connectMidi, getMidiStatus, onMidiStatus, pedalDoubleTap, type MidiStatus } from "@/lib/midi";
 import { reader, speechSupported } from "@/lib/speech";
+import { blockReading } from "@/lib/narration";
+import { readable } from "@/lib/speech-text";
 import { plan as makePlan } from "@/lib/planner";
 import { recordStore, sessionStore, useStore } from "@/lib/store";
 import { useToday } from "@/lib/useToday";
@@ -104,7 +106,7 @@ export function SessionRunner({ id }: { id: string }) {
       un();
     };
   }, []);
-  const readBlock = () => reader.speak([{ text: [block.title, ...block.text].join(". ") }], "session");
+  const readBlock = () => reader.speak([{ text: blockReading(block) }], "session");
   useEffect(() => {
     if (autoRead && canSpeak) readBlock();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,7 +150,7 @@ export function SessionRunner({ id }: { id: string }) {
           {BLOCK_LABEL[block.kind]}, block {idx + 1} of {blocks.length}
           {block.side ? `, side ${block.side}` : ""}
         </span>
-        <h1 className="now-title" data-read>
+        <h1 className="now-title" {...readable(block.title)}>
           {block.title}
         </h1>
         <div className={`timer${running ? " running" : ""}${remaining <= 0 ? " overtime" : ""}`} role="timer" aria-live="off" data-tour="session-timer">
@@ -215,7 +217,7 @@ export function SessionRunner({ id }: { id: string }) {
         </div>
         <ul className="now-text">
           {block.text.map((t, i) => (
-            <li key={i} data-read>
+            <li key={i} {...readable(t)}>
               {t}
             </li>
           ))}

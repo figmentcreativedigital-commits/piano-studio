@@ -4,6 +4,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { usePathname, useRouter } from "next/navigation";
 import { TOUR, type TourStep } from "@/content/tour";
 import { reader, speechSupported } from "@/lib/speech";
+import { tourReading } from "@/lib/narration";
 
 /*
  * Guided tour. The engine follows the EEC Institute prototype: chapters by
@@ -42,8 +43,8 @@ const first = (target?: string | string[]) => {
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 function read(on: boolean, s: Flat, why: boolean) {
-  if (!on || !speechSupported()) return;
-  reader.speak([{ text: [s.title, s.body, why && s.why ? s.why : ""].filter(Boolean).join(". ") }], "tour");
+  if (!on) return;
+  reader.speak([{ text: tourReading(s, why) }], "tour");
 }
 
 export function Tour() {

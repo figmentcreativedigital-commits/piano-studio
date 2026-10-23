@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { EXERCISES, LESSONS, lessonCode } from "@/content";
+import { readable } from "@/lib/speech-text";
 
 export const metadata: Metadata = { title: "Listening", description: "Recordings with one specific question each." };
 
@@ -35,8 +36,8 @@ export default function ListeningPage() {
                 </dl>
               </div>
               <div>
-                <h2>{r.title}</h2>
-                <p className="prose" style={{ fontSize: "var(--step-2)" }}>
+                <h2 {...readable(r.title)}>{r.title}</h2>
+                <p className="prose" style={{ fontSize: "var(--step-2)" }} {...readable(r.question)}>
                   {r.question}
                 </p>
                 {r.cue && <p className="hint">{r.cue}.</p>}
