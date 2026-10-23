@@ -190,7 +190,7 @@ export const EXERCISES_W01: Exercise[] = [
     ],
     listenFor: "Here, A♭ belongs to the scale. It isn't just a passing note on the way somewhere. It sits between G and A as part of the B diminished chord.",
     feelFor: "Your thumb tucking under before F and before A.",
-    errors: ["Rushing from A♭ to A", "A bump on the thumb notes, F and A", "Leaving out A♭ out of habit"],
+    errors: ["Rushing from A♭ to A", "A bump on the thumb notes, F and A", "Skipping A♭ out of habit"],
     cue: "Thumb travels early.",
     check: "3 clean octaves up and down in a row at ♩ = 60. Tomorrow, play it once from memory.",
     easier: "Play 1 group of 3 notes at a time.",
@@ -722,7 +722,7 @@ export const EXERCISES_W01: Exercise[] = [
   },
   {
     id: "lis-bud-celia",
-    title: "Bud Powell: 'Celia'",
+    title: "Bud Powell: “Celia”",
     subtitle: "Counting the left hand",
     kind: "listening",
     source: { kind: "recording", note: "Bud Powell Trio, recorded February 23, 1949, with Ray Brown and Max Roach. It's on the album Jazz Giant (Norgran/Verve).", status: "verified", refs: [{ label: "Wikipedia: Jazz Giant", url: "https://en.wikipedia.org/wiki/Jazz_Giant" }] },
@@ -773,7 +773,7 @@ export const EXERCISES_W01: Exercise[] = [
   },
   {
     id: "lis-silver",
-    title: "Horace Silver: 'Doodlin''",
+    title: "Horace Silver: “Doodlin’”",
     subtitle: "Comping behind the horns",
     kind: "listening",
     source: { kind: "recording", note: "Horace Silver and the Jazz Messengers (Blue Note). Recorded November 13, 1954.", status: "verified", refs: [{ label: "Wikipedia: Horace Silver and the Jazz Messengers", url: "https://en.wikipedia.org/wiki/Horace_Silver_and_the_Jazz_Messengers" }] },

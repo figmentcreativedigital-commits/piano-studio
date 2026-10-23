@@ -1,5 +1,6 @@
 "use client";
 
+import { glosser } from "./glosser";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { LESSONS, PHASES, SKILLS, lessonCode, themeVars } from "@/content";
@@ -46,7 +47,7 @@ export function TodayView() {
             {lesson.title}
           </h1>
           <p className="today-objective" {...readable(lesson.objective)}>
-            {lesson.objective}
+            {glosser()(lesson.objective)}
           </p>
 
           <div className="notices" data-tour="today-notices">

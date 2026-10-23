@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { GLOSSARY } from "@/content/glossary";
-import { glossParts } from "@/components/Gloss";
+import { glossParts } from "@/lib/gloss";
 import { grade, longestSentence } from "@/lib/readability";
 
 describe("glossary", () => {

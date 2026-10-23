@@ -1,3 +1,4 @@
+import { glosser } from "@/components/glosser";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -28,6 +29,8 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
   const prev = LESSONS[idx - 1];
   const next = LESSONS[idx + 1];
 
+  const gHero = glosser();
+  const gBody = glosser();
   return (
     <>
       <section className="hero" aria-labelledby="lesson-h1" style={themeVars(lesson.theme)}>
@@ -44,7 +47,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             {lesson.title}
           </h1>
           <p className="today-objective" {...readable(lesson.objective)}>
-            {lesson.objective}
+            {gHero(lesson.objective)}
           </p>
           <div className="btn-row">
             <Link className="btn primary" href={`/session/${lesson.id}`}>
@@ -69,7 +72,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             </dd>
             <dt>Try it in music</dt>
             <dd {...readable(`Try it in music: ${lesson.application}`)}>
-              {lesson.application}
+              {gHero(lesson.application)}
             </dd>
             <dt>Tunes</dt>
             <dd data-tour="lesson-tunes">
@@ -125,7 +128,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
                 <ul>
                   {b.text.map((t, i) => (
                     <li key={i} {...readable(t)}>
-                      {t}
+                      {gBody(t)}
                     </li>
                   ))}
                   {repeat.map((x) => (

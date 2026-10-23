@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
-import { GLOSSARY, type GlossaryEntry } from "@/content/glossary";
+import type { GlossaryEntry } from "@/content/glossary";
+import { glossParts } from "@/lib/gloss";
 
 /*
  * Plain-language definitions on tap or hover. <Gloss text="..."/> renders a
@@ -9,29 +10,15 @@ import { GLOSSARY, type GlossaryEntry } from "@/content/glossary";
  * passage it becomes a small button that opens a short definition.
  */
 
-const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const ENTRIES = GLOSSARY.flatMap((g) => g.match.map((m) => ({ m, g }))).sort((a, b) => b.m.length - a.m.length);
-const BY_MATCH = new Map(ENTRIES.map((e) => [e.m.toLowerCase(), e.g]));
-const RE = new RegExp(`(?<![\\w-])(${ENTRIES.map((e) => esc(e.m)).join("|")})(?![\\w-])`, "gi");
-
-export function glossParts(text: string): (string | { text: string; entry: GlossaryEntry })[] {
-  const out: (string | { text: string; entry: GlossaryEntry })[] = [];
-  const seen = new Set<string>();
-  let last = 0;
-  for (const m of text.matchAll(RE)) {
-    const entry = BY_MATCH.get(m[0].toLowerCase());
-    if (!entry || seen.has(entry.term)) continue;
-    seen.add(entry.term);
-    if (m.index! > last) out.push(text.slice(last, m.index));
-    out.push({ text: m[0], entry });
-    last = m.index! + m[0].length;
-  }
-  if (last < text.length) out.push(text.slice(last));
-  return out;
-}
-
-function Term({ children, entry }: { children: ReactNode; entry: GlossaryEntry }) {
-  const [open, setOpen] = useState(false);
+export function Term({ children, entry }: { children: ReactNode; entry: GlossaryEntry }) {
+  // Hover shows the definition while the mouse is over the term; a click or tap pins it open.
+  const [hover, setHover] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const open = hover || pinned;
+  const setOpen = (v: boolean) => {
+    setHover(v);
+    setPinned(v);
+  };
   const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
   const btn = useRef<HTMLButtonElement>(null);
   const bubble = useRef<HTMLSpanElement>(null);
@@ -65,9 +52,9 @@ function Term({ children, entry }: { children: ReactNode; entry: GlossaryEntry }
         className="term-btn"
         aria-expanded={open}
         aria-describedby={open ? id : undefined}
-        onClick={() => setOpen((o) => !o)}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        onClick={() => (pinned ? setOpen(false) : setPinned(true))}
+        onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
+        onPointerLeave={(e) => e.pointerType === "mouse" && setHover(false)}
         onBlur={() => setOpen(false)}
         onKeyDown={(e) => {
           if (e.key === "Escape") setOpen(false);

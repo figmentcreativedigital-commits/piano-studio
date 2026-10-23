@@ -7,6 +7,7 @@ import { EarCheck } from "./EarCheck";
 import { ExercisePlayer } from "./ExercisePlayer";
 import { ReadButton } from "./ReadAloud";
 import { readable } from "@/lib/speech-text";
+import { glosser } from "./glosser";
 
 const STATUS: Record<string, string> = {
   verified: "checked",
@@ -26,6 +27,7 @@ function searchLinks(q: string) {
 export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exercise; lhRest?: boolean; simplify?: boolean }) {
   const lhOnly = ex.hands === "LH";
   const r = ex.recording;
+  const g = glosser();
   return (
     <article className="ex" id={`ex-${ex.id}`} aria-labelledby={`ex-${ex.id}-t`} data-tour="exercise" data-read-region>
       <header className="ex-head">
@@ -107,7 +109,7 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
           <ol>
             {ex.steps.map((s, i) => (
               <li key={i} {...readable(s)}>
-                {s}
+                {g(s)}
               </li>
             ))}
           </ol>
@@ -116,13 +118,13 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
               {ex.listenFor && (
                 <>
                   <h4>Listen for</h4>
-                  <p>{ex.listenFor}</p>
+                  <p>{g(ex.listenFor)}</p>
                 </>
               )}
               {ex.feelFor && (
                 <>
                   <h4>Feel for</h4>
-                  <p>{ex.feelFor}</p>
+                  <p>{g(ex.feelFor)}</p>
                 </>
               )}
             </>
@@ -130,19 +132,19 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
           <h4>Common mistakes</h4>
           <ul>
             {ex.errors.map((e, i) => (
-              <li key={i}>{e}</li>
+              <li key={i}>{g(e)}</li>
             ))}
           </ul>
         </div>
         <div>
           <h4>Cue</h4>
           <p className="cue" {...readable(`Cue: ${ex.cue}`)}>
-            {ex.cue}
+            {g(ex.cue)}
           </p>
           <div className="done-when" data-tour="done-when">
             <h4>Done when</h4>
             <p {...readable(`Done when: ${ex.check}`)}>
-              {ex.check}
+              {g(ex.check)}
             </p>
             <p className="hint" style={{ margin: 0 }}>
               Start at ♩ = {ex.tempo.start || "the recording's tempo"}
@@ -150,11 +152,11 @@ export function ExerciseCard({ ex, lhRest = false, simplify = false }: { ex: Exe
             </p>
           </div>
           <h4>Easier</h4>
-          <p>{ex.easier}</p>
+          <p>{g(ex.easier)}</p>
           {ex.harder && (
             <>
               <h4>Harder</h4>
-              <p>{ex.harder}</p>
+              <p>{g(ex.harder)}</p>
             </>
           )}
           {ex.lhCare && <div className="care">{ex.lhCare}</div>}

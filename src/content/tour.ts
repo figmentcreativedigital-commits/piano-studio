@@ -112,7 +112,7 @@ export const TOUR: TourChapter[] = [
       {
         target: [t("exercise-source"), t("exercise")],
         title: "Where every exercise comes from",
-        body: "Each exercise has a label that shows where it comes from. It might be Barry Harris, checked against his classes. It might be Bach's score, a checked recording, or an original study. Every note is written with its octave number. Middle C is C4. Finger numbers never get mixed up with the numbers of scale notes.",
+        body: "Each exercise has a label that shows where it comes from. It might be Barry Harris, checked against his classes. It might be Bach's score, a checked recording, or an original exercise. Every note is written with its octave number. Middle C is C4. Finger numbers never get mixed up with the numbers of scale notes.",
         why: "The label keeps what Barry taught apart from adaptations. An adaptation is his idea, changed to fit your hands.",
       },
       {
