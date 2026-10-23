@@ -107,7 +107,7 @@ export default async function ParkerSoloPage({
             </Link>
           </p>
         </div>
-        <span className="lib-monogram" aria-hidden="true">
+        <span className="lib-monogram is-num" aria-hidden="true">
           {solo.pages[0]}
         </span>
       </header>

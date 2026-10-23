@@ -38,7 +38,7 @@ export default async function BachPiecePage({ params }: { params: Promise<{ id: 
             {g(piece.summary)}
           </p>
         </div>
-        <span className="lib-monogram" aria-hidden="true">
+        <span className="lib-monogram is-num" aria-hidden="true">
           {piece.bwv.replace("BWV ", "")}
         </span>
       </header>
