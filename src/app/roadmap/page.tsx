@@ -84,7 +84,15 @@ export default function RoadmapPage() {
                   <ul>{p.jazz.map((x) => <li key={x}><Gloss text={x} /></li>)}</ul>
                 </div>
                 <div>
-                  <h3>Bach</h3>
+                  <h3>
+                    <Link href="/library/parker">Charlie Parker</Link>
+                  </h3>
+                  <ul>{p.bird.map((x) => <li key={x}><Gloss text={x} /></li>)}</ul>
+                </div>
+                <div>
+                  <h3>
+                    <Link href="/library/bach">Bach</Link>
+                  </h3>
                   <ul>{p.bach.map((x) => <li key={x}><Gloss text={x} /></li>)}</ul>
                 </div>
                 <div>

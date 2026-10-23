@@ -50,7 +50,7 @@ export function prose(): Field[] {
   BASELINE.teaching.forEach((t, i) => add(`baseline teaching ${i}`, t));
   for (const p of PHASES) {
     add(`${p.id} summary`, p.summary);
-    [...p.jazz, ...p.bach, ...p.technique, ...p.ear].forEach((t, i) => add(`${p.id} item ${i}`, t));
+    [...p.jazz, ...p.bach, ...p.bird, ...p.technique, ...p.ear].forEach((t, i) => add(`${p.id} item ${i}`, t));
     p.tunes.forEach((t) => add(`${p.id} ${t.vehicle}`, t.text));
     p.milestone.checks.forEach((c, i) => add(`${p.id} check ${i}`, c));
   }

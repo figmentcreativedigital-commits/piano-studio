@@ -266,6 +266,8 @@ export interface Phase {
   summary: string;
   jazz: string[];
   bach: string[];
+  /** Charlie Parker study: Omnibook solos on the three tunes (concert-key page numbers). */
+  bird: string[];
   technique: string[];
   ear: string[];
   /** How each of the three tunes is used in this phase. */

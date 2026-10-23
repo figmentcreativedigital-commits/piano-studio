@@ -100,7 +100,7 @@ export const LESSONS_W01: Lesson[] = [
       ] },
       { id: "b3", side: "B", kind: "break", title: "Break", minutes: 3, text: ["Shake out your hands. Open and close them gently."] },
       { id: "b4", side: "B", kind: "bach", title: "Bach: bar 1, right hand", minutes: 14, exerciseIds: ["bach-m1-rh"], text: ["Play beats 3–4 alone. Then join them to the notes just before. Then play the whole bar."] },
-      { id: "b5", side: "B", kind: "listening", title: "Bud Powell: “Celia”", minutes: 10, exerciseIds: ["lis-bud-celia"], text: ["Pick 4 bars of his solo. Count how many times his left hand plays."] },
+      { id: "b5", side: "B", kind: "listening", title: "Charlie Parker: “Now's the Time”", minutes: 10, exerciseIds: ["lis-bird-nows-1945"], text: ["Count the 12 bars of each chorus. Then sing the opening riff with Bird."] },
       { id: "b6", side: "B", kind: "reading", title: "Reading minute", minutes: 5, exerciseIds: ["read-02"], text: ["Bass clef, with fingers 5 to 2."] },
       { id: "b7", side: "B", kind: "retrieval", title: "From memory, then log", minutes: 8, text: ["From memory, play chords 1–5 up and back once.", LOG] },
     ],

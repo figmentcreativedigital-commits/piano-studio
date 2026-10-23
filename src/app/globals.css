@@ -3743,3 +3743,17 @@ textarea.input {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+.tune-bird {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  columns: 2 14rem;
+  column-gap: 20px;
+}
+.tune-bird li {
+  break-inside: avoid;
+  padding: 4px 0;
+}
+.tune-bird a {
+  font-weight: 700;
+}

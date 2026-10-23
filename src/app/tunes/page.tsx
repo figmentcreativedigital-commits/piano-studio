@@ -1,3 +1,4 @@
+import { PARKER_SOLOS } from "@/content/parker";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PHASES, VEHICLES, themeVars } from "@/content";
@@ -91,6 +92,24 @@ export default function TunesPage() {
                   </li>
                 ))}
               </ol>
+              <h3>Bird on these changes</h3>
+              {PARKER_SOLOS.filter((x) => x.vehicle === v.id).length ? (
+                <ul className="tune-bird">
+                  {PARKER_SOLOS.filter((x) => x.vehicle === v.id)
+                    .sort((a, b) => Number(b.key === v.key) - Number(a.key === v.key) || a.pages[0] - b.pages[0])
+                    .map((x) => (
+                      <li key={x.slug}>
+                        <Link href={`/library/parker/${x.slug}`}>{x.title}</Link>
+                        <span className="muted">
+                          {" "}
+                          Omnibook page {x.pages[0]}, in {x.key}
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              ) : (
+                <p className="hint">The Omnibook has no minor blues. Use Bird's minor ii–V lines from “Blues for Alice” and “Si Si”.</p>
+              )}
               <h3>On record</h3>
               <ul className="tune-records">
                 {v.recordings.map((r) => (

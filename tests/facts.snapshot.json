@@ -2175,6 +2175,48 @@
     ]
    }
   },
+  "lis-bird-nows-1945": {
+   "data": {
+    "id": "lis-bird-nows-1945",
+    "kind": "listening",
+    "source": {
+     "kind": "recording",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://en.wikipedia.org/wiki/Now%27s_the_Time_(composition)"
+      },
+      {
+       "url": "http://www.plosin.com/milesahead/Sessions.aspx?s=451126"
+      }
+     ]
+    },
+    "hands": "both",
+    "vehicle": "blues",
+    "tempo": {
+     "start": 0
+    },
+    "recording": {
+     "artist": "Charlie Parker's Re-Boppers",
+     "album": "Savoy 573; also on The Complete Savoy & Dial Master Takes",
+     "recorded": "November 26, 1945",
+     "personnel": "Charlie Parker (as), Miles Davis (tp), Dizzy Gillespie (p), Curly Russell (b), Max Roach (d)",
+     "sourceUrl": "https://en.wikipedia.org/wiki/Now%27s_the_Time_(composition)"
+    },
+    "skills": [
+     "blues-guide",
+     "ear-sing"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
   "lis-bud-celia": {
    "data": {
     "id": "lis-bud-celia",
@@ -2949,7 +2991,7 @@
       "kind": "listening",
       "minutes": 10,
       "exerciseIds": [
-       "lis-bud-celia"
+       "lis-bird-nows-1945"
       ]
      },
      {
@@ -3804,6 +3846,11 @@
      "vehicle": "rhythm"
     }
    ],
+   "bird": [
+    "“Now's the Time” (1945; Omnibook page 76): sing the melody with the record. Then find it on the piano and check it in the book.",
+    "“Billie's Bounce” (1945; page 80): the melody by ear, 2 bars a day.",
+    "“Now's the Time” (1953; page 74): Bird's first chorus. On beat 1 of each new chord, which chord tone does he play?"
+   ],
    "milestone": {
     "id": "M1",
     "week": 3
@@ -3828,6 +3875,12 @@
     {
      "vehicle": "minor-blues"
     }
+   ],
+   "bird": [
+    "Barry's added-note rules, heard in Bird's own lines. The phrase guides show where each one happens in your Omnibook.",
+    "“Moose the Mooche” (page 4): the melody by ear. Then Bird's first A section.",
+    "“Thriving from a Riff” (page 60) and “Anthropology” (page 10, live with Bud Powell): the same tune, 6 years apart.",
+    "“Blues for Alice” (page 18): Bird's own blues changes, next to the plain F blues."
    ],
    "milestone": {
     "id": "M2",
@@ -3854,6 +3907,11 @@
      "vehicle": "minor-blues"
     }
    ],
+   "bird": [
+    "“Donna Lee” (page 48): the melody by ear, 1 section at a time. Bud Powell plays piano on this record.",
+    "Bar 8 of “Donna Lee” (E♭m to A♭7): Barry taught that Bird played a D7 line over these chords on “Indiana”. Listen for it.",
+    "“Chasing the Bird” (page 82): Rhythm changes in F, live in 1949."
+   ],
    "milestone": {
     "id": "M3",
     "week": 9
@@ -3878,6 +3936,10 @@
     {
      "vehicle": "minor-blues"
     }
+   ],
+   "bird": [
+    "Learn one whole Bird chorus by ear on each tune: a blues, Rhythm changes and “Donna Lee”. Check each one in the book.",
+    "“Parker's Mood” (page 134): a slow blues, for how Bird shapes a phrase."
    ],
    "milestone": {
     "id": "M4",
