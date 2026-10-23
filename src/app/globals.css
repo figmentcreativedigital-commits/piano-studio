@@ -229,19 +229,29 @@ select {
   color: var(--muted);
 }
 
-/* ───────── Header ───────── */
+/* ───────── Header and the five places ─────────
+ * One nav element: pills in the header from 768px up, a tab bar fixed to
+ * the bottom of the screen on phones. Floating things (the help button,
+ * the reader bar, toasts) sit on --dock, which clears the tab bar. */
+:root {
+  --header-h: 60px;
+  --tabbar-h: 0px;
+  --dock: max(16px, env(safe-area-inset-bottom, 0px));
+}
+main:focus {
+  outline: none;
+}
 .site-header {
   position: sticky;
   top: env(safe-area-inset-top, 0px);
   z-index: 40;
   border-bottom: 1px solid var(--white);
 }
-.site-header .wrap {
+.site-header-in {
   display: flex;
   align-items: center;
-  gap: 8px 24px;
-  min-height: 60px;
-  flex-wrap: wrap;
+  gap: 8px clamp(12px, 2.2vw, 28px);
+  min-height: var(--header-h);
   padding-block: 6px;
 }
 .wordmark {
@@ -255,56 +265,159 @@ select {
   display: inline-flex;
   align-items: baseline;
   gap: 8px;
-}
-.wordmark small {
-  font-stretch: 125%;
-  font-weight: 500;
-  font-size: 0.72rem;
-  letter-spacing: 0.01em;
-  color: var(--muted);
+  flex: none;
 }
 .nav {
-  display: flex;
-  gap: 2px;
-  overflow-x: auto;
-  scrollbar-width: none;
   flex: 1 1 auto;
   min-width: 0;
 }
-.nav::-webkit-scrollbar {
-  display: none;
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2px;
 }
 .nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
   font-size: var(--step-0);
-  padding: 8px 12px;
-  border-radius: 999px;
   white-space: nowrap;
   color: var(--ink-2);
+}
+.nav-mark {
+  display: none;
 }
 .nav a:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1.5px;
 }
-.nav a[aria-current="page"] {
+.nav a[aria-current] {
   background: var(--white);
   color: var(--cobalt);
   text-decoration: none;
 }
-@media (max-width: 760px) {
-  .nav {
-    order: 3;
-    flex-basis: 100%;
-    margin-inline: -6px;
+.header-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  flex: none;
+}
+.listen-btn {
+  border: 1.5px solid var(--rule);
+  width: 44px;
+  height: 44px;
+}
+.listen-btn.solid {
+  border-color: var(--white);
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --header-h: 56px;
   }
+  :root:has(.site-header:not([data-focus])) {
+    --tabbar-h: calc(64px + env(safe-area-inset-bottom, 0px));
+    --dock: calc(var(--tabbar-h) + 12px);
+  }
+  html {
+    scroll-padding-bottom: var(--tabbar-h);
+  }
+  body {
+    padding-bottom: var(--tabbar-h);
+  }
+  /* The header scrolls away on phones; the tab bar stays. */
   .site-header {
-    position: static;
+    position: relative;
+    top: auto;
+  }
+  .site-header-in {
+    gap: 8px;
+    padding-block: 6px;
+  }
+  .wordmark {
+    font-size: 1.55rem;
+  }
+  .header-tools {
+    gap: 8px;
+  }
+  .nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 45;
+    background: var(--band);
+    color: var(--band-ink);
+    border-top: 1px solid var(--white);
+    padding: 0 env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  }
+  .site-header[data-focus] .nav {
+    display: none;
+  }
+  .nav ul {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+  }
+  .nav a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    width: 100%;
+    min-height: 64px;
+    padding: 6px 2px 7px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: 650;
+    letter-spacing: 0.01em;
+    color: var(--white);
+    touch-action: manipulation;
+  }
+  .nav-mark {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 30px;
+    border-radius: 999px;
+    transition: background 0.18s ease;
+  }
+  .nav a:hover {
+    text-decoration: none;
+  }
+  .nav a:hover .nav-mark {
+    box-shadow: inset 0 0 0 1.5px var(--white);
+  }
+  .nav a[aria-current] {
+    background: transparent;
+    color: var(--white);
+    font-weight: 800;
+  }
+  .nav a[aria-current] .nav-mark {
+    background: var(--white);
+    color: var(--cobalt);
+    box-shadow: none;
+  }
+  .nav a:focus-visible {
+    outline-offset: -3px;
   }
 }
 
-/* ───────── Metronome (header) ───────── */
+/* ───────── Metronome (header) ─────────
+ * From 1080px the controls sit in the header. Below that, one button
+ * shows the tempo and opens the same controls in a panel. */
+.metro-wrap {
+  position: relative;
+  display: inline-flex;
+}
 .metro {
   display: inline-flex;
   align-items: center;
@@ -314,12 +427,16 @@ select {
   padding: 3px 4px 3px 12px;
   background: transparent;
 }
+.metro-head {
+  display: none;
+}
 .metro-light {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   border: 2px solid var(--rule);
   transition: none;
+  flex: none;
 }
 .metro-light.on {
   background: var(--live);
@@ -361,6 +478,117 @@ select {
   font-size: var(--step-0);
   max-width: 8.5em;
 }
+.metro-toggle {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 14px 0 12px;
+  border: 1.5px solid var(--rule);
+  border-radius: 999px;
+  background: transparent;
+  font-weight: 750;
+  font-size: var(--step-1);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.metro-toggle:hover {
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+.metro-wrap.is-on .metro-toggle {
+  border-color: var(--white);
+}
+.metro-toggle[aria-expanded="true"] {
+  background: var(--white);
+  color: var(--cobalt);
+  border-color: var(--white);
+}
+.metro-toggle[aria-expanded="true"] .metro-light {
+  border-color: var(--cobalt);
+}
+.metro-toggle-tempo {
+  min-width: 2.2ch;
+  text-align: left;
+}
+@media (max-width: 1079.98px) {
+  .metro-toggle {
+    display: inline-flex;
+  }
+  .metro {
+    display: none;
+  }
+  .metro-wrap.is-open .metro {
+    display: grid;
+    position: absolute;
+    top: calc(100% + 11px);
+    right: 0;
+    z-index: 55;
+    width: min(340px, calc(100vw - 32px));
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head light"
+      "tempo play"
+      "mode mode";
+    align-items: center;
+    gap: 16px 12px;
+    padding: 16px 16px 18px;
+    border: 1px solid var(--white);
+    border-radius: 0;
+    background: var(--band);
+    color: var(--band-ink);
+  }
+  .metro-head {
+    display: block;
+    grid-area: head;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: var(--step-3);
+    line-height: 1;
+  }
+  .metro > .metro-light {
+    grid-area: light;
+    justify-self: end;
+    width: 16px;
+    height: 16px;
+  }
+  .metro-wrap.is-open .metro-tempo {
+    grid-area: tempo;
+    gap: 6px;
+    font-size: var(--step-2);
+  }
+  .metro-wrap.is-open .metro-tempo .icon-btn {
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid var(--white);
+    font-size: 1.3rem;
+  }
+  .metro-wrap.is-open .metro-tempo input {
+    width: 3ch;
+    font-size: var(--step-4);
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+  }
+  .metro-wrap.is-open .metro-play {
+    grid-area: play;
+    width: 56px;
+    height: 56px;
+    border: 1.5px solid var(--white);
+    font-size: 1.25rem;
+  }
+  .metro-wrap.is-open .metro-mode {
+    grid-area: mode;
+    width: 100%;
+    max-width: none;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1.5px solid var(--white);
+    border-radius: 999px;
+    font-size: var(--step-1);
+  }
+}
+
 .icon-btn {
   width: 36px;
   height: 36px;
@@ -1437,7 +1665,7 @@ textarea.input {
 .toast {
   position: fixed;
   left: 50%;
-  bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--dock) + 4px);
   transform: translateX(-50%);
   background: var(--btn);
   color: var(--btn-ink);
@@ -1653,37 +1881,76 @@ textarea.input {
 
 .footer {
   border-top: 1px solid var(--rule);
-  padding-block: 28px 48px;
-  margin-top: 40px;
+  padding-block: 40px 44px;
+  margin-top: 56px;
   font-size: var(--step-0);
   color: var(--muted);
 }
-.footer nav {
-  display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
+.footer-in {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.6fr);
+  gap: 28px 56px;
 }
-.footer .wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 28px;
-  justify-content: space-between;
+.footer-mark {
+  font-size: 1.6rem;
+  color: var(--ink);
 }
-
-/* ───────── Header tools ───────── */
-.header-tools {
+.footer-brand p {
+  margin: 10px 0 0;
+  max-width: 30ch;
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+.sitemap {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+.sitemap h2 {
+  margin: 0 0 8px;
+  font-family: var(--ui);
+  font-size: var(--step--1);
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.sitemap ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.sitemap a {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-left: auto;
+  min-height: 36px;
+  color: var(--ink-2);
+  text-decoration: none;
 }
-.listen-btn {
-  border: 1.5px solid var(--rule);
-  width: 40px;
-  height: 40px;
+.sitemap a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
-.listen-btn.solid {
-  border-color: var(--white);
+@media (max-width: 900px) {
+  .footer-in {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .footer {
+    margin-top: 40px;
+    padding-block: 32px 28px;
+  }
+  .sitemap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 16px;
+  }
+  .sitemap a {
+    min-height: 44px;
+  }
 }
 
 /* ───────── Facts on a color field ───────── */
@@ -1727,7 +1994,7 @@ textarea.input {
 .reader-bar {
   position: fixed;
   left: max(16px, env(safe-area-inset-left, 0px));
-  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  bottom: var(--dock);
   z-index: 70;
   display: flex;
   align-items: center;
@@ -1955,7 +2222,7 @@ textarea.input {
 .tour-fab {
   position: fixed;
   right: max(16px, env(safe-area-inset-right, 0px));
-  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  bottom: var(--dock);
   z-index: 80;
   display: inline-flex;
   align-items: center;
@@ -1984,9 +2251,17 @@ textarea.input {
 .tour-fab:hover {
   box-shadow: inset 0 0 0 1px var(--white);
 }
-@media (max-width: 760px) {
+.tour-fab[aria-expanded="true"] {
+  background: var(--white);
+  color: var(--cobalt);
+}
+.tour-fab[aria-expanded="true"] .tour-fab-mark {
+  background: var(--cobalt);
+  color: var(--white);
+}
+@media (max-width: 767.98px) {
   .tour-fab {
-    padding: 0 8px;
+    padding: 0 7px;
   }
   .tour-fab-label {
     position: absolute;
@@ -1999,7 +2274,7 @@ textarea.input {
 .tour-invite {
   position: fixed;
   right: max(16px, env(safe-area-inset-right, 0px));
-  bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + 60px);
+  bottom: calc(var(--dock) + 60px);
   z-index: 80;
   width: min(340px, calc(100vw - 32px));
   padding: 16px 18px;
@@ -2255,8 +2530,14 @@ textarea.input {
   .tour-fab,
   .tour-layer,
   .tour-invite,
-  .reader-bar {
+  .help-menu,
+  .reader-bar,
+  .nav,
+  .toc {
     display: none !important;
+  }
+  body {
+    padding-bottom: 0;
   }
 }
 
