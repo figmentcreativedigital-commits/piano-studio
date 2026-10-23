@@ -29,7 +29,7 @@ export const LESSONS_W01: Lesson[] = [
       ] },
       { id: "a3", side: "A", kind: "harris", title: "The sixth-diminished scale", minutes: 16, exerciseIds: ["h-scale"], text: [
         "Hear it, sing it and play it. Then vary it. Last, play it once from memory.",
-        "Use only quarter notes today. Start at ♩ = 60. Your hands were even at ♩ = 72 in the baseline, so go up to 72 once it feels easy.",
+        "Use only quarter notes today, at ♩ = 50–60. Your hands were even at ♩ = 72 in the baseline. So if 60 feels easy, try 72 at the end.",
       ] },
       { id: "a4", side: "A", kind: "harris", title: "Chord tones on the beat", minutes: 12, exerciseIds: ["h-scale-8"], text: [
         "Play the scale going down only today. Use even eighth notes at ♩ = 50, then 60. Say 'on' each time a C6 note lands on the click.",
