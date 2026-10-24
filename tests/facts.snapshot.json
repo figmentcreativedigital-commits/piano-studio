@@ -2263,10 +2263,10 @@
      "status": "verified",
      "refs": [
       {
-       "url": "https://en.wikipedia.org/wiki/Dial_%22S%22_for_Sonny"
+       "url": "https://www.freshsoundrecords.com/sonny-clark-albums/3539-sonny-clark-trio.html"
       },
       {
-       "url": "https://jazzleadsheets.com/bootin-it.html"
+       "url": "https://popmatters.com/sonny-clark-trio-1960-time-sessions-2515217443.html"
       }
      ]
     },
@@ -2276,11 +2276,52 @@
      "start": 0
     },
     "recording": {
-     "artist": "Sonny Clark",
-     "album": "Dial “S” for Sonny (Blue Note BLP 1570)",
-     "recorded": "July 21, 1957",
-     "personnel": "Art Farmer (tp), Curtis Fuller (tb), Hank Mobley (ts), Sonny Clark (p), Wilbur Ware (b), Louis Hayes (d)",
-     "sourceUrl": "https://en.wikipedia.org/wiki/Dial_%22S%22_for_Sonny"
+     "artist": "Sonny Clark Trio",
+     "album": "The Sonny Clark Trio (Time Records T/70003)",
+     "recorded": "March 23, 1960",
+     "personnel": "Sonny Clark (p), George Duvivier (b), Max Roach (d)",
+     "sourceUrl": "https://www.freshsoundrecords.com/sonny-clark-albums/3539-sonny-clark-trio.html"
+    },
+    "skills": [
+     "ear-sing"
+    ]
+   },
+   "tokens": {
+    "spelling": [],
+    "fingering": [],
+    "steps": [],
+    "check": [],
+    "easier": [],
+    "captions": []
+   }
+  },
+  "lis-clark-mambo": {
+   "data": {
+    "id": "lis-clark-mambo",
+    "kind": "listening",
+    "source": {
+     "kind": "recording",
+     "status": "verified",
+     "refs": [
+      {
+       "url": "https://www.freshsoundrecords.com/sonny-clark-albums/3539-sonny-clark-trio.html"
+      },
+      {
+       "url": "https://popmatters.com/sonny-clark-trio-1960-time-sessions-2515217443.html"
+      }
+     ]
+    },
+    "hands": "both",
+    "vehicle": "blues",
+    "tempo": {
+     "start": 0
+    },
+    "recording": {
+     "artist": "Sonny Clark Trio",
+     "album": "The Sonny Clark Trio (Time Records T/70003)",
+     "recorded": "March 23, 1960",
+     "personnel": "Sonny Clark (p), George Duvivier (b), Max Roach (d)",
+     "sourceUrl": "https://www.freshsoundrecords.com/sonny-clark-albums/3539-sonny-clark-trio.html"
     },
     "skills": [
      "ear-sing"
@@ -3310,7 +3351,7 @@
       "kind": "listening",
       "minutes": 7,
       "exerciseIds": [
-       "lis-clark"
+       "lis-clark-mambo"
       ]
      },
      {

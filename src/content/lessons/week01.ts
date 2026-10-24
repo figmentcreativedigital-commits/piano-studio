@@ -12,10 +12,10 @@ export const LESSONS_W01: Lesson[] = [
     start: "10:00",
     minutes: 120,
     title: "Barry's Scale and Sonny's Blues",
-    objective: "Learn Barry Harris's C sixth-diminished scale. Hear it, sing it, then play it with your right hand. Then count the blues with Sonny Clark's “Bootin' It”, the track you picked.",
+    objective: "Learn Barry Harris's C sixth-diminished scale. Hear it, sing it, then play it with your right hand. Then count the blues with Sonny Clark's “Blues Blue”, one of the two slow blues you sent.",
     prerequisites: ["Your baseline. You did it on October 23"],
     balance:
-      "Harris leads today, with 28 minutes on the scale and its chord tones. Bach gets 18 minutes. Listening gets 20: Lester, and Sonny Clark's “Bootin' It”. You also work on touch, light left-hand shapes and your first reading minute.",
+      "Harris leads today, with 28 minutes on the scale and its chord tones. Bach gets 18 minutes. Listening gets 20: Lester, and Sonny Clark's “Blues Blue”. You also work on touch, light left-hand shapes and your first reading minute.",
     focus: ["c6dim-line", "bach-inv1-m1-rh", "lester-1", "touch"],
     blocks: [
       { id: "a1", side: "A", kind: "setup", title: "Check-in and setup", minutes: 5, text: [
@@ -47,8 +47,8 @@ export const LESSONS_W01: Lesson[] = [
       { id: "b3", side: "B", kind: "listening", title: "Lester: sing the first phrase", minutes: 10, exerciseIds: ["lis-lester-1"], text: [
         "Sing along with the record 3 times. Then sing it alone. Match when each note happens, not just which note.",
       ] },
-      { id: "b4", side: "B", kind: "listening", title: "Sonny Clark: “Bootin' It”", minutes: 10, exerciseIds: ["lis-clark"], text: [
-        "It's a fast blues in B♭. Count the 12 bars of the first 2 choruses. Then, in Sonny's solo, listen to his left hand. Are its notes short or long?",
+      { id: "b4", side: "B", kind: "listening", title: "Sonny Clark: “Blues Blue”", minutes: 10, exerciseIds: ["lis-clark"], text: [
+        "Count the 12 bars of the first 2 choruses. Then, in Sonny's solo, listen to his left hand. Are its notes short or long?",
       ] },
       { id: "b5", side: "B", kind: "reading", title: "Reading minute", minutes: 5, exerciseIds: ["read-01"], text: ["Play it once through at ♩ = 40 without stopping."] },
       { id: "b6", side: "B", kind: "free", title: "Free play on the scale", minutes: 10, exerciseIds: ["free-c6"], text: [
@@ -168,7 +168,7 @@ export const LESSONS_W01: Lesson[] = [
       { id: "5", kind: "harris", title: "Movement, down from the top", minutes: 10, exerciseIds: ["h-move-oct"], text: ["Start from the top C6 chord, C5 to A5. Then come down."] },
       { id: "6", kind: "bach", title: "Bach: bar 1, then half of bar 2", minutes: 10, exerciseIds: ["bach-m1-rh", "bach-m1-lh", "bach-m2-rh"], text: ["Play bar 1 with your right hand, then your left. Then play the first half of bar 2."] },
       { id: "7", kind: "reading", title: "Reading minute", minutes: 4, exerciseIds: ["read-04"], text: ["Bass clef, G major, fingers 5 to 2."] },
-      { id: "8", kind: "listening", title: "Sonny Clark: phrase endings", minutes: 7, exerciseIds: ["lis-clark"], text: ["Back to “Bootin' It”. Hum the endings of 2 of Sonny's phrases."] },
+      { id: "8", kind: "listening", title: "Sonny Clark: phrase endings", minutes: 7, exerciseIds: ["lis-clark-mambo"], text: ["Play “Blues Mambo”. After the mambo melody, the trio swings. Hum the endings of 2 of Sonny's phrases."] },
       { id: "9", kind: "retrieval", title: "From memory, then log", minutes: 4, text: ["From memory, play Lester's phrase once, swung.", LOG] },
     ],
     application: "Move Lester's phrase down a whole step so it starts on C5. Now it's in F, the key of “Indiana”. Play it over a left-hand F3 on beat 1, with finger 3. If the base of your thumb is sore, use your right hand alone.",
