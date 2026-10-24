@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { themeVars } from "@/content";
 import { getLibraryEntry } from "@/content/library";
 import { PARKER_SOLOS, PARKER_TEXT, getParkerSolo, soloFacts, soloKicker } from "@/content/parker";
-import { PARKER_GUIDES } from "@/content/parker-guides";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { glosser } from "@/components/glosser";
 import { LibrarySection } from "@/components/LibraryPage";
@@ -51,20 +50,9 @@ export default async function ParkerSoloPage({
   const solo = getParkerSolo((await params).slug);
   if (!solo) notFound();
   const entry = getLibraryEntry("parker");
-  const guide = PARKER_GUIDES[solo.slug] ?? [];
   const g = glosser();
   const t = PARKER_TEXT;
   const r = solo.recording;
-  const groups = guide.reduce<
-    { key: string; label: string; items: typeof guide }[]
-  >((acc, p) => {
-    const key = `${p.sec}-${p.chorus}`;
-    const label = p.sec === "head" ? "The melody" : `Solo, chorus ${p.chorus}`;
-    const last = acc[acc.length - 1];
-    if (last && last.key === key) last.items.push(p);
-    else acc.push({ key, label, items: [p] });
-    return acc;
-  }, []);
   const i = PARKER_SOLOS.findIndex((s) => s.slug === solo.slug);
   const prev = PARKER_SOLOS[i - 1];
   const next = PARKER_SOLOS[i + 1];
@@ -120,33 +108,6 @@ export default async function ParkerSoloPage({
           </dl>
           {r.note && <p className="hint">{r.note}</p>}
         </LibrarySection>
-
-        {groups.length > 0 && (
-          <LibrarySection title={t.guideTitle} intro={t.guideIntro}>
-            {groups.map((grp) => (
-              <section
-                key={grp.key}
-                className="pk-chorus"
-                aria-label={grp.label}
-              >
-                <h3 className="pk-chorus-title">{grp.label}</h3>
-                <ol className="pk-guide">
-                  {grp.items.map((p) => (
-                    <li
-                      key={`${p.page}-${p.line}-${p.bar}`}
-                      id={`p${p.page}-${p.line}-${p.bar}`}
-                    >
-                      <h4 className="pk-where">
-                        Page {p.page}. {p.where}
-                      </h4>
-                      <p>{g(p.text)}</p>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            ))}
-          </LibrarySection>
-        )}
 
         <LibrarySection title={t.studyTitle} intro={t.studyIntro}>
           <ol className="lib-steps">

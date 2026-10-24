@@ -3709,46 +3709,6 @@ textarea.input {
 .pk-facts {
   margin-top: 0;
 }
-.pk-chorus + .pk-chorus {
-  margin-top: 28px;
-}
-.pk-chorus-title {
-  margin: 0 0 10px;
-  font-family: var(--display);
-  font-style: italic;
-  font-weight: 800;
-  font-size: var(--step-2);
-}
-.pk-guide {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0;
-  border-top: 1.5px solid var(--ink);
-}
-.pk-guide li {
-  display: grid;
-  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
-  gap: 4px 20px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.pk-where {
-  margin: 0;
-  font-family: var(--ui);
-  font-size: var(--step--1);
-  font-weight: 700;
-  line-height: 1.4;
-}
-.pk-guide p {
-  margin: 0;
-}
-@media (max-width: 640px) {
-  .pk-guide li {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
 .tune-bird {
   list-style: none;
   margin: 0 0 18px;
@@ -3761,65 +3721,5 @@ textarea.input {
   padding: 4px 0;
 }
 .tune-bird a {
-  font-weight: 700;
-}
-.pk-habits {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: 12px;
-}
-.pk-habits > li {
-  padding: 20px 22px 18px;
-  background: var(--paper);
-  box-shadow: inset 0 0 0 1px var(--rule);
-  border-top: 4px solid var(--rule-strong);
-}
-.pk-big {
-  margin: 0;
-  font-family: var(--display);
-  font-style: italic;
-  font-weight: 800;
-  font-size: var(--step-5, 3.4rem);
-  line-height: 1;
-  color: var(--rule-strong);
-}
-.pk-habits h3,
-.pk-concepts h3 {
-  margin: 8px 0 6px;
-  font-family: var(--display);
-  font-style: italic;
-  font-weight: 800;
-  font-size: var(--step-2);
-  line-height: 1.1;
-}
-.pk-habits p,
-.pk-concepts p {
-  margin: 0 0 8px;
-}
-.pk-concepts {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0;
-  border-top: 1.5px solid var(--ink);
-}
-.pk-concepts > li {
-  padding: 18px 0 16px;
-  border-bottom: 1px solid var(--rule);
-}
-.pk-spots {
-  list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
-  display: grid;
-  gap: 4px;
-  font-family: var(--ui);
-  font-size: var(--step--1);
-}
-.pk-spots a {
   font-weight: 700;
 }

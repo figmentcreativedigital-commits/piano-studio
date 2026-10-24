@@ -911,7 +911,7 @@ export const PARKER_TEXT = {
     { title: "Sing it", text: "Sing along with Bird until you can sing it alone, in time." },
     { title: "Find it", text: "Find the notes on the piano by ear, one at a time, with your right hand." },
     { title: "Check it", text: "Now look at the book: the page, line and bar. Fix any note you got wrong." },
-    { title: "Understand it", text: "Read what the guide says about it. Which chord tones land on the beats? Where is the added half step?" },
+    { title: "Understand it", text: "Look at the phrase against its chord in the book. Which chord tones land on the beats? Where is the added half step?" },
     { title: "Play it on the tune", text: "Play it over the chart on the Tunes page, with your left hand on guide tones." },
   ],
   bookTitle: "Your Omnibook",
@@ -927,14 +927,7 @@ export const PARKER_TEXT = {
   rhythmIntro: "The chords of “I Got Rhythm”. Most are in B♭, like the chart on the Tunes page.",
   indianaTitle: "“Indiana” and “Donna Lee”",
   indianaIntro: "Bird's line on the chords of “Indiana”, in A♭.",
-  guideTitle: "Phrase by phrase",
-  guideIntro: "Every phrase Bird plays, in order. Each note was read from the book and checked against Barry's ideas. If the guide and the page ever disagree, trust the page.",
   recordTitle: "The record",
-  habitsTitle: "What Bird does, counted",
-  habitsIntro: (a: { solos: number; notes: number }) =>
-    `Every note of ${a.solos} solos was read from the book and counted. These are his habits on our three tunes.`,
-  conceptsTitle: "Barry's ideas in Bird's playing",
-  conceptsIntro: "Barry Harris built his method on how Bird played. Here is each idea, how often Bird uses it, and where to find it in your book.",
 };
 
 export function soloMeta(s: ParkerSolo): string {
@@ -947,7 +940,7 @@ export function soloRecordLine(s: ParkerSolo): string {
 
 export function parkerTexts(): string[] {
   const t = PARKER_TEXT;
-  const out: string[] = [t.studyTitle, t.studyIntro, t.bookTitle, t.bookIntro, ...t.bookNotes, t.bluesTitle, t.bluesIntro, t.rhythmTitle, t.rhythmIntro, t.indianaTitle, t.indianaIntro, t.guideTitle, t.guideIntro, t.recordTitle];
+  const out: string[] = [t.studyTitle, t.studyIntro, t.bookTitle, t.bookIntro, ...t.bookNotes, t.bluesTitle, t.bluesIntro, t.rhythmTitle, t.rhythmIntro, t.indianaTitle, t.indianaIntro, t.recordTitle];
   for (const s of t.steps) out.push(s.title, s.text);
   for (const s of PARKER_SOLOS) {
     out.push(s.title, s.about, soloMeta(s), soloKicker(s), soloRecordLine(s));

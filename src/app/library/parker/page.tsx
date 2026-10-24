@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { getLibraryEntry } from "@/content/library";
-import { PARKER_TEXT, getParkerSolo, parkerByForm, soloMeta, soloRecordLine, type ParkerSolo } from "@/content/parker";
-import { PARKER_ANALYSIS, type SpotRef } from "@/content/parker-analysis";
-import Link from "next/link";
+import { PARKER_TEXT, parkerByForm, soloMeta, soloRecordLine, type ParkerSolo } from "@/content/parker";
 import { LibraryCard, LibraryCards, LibraryPage, LibraryProse, LibrarySection } from "@/components/LibraryPage";
 
 const entry = getLibraryEntry("parker");
@@ -22,24 +20,6 @@ function Solos({ list }: { list: ParkerSolo[] }) {
   );
 }
 
-function Spots({ list }: { list: SpotRef[] }) {
-  return (
-    <ul className="pk-spots">
-      {list.map((r) => {
-        const s = getParkerSolo(r.slug);
-        return (
-          <li key={`${r.slug}-${r.page}-${r.line}-${r.bar}`}>
-            <Link href={`/library/parker/${r.slug}#p${r.page}-${r.line}-${r.bar}`}>
-              {s?.title}, page {r.page}, line {r.line}, bar {r.bar}
-            </Link>
-            {r.text ? <span className="muted"> {r.text}</span> : null}
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
 const byKey = (first: string) => (a: ParkerSolo, b: ParkerSolo) => Number(b.key === first) - Number(a.key === first) || a.pages[0] - b.pages[0];
 
 export default function ParkerPage() {
@@ -56,45 +36,6 @@ export default function ParkerPage() {
           ))}
         </ol>
       </LibrarySection>
-
-      {PARKER_ANALYSIS.habits.length > 0 && (
-        <LibrarySection title={t.habitsTitle} intro={t.habitsIntro(PARKER_ANALYSIS)} id="habits">
-          <ul className="pk-habits">
-            {PARKER_ANALYSIS.habits.map((h) => (
-              <li key={h.id}>
-                <p className="pk-big">{h.big}</p>
-                <h3>{h.label}</h3>
-                <p>{h.text}</p>
-                <Spots list={h.examples} />
-              </li>
-            ))}
-          </ul>
-        </LibrarySection>
-      )}
-
-      {PARKER_ANALYSIS.concepts.length > 0 && (
-        <LibrarySection title={t.conceptsTitle} intro={t.conceptsIntro} id="barry">
-          <ol className="pk-concepts">
-            {PARKER_ANALYSIS.concepts.map((c) => (
-              <li key={c.id} id={`idea-${c.id}`}>
-                <h3>{c.name}</h3>
-                <p>
-                  <b>Barry: </b>
-                  {c.barry}{" "}
-                  <a href={c.link} target="_blank" rel="noreferrer">
-                    His class (step {c.step})
-                  </a>
-                </p>
-                <p>
-                  <b>Bird: </b>
-                  {c.bird}
-                </p>
-                <Spots list={c.examples} />
-              </li>
-            ))}
-          </ol>
-        </LibrarySection>
-      )}
 
       <LibrarySection title={t.bluesTitle} intro={t.bluesIntro} id="blues">
         <Solos list={parkerByForm("blues").sort(byKey("F"))} />
